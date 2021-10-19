@@ -1,7 +1,45 @@
+import org.apache.tools.ant.filters.ReplaceTokens
+
+buildscript{
+    ext {
+        springBootVer = '2.5.5'
+        querydslVer = '4.4.0'
+        querydslPluginVer = '1.0.10'
+        springDependencyMgmtVer = '1.0.11'
+        springLoadedVer = '1.2.8'
+        nodePluginVer = '1.3.1'
+    }
+    repositories {
+        mavenCentral()
+        jcenter()
+        jcenter()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVer}"
+        classpath "io.spring.gradle:dependency-management-plugin:${springDependencyMgmtVer}.RELEASE"
+        classpath "org.springframework:springloaded:${springLoadedVer}.RELEASE"
+        classpath "com.github.node-gradle:gradle-node-plugin:3.1.0"
+    }
+}
+
 plugins {
-    id 'org.springframework.boot' version '2.5.5'
+    id 'org.springframework.boot' version "${springBootVer}"
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id 'java'
+    id 'idea'
+}
+
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'eclipse'
+apply plugin: 'com.github.node-gradle.node'
+
+repositories {
+    mavenCentral()
+    maven { url 'https://repo.spring.io/snapshot' }
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url "https://repo.spring.io/release" }
+    maven { url "https://repo.maven.apache.org/maven2" }
+    maven { url "https://build.shibboleth.net/nexus/content/repositories/releases" }
 }
 
 group = 'com.metamong.server'
@@ -9,32 +47,95 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
 
 configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+    providedRuntime
+}
+
+//set build time and inject value to application.properties
+def buildTime() {
+    def date = new Date()
+    def formattedDate = date.format('yyyyMMdd_HHmm')
+    return formattedDate
+}
+
+project.ext.set("build.date", buildTime())
+
+processResources {
+    with copySpec {
+        from "src/main/resources"
+        include "**/application*.yml"
+        include "**/application*.yaml"
+        include "**/application*.properties"
+
+        duplicatesStrategy = 'include'
+        project.properties.findAll().each {
+            prop ->
+                if (prop.value != null) {
+                    filter(ReplaceTokens, tokens: [ (prop.key): String.valueOf(prop.value)])
+                    filter(ReplaceTokens, tokens: [ ('project.' + prop.key): String.valueOf(prop.value)])
+                    filter(ReplaceTokens, tokens: [ ('project.ext.' + prop.key): String.valueOf(prop.value)])
+                }
+        }
     }
 }
 
-repositories {
-    mavenCentral()
-}
-
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-batch'
-//    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'mysql:mysql-connector-java'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.batch:spring-batch-test'
-//    testImplementation 'org.springframework.security:spring-security-test'
+    implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    compileOnly("org.projectlombok:lombok")
+    developmentOnly("org.springframework.boot:spring-boot-devtools")
+    testImplementation("org.springframework.boot:spring-boot-starter-test")
 
+    annotationProcessor("org.springframework.boot:spring-boot-starter-data-jpa")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
+
+//    implementation("io.springfox:springfox-boot-starter:3.0.0")
+    implementation("com.google.guava:guava:29.0-jre")
+    annotationProcessor("com.google.guava:guava:29.0-jre")
+
+    implementation fileTree(dir: 'libs', include:['*.jar'])
+
+    implementation("com.h2database:h2")
+
+    // getVirtualServerName() 오류를 해결하기 위한 버전 업그레이드
+//    compileOnly ("javax.servlet:javax.servlet-api:4.0.1")
+
+    // mysql 의존성 추가
+    implementation 'mysql:mysql-connector-java'
+
+    // JPA 관련 의존성 추가
+    implementation("com.querydsl:querydsl-jpa:${querydslVer}")
+    implementation("com.querydsl:querydsl-apt:${querydslVer}")
+    annotationProcessor("com.querydsl:querydsl-apt:${querydslVer}:jpa")
+
+    // swagger 관련 의존성 추가
     implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
     implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+
+    implementation("com.querydsl:querydsl-jpa") //querydsl
+    implementation("com.querydsl:querydsl-apt") //querydsl
+
+    annotationProcessor "com.querydsl:querydsl-apt:${dependencyManagement.importedProperties['querydsl.version']}:jpa" // querydsl JPAAnnotationProcessor 사용 지정
+    annotationProcessor("jakarta.persistence:jakarta.persistence-api")
+    annotationProcessor("jakarta.annotation:jakarta.annotation-api")
+
+    // lombok 관련 의존성 추가
+    implementation("org.projectlombok:lombok:1.18.20")
+    annotationProcessor("org.projectlombok:lombok:1.18.20")
+}
+
+//querydsl 적용
+def generated= 'src/main/generated'
+
+sourceSets {
+    main.java.srcDirs += [ generated ]
+}
+
+tasks.withType(JavaCompile) {
+    options.annotationProcessorGeneratedSourcesDirectory = file(generated)
+}
+
+clean.doLast {
+    file(generated).deleteDir()
 }
 
 test {
