@@ -14,8 +14,8 @@ import javax.persistence.ManyToOne;
 public class User extends BaseEntity {
 
     @ManyToOne
-    @JoinColumn(name = "room_id")
-    int roomId;
+    @JoinColumn(name = "room_id", referencedColumnName = "id")
+    Room room;
 
     String email;
     String password;
