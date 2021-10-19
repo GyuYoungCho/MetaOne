@@ -1,0 +1,28 @@
+{
+  "properties": [
+    {
+      "name": "token.accessToken",
+      "type": "java.lang.String",
+      "description": "Description for token.accessToken."
+    },
+    {
+      "name": "token.refreshToken",
+      "type": "java.lang.String",
+      "description": "Description for token.refreshToken."
+    },
+    {
+      "name": "token.secretKey",
+      "type": "java.lang.String",
+      "description": "Description for token.secretKey."
+    },
+    {
+      "name": "token.expire.accessToken",
+      "type": "java.lang.Long",
+      "description": "Description for token.expire.accessToken."
+    },
+    {
+      "name": "token.expire.refreshToken",
+      "type": "java.lang.Long",
+      "description": "Description for token.expire.refreshToken."
+    }
+  ] }

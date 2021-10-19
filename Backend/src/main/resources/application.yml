@@ -23,6 +23,7 @@ spring:
     hikari:
       maximum-pool-size: 8
 
+<<<<<<< HEAD
   jpa:
     show-sql: true
     hibernate:
@@ -54,3 +55,12 @@ spring:
     devtools:
       livereload:
         enabled: true
+
+token:
+  accesstoken: "accessToken"
+  refreshtoken: "refreshToken"
+  expire:                        # 60초 : 60000, # 60분 : 3600000, # 1일 : 86400000, # 7일 : 604800000
+    accesstoken: 3600000
+    refreshtoken: 604800000
+  secretkey: "jeignrwlgnreiu5ngd2fdgdqgblwef2epfkwefbedkbvdfk9jk32fdmhgfg"
+
