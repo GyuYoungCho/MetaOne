@@ -2,17 +2,22 @@ package com.metamong.server.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.Entity;
-import java.sql.Time;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import java.util.Date;
 
 @Entity
 @Getter
 @Setter
 public class Education extends BaseEntity {
 
-    Time duration;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    private Date duration;
 
-    String education;
+    private String education;
 
 }

@@ -16,18 +16,18 @@ public class Message extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "sent_user_id")
-    User sentUserId;
+    private User sentUserId;
 
     @ManyToOne
     @JoinColumn(name = "recv_user_id")
-    User recvUserId;
+    private User recvUserId;
 
-    String content;
+    private String content;
 
     @Temporal(value = TemporalType.TIMESTAMP)
     @CreationTimestamp
     private Date createAt;
 
     @Column(name="is_read", columnDefinition = "TINYINT", length=4)
-    int isRead;
+    private int isRead;
 }

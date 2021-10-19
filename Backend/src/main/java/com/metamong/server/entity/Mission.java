@@ -14,9 +14,9 @@ public class Mission extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "education_id")
-    Education education;
+    private Education education;
 
-    int ordiering;
+    private int ordering;
 
-    String description;
+    private String description;
 }
