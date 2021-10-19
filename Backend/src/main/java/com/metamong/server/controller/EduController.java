@@ -13,7 +13,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/edu")
 public class EduController {
-
     /**
      * 교육 내역 조회
      * @return
@@ -74,7 +73,7 @@ public class EduController {
      */
     @PostMapping("/certificate")
     @ApiOperation(value = "교육 증명서 신청")
-    public ResponseEntity registerCertificate(@RequestBody Education edu, HttpServletRequest request){
+    public ResponseEntity registerCertificate(@RequestBody Object edu, HttpServletRequest request){
 
         return ResponseEntity.status(201).build();
     }
@@ -87,7 +86,7 @@ public class EduController {
      */
     @PutMapping("/certificate")
     @ApiOperation(value = "교육 증명서 수정")
-    public ResponseEntity updateCertificate(@RequestBody Education edu, HttpServletRequest request){
+    public ResponseEntity updateCertificate(@RequestBody Object edu, HttpServletRequest request){
 
         return ResponseEntity.status(200).build();
     }
@@ -113,10 +112,9 @@ public class EduController {
      */
     @PostMapping("/rank")
     @ApiOperation(value = "미션 기록 저장")
-    public ResponseEntity registerRank(@RequestBody Rank rank, HttpServletRequest request){
+    public ResponseEntity registerRank(@RequestBody Object rank, HttpServletRequest request){
 
         return ResponseEntity.status(201).build();
     }
-
 
 }
