@@ -6,6 +6,9 @@ gradle/
 !**/src/main/**/build/
 !**/src/test/**/build/
 
+# Qclass
+**/src/main/generated/com/metamong/server/entity
+
 ### STS ###
 .apt_generated
 .classpath
