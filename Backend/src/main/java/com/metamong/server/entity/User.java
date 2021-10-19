@@ -3,10 +3,9 @@ package com.metamong.server.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -15,17 +14,30 @@ public class User extends BaseEntity {
 
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "id")
-    Room room;
+    private Room room;
 
-    String email;
-    String password;
-    String fileUrl;
+    private String email;
+
+    private String password;
+
+    private String fileUrl;
 
     @Column(name="auth", columnDefinition = "TINYINT", length=4)
-    int auth;
-    String nickname;
-    String name;
+    private int auth;
+
+    private String nickname;
+
+    private String name;
 
     @Column(name="state", columnDefinition = "TINYINT", length=4)
-    int state;
+    private int state;
+
+    /* 유저의 증명서 */
+    @OneToMany(mappedBy = "user")
+    private List<Certificate> certificates = new ArrayList<>();
+
+    /* 유저의 쪽지 */
+//    @OneToMany(mappedBy = "user")
+//    private List<Message> messages = new ArrayList<>();
+
 }
