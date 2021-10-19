@@ -23,7 +23,6 @@ spring:
     hikari:
       maximum-pool-size: 8
 
-<<<<<<< HEAD
   jpa:
     show-sql: true
     hibernate:
