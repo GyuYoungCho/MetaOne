@@ -12,7 +12,6 @@ import java.util.List;
 @Setter
 public class User extends BaseEntity {
 
-    /* À¯ÀúÀÇ ·ë ¹øÈ£ */
     @ManyToOne
     @JoinColumn(name = "room_id", referencedColumnName = "id")
     private Room room;
@@ -40,7 +39,7 @@ public class User extends BaseEntity {
 //    @OneToMany(mappedBy = "user")
 //    private List<Message> messages = new ArrayList<>();
 
-    /* À¯ÀúÀÇ °Ô½ÃÆÇ */
+    /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô½ï¿½ï¿½ï¿½ */
     @OneToMany(mappedBy = "user")
     private List<GuestBook> guestBooks = new ArrayList<>();
 
