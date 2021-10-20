@@ -2,19 +2,31 @@ package com.metamong.server.controller;
 
 import com.metamong.server.dto.UserDto;
 import com.metamong.server.entity.User;
+import com.metamong.server.repository.UserRepository;
+import com.metamong.server.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
 public class UserController {
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private UserRepository userRepository;
 
     /***
      *
@@ -32,9 +44,12 @@ public class UserController {
         if (bindingResult.hasErrors())
             return ResponseEntity.status(400).build();
 
-        // 유저 서비스 로직
+        if (userService.isExistEmail(registerInfo.getEmail()))
+            return ResponseEntity.status(409).build();
 
-        return ResponseEntity.status(200).build();
+        Map<String, Integer> map = new HashMap<>();
+        map.put("id", userService.register(registerInfo));
+        return new ResponseEntity<>(map, HttpStatus.valueOf(201));
     }
 
     /***
@@ -46,8 +61,12 @@ public class UserController {
     @PutMapping("")
     @ApiOperation(value="회원정보 수정", notes = "사용자가 자신의 정보를 수정한다.")
     public ResponseEntity update(
-            @RequestBody @ApiParam(value="회원수정 정보", required = true) Object updateInfo
+            @RequestBody @ApiParam(value="회원수정 정보", required = true) Object updateInfo, HttpServletRequest request
         ) throws IOException{
+        int userId = (Integer) request.getAttribute("userId");
+        // 닉네임이랑 비번만 바꾸기 가능요
+//        if (userService.isExistEmail(updateInfo.getEmail()))
+//            return ResponseEntity.status(409).build();
 
         return ResponseEntity.status(200).build();
     }
@@ -92,8 +111,16 @@ public class UserController {
     public ResponseEntity duplicate(
             @RequestParam @ApiParam(value="닉네임 or 이메일", required = true) String type, @RequestParam @ApiParam(value="닉네임이나 이메일 정보", required = true) String data
             ) throws IOException{
+        // type Email 중복검사
+        if (type == "email"){
+            if (userService.isExistEmail(data)) return new ResponseEntity(HttpStatus.valueOf(400));
+            return new ResponseEntity(HttpStatus.valueOf(200));
+       // type Nickname 중복검사
+        }else if(type == "nickname"){
+            if (userService.isExistNickname(data)) return new ResponseEntity(HttpStatus.valueOf(400));
+            return new ResponseEntity(HttpStatus.valueOf(200));
 
-        return ResponseEntity.status(200).build();
+        }else return ResponseEntity.status(400).build();
     }
 
     /***
@@ -103,9 +130,10 @@ public class UserController {
      */
     @PostMapping("email")
     @ApiOperation(value="이메일 인증")
-    public ResponseEntity email(
+    public ResponseEntity checkEmail(
             @RequestBody @ApiParam(value="이메일", required = true) UserDto.TokenRequest tokenReq
             ) throws IOException{
+
 
         return ResponseEntity.status(200).build();
     }

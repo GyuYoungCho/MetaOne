@@ -72,6 +72,19 @@ public class UserDto {
     }
 
     @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class updateRequest{
+        @NotNull
+        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d$@$!%*#?&]{8,}$")
+        private String originPassword;
+
+        private String newPassword;
+        private String newPasswordCheck;
+    }
+
+    @Getter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class LoginRequest{

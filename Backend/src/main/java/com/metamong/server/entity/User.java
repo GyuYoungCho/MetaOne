@@ -32,11 +32,22 @@ public class User extends BaseEntity {
     @Column(name="state", columnDefinition = "TINYINT", length=4)
     private int state;
 
-    /* À¯ÀúÀÇ Áõ¸í¼­ */
+    /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
     @OneToMany(mappedBy = "user")
     private List<Certificate> certificates = new ArrayList<>();
 
-    /* À¯ÀúÀÇ ÂÊÁö */
+    public User(String email, String password, String name, String nickname) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.nickname = nickname;
+    }
+
+    public User() {
+        super();
+    }
+
+    /* ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ */
 //    @OneToMany(mappedBy = "user")
 //    private List<Message> messages = new ArrayList<>();
 
