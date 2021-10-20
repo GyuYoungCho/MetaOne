@@ -22,7 +22,7 @@ public class Certificate extends BaseEntity{
 
     private Date createAt;
 
-    private Date passTime;
+    private Integer passTime;
 
     @Column(name="is_educated", columnDefinition = "TINYINT", length=4)
     private int isEducated;
