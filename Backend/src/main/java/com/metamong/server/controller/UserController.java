@@ -1,11 +1,16 @@
 package com.metamong.server.controller;
 
+import com.metamong.server.dto.UserDto;
+import com.metamong.server.entity.User;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -19,9 +24,15 @@ public class UserController {
      */
     @PostMapping("")
     @ApiOperation(value="회원가입", notes = "사용자가 회원가입을 시도한다.")
-    public ResponseEntity resgister(
-            @RequestBody  @ApiParam(value="회원가입 정보", required = true) Object registerInfo
+    public ResponseEntity <Map<String, Integer>> resgister(
+            @RequestBody  @ApiParam(value="회원가입 정보", required = true)
+            @Valid UserDto.RegisterRequest registerInfo, BindingResult bindingResult
             ) throws IOException {
+
+        if (bindingResult.hasErrors())
+            return ResponseEntity.status(400).build();
+
+        // 유저 서비스 로직
 
         return ResponseEntity.status(200).build();
     }
@@ -60,11 +71,12 @@ public class UserController {
      * @throws IOException
      */
     @PostMapping("login")
-    @ApiOperation(value="로그인")
-    public ResponseEntity login(
-            @RequestBody  @ApiParam(value="로그인 정보", required = true) Object loginInfo
-            ) throws IOException{
+    @ApiOperation(value="로그인", response =UserDto.Response.class)
+    public ResponseEntity<UserDto.Response> login(
+            @RequestBody  @ApiParam(value="로그인 정보", required = true) UserDto.LoginRequest loginInfo
+            ) throws InterruptedException, IOException{
 
+        // 유저 서비스 로그인 로직
         return ResponseEntity.status(200).build();
     }
 
@@ -86,14 +98,13 @@ public class UserController {
 
     /***
      *
-     * @param email : 사용자 이메일
      * @return
      * @throws IOException
      */
     @PostMapping("email")
     @ApiOperation(value="이메일 인증")
     public ResponseEntity email(
-            @RequestBody @ApiParam(value="이메일", required = true) String email
+            @RequestBody @ApiParam(value="이메일", required = true) UserDto.TokenRequest tokenReq
             ) throws IOException{
 
         return ResponseEntity.status(200).build();
