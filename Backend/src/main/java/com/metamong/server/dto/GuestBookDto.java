@@ -19,7 +19,8 @@ public class GuestBookDto {
     private Integer id;
     private Integer userId;
     private Date createAt;
-    private String Content;
+    private String content;
+    private String nickname;
 
     @JsonIgnore
     private UserDto userDto;
@@ -32,8 +33,10 @@ public class GuestBookDto {
     }
 
     @Setter
+    @Getter
     @AllArgsConstructor
     @NoArgsConstructor
+    @Builder
     public static class ResponseList{
         private List<GuestBookDto> data;
     }

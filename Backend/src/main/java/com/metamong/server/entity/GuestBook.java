@@ -1,7 +1,7 @@
 package com.metamong.server.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.metamong.server.dto.GuestBookDto;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -10,6 +10,10 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Table(name = "guest_book")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class GuestBook extends BaseEntity{
 
     @Temporal(value = TemporalType.TIMESTAMP)
@@ -22,4 +26,12 @@ public class GuestBook extends BaseEntity{
     @JoinColumn(name = "user_id")
     private User user;
 
+    public GuestBookDto convertToDto(){
+        return GuestBookDto.builder()
+                .id(id)
+                .userId(this.user.id)
+                .createAt(this.createAt)
+                .content(this.content)
+                .build();
+    }
 }
