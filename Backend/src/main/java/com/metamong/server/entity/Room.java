@@ -17,7 +17,6 @@ public class Room extends BaseEntity {
 
     private int maxPopulation;
 
-    /* 방마다 접속한 유저 리스트 */
     @OneToMany(mappedBy = "room")
     private List<User> users = new ArrayList<>();
 }
