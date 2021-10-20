@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/users")
@@ -121,8 +122,10 @@ public class UserController {
      */
     @PostMapping("login-kakao")
     @ApiOperation(value="카카오톡 로그인")
-    public ResponseEntity loginkakao() throws IOException{
+    public ResponseEntity loginkakao(@RequestBody Map<String, String> payload) throws IOException{
 
+        System.out.println("email >>>> " + payload.get("email"));
+        System.out.println("name >>>> " + payload.get("name"));
         return ResponseEntity.status(200).build();
     }
 
