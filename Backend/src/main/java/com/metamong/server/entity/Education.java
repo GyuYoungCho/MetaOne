@@ -3,6 +3,7 @@ package com.metamong.server.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ public class Education extends BaseEntity {
 
     private Date duration;
 
+    @Column(unique=true)
     private String education;
 
     @OneToMany(mappedBy = "education")
