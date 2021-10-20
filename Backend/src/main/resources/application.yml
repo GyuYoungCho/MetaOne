@@ -17,9 +17,9 @@ server.port: 8080
 
 spring:
   datasource:
-    url : jdbc:mysql://localhost:3306/metamong?serverTimezone=Asia/Seoul          # ssafy EC2 발급되면 변경 예정
+    url : jdbc:mysql://k5a305.p.ssafy.io:3306/metamong?serverTimezone=Asia/Seoul          # ssafy EC2 발급되면 변경 예정
     username : root
-    password : 1234
+    password : 1103
     hikari:
       maximum-pool-size: 8
 
