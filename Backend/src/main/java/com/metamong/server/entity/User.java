@@ -20,8 +20,6 @@ public class User extends BaseEntity {
 
     private String password;
 
-    private String fileUrl;
-
     @Column(name="auth", columnDefinition = "TINYINT", length=4)
     private int auth;
 
@@ -32,7 +30,6 @@ public class User extends BaseEntity {
     @Column(name="state", columnDefinition = "TINYINT", length=4)
     private int state;
 
-    /* ������ ���� */
     @OneToMany(mappedBy = "user")
     private List<Certificate> certificates = new ArrayList<>();
 
@@ -47,8 +44,16 @@ public class User extends BaseEntity {
         super();
     }
 
-    /* ������ ���� */
+    @OneToOne(mappedBy = "user")
+    private Characters character;
+
+    @OneToMany(mappedBy = "user")
+    private List<Certificate> certificates = new ArrayList<>();
+
 //    @OneToMany(mappedBy = "user")
 //    private List<Message> messages = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<GuestBook> guestBooks = new ArrayList<>();
 
 }
