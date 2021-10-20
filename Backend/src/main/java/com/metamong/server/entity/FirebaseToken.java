@@ -1,10 +1,10 @@
 package com.metamong.server.entity;
 
 import lombok.*;
-import org.springframework.data.annotation.CreatedDate;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Getter
@@ -17,8 +17,9 @@ public class FirebaseToken extends BaseEntity {
 
     private String token;
 
-    @CreatedDate
-    private LocalDateTime createAt;
+    @Temporal(value = TemporalType.TIMESTAMP)
+    @CreationTimestamp
+    private Date createAt;
 
     @ManyToOne
     @JoinColumn(name="user_id")
