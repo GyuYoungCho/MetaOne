@@ -15,7 +15,6 @@ public class GuestBook extends BaseEntity{
 
     private String content;
 
-    /* 방명록을 작성한 유저 리스트 */
     @OneToMany(mappedBy = "guestBook")
     private List<User> users = new ArrayList<>();
 
