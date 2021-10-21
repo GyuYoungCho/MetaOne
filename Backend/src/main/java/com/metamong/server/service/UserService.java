@@ -21,4 +21,5 @@ public interface UserService {
     public void updatePassword(UserDto.UpdateRequest updateInfo, HttpServletRequest request);
     public void updateNickname(UserDto.UpdateRequest updateInfo, HttpServletRequest request);
     public void deleteUser(int id);
+
 }
