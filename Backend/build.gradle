@@ -141,6 +141,9 @@ dependencies {
 
     // Redis
     compile 'org.springframework.boot:spring-boot-starter-data-redis:2.3.1.RELEASE'
+
+    // 이메일 인증
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
 }
 
 //querydsl 적용

@@ -154,15 +154,12 @@ public class UserController {
         // type Email 중복검사
         System.out.println("중복검사 시작합니다... "+ type +" / "+ data);
         if (type.equals("email")){
-            System.out.println("이메일이군요.. ");
             if (userService.isExistEmail(data)) return new ResponseEntity(HttpStatus.valueOf(400));
             return new ResponseEntity(HttpStatus.valueOf(200));
        // type Nickname 중복검사
         }else if(type.equals("nickname")){
-            System.out.println("닉네임이군요.. ");
             if (userService.isExistNickname(data)) return new ResponseEntity(HttpStatus.valueOf(400));
             return new ResponseEntity(HttpStatus.valueOf(200));
-
         }else 
             System.out.println("수정할 정보를 입력하세요");
             return ResponseEntity.status(400).build();
@@ -178,8 +175,7 @@ public class UserController {
     public ResponseEntity checkEmail(
             @RequestBody @ApiParam(value="이메일", required = true) UserDto.TokenRequest tokenReq
             ) throws IOException{
-
-
+        userService.TokenGeneration(tokenReq.getId(), tokenReq.getEmail(), "");
         return ResponseEntity.status(200).build();
     }
 
