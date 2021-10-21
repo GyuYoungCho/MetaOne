@@ -5,7 +5,9 @@ import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,6 +23,10 @@ public class GuestBook extends BaseEntity{
     private Date createAt;
 
     private String content;
+
+
+//    @OneToMany(mappedBy = "guestBook")
+//    private List<User> users = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
