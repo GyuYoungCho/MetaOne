@@ -79,7 +79,7 @@ public class UserController {
     public ResponseEntity update(
             @RequestBody @ApiParam(value="회원수정 정보", required = true) UserDto.UpdateRequest updateInfo, HttpServletRequest request
         ) throws IOException{
-        int userId = (Integer) request.getAttribute("userId");
+        // int userId = (Integer) request.getAttribute("userId");
         if(updateInfo.getOriginPassword() == null) return ResponseEntity.status(401).build();
         if(updateInfo.getNickname() != null){
             userService.updateNickname(updateInfo, request);
@@ -125,11 +125,14 @@ public class UserController {
             ) throws InterruptedException, IOException{
         UserDto.LoginRes loginRes = userService.login(loginInfo);
         Map<String, Object> map = jwtService.createToken(loginRes.getId());
+        System.out.println("map : "+ map.get(accessToken));
 
         HttpHeaders resHeader = new HttpHeaders();
 
-        resHeader.set(accessToken, (String) map.get("acToken"));
-        resHeader.set(refreshToken, (String) map.get("rfToken"));
+        resHeader.set(accessToken, (String) map.get(accessToken));
+        System.out.println("resHeader : "+ resHeader.get(accessToken));
+        resHeader.set(refreshToken, (String) map.get(refreshToken));
+        System.out.println("resHeader : "+ resHeader.get(refreshToken));
 
         //if(loginInfo.getFirebaseToken() != null) fcmService.save(myRes, myReq.getFirebaseToken());
 
@@ -150,18 +153,18 @@ public class UserController {
             ) throws IOException{
         // type Email 중복검사
         System.out.println("중복검사 시작합니다... "+ type +" / "+ data);
-        if (type == "email"){
+        if (type.equals("email")){
             System.out.println("이메일이군요.. ");
             if (userService.isExistEmail(data)) return new ResponseEntity(HttpStatus.valueOf(400));
             return new ResponseEntity(HttpStatus.valueOf(200));
        // type Nickname 중복검사
-        }else if(type == "nickname"){
+        }else if(type.equals("nickname")){
             System.out.println("닉네임이군요.. ");
             if (userService.isExistNickname(data)) return new ResponseEntity(HttpStatus.valueOf(400));
             return new ResponseEntity(HttpStatus.valueOf(200));
 
         }else 
-            System.out.println("실패");
+            System.out.println("수정할 정보를 입력하세요");
             return ResponseEntity.status(400).build();
     }
 
