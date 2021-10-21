@@ -28,8 +28,8 @@ public class SwaggerConfiguration {
     private final String version = "V1";
     private final String title = "MetaMong API " + version;
 
-//    @Value("${security.accesstoken}")
-//    private String accessToken;
+    @Value("${token.accesstoken}")
+    private String accessToken;
 
     @Bean
     public Docket api() {
@@ -42,9 +42,9 @@ public class SwaggerConfiguration {
                 .apis(RequestHandlerSelectors.basePackage("com.metamong.server.controller"))
                 .paths(PathSelectors.any()).build()
                 .useDefaultResponseMessages(false)
-                .globalResponseMessage(RequestMethod.GET,responseMessages);
-//                .securityContexts(Arrays.asList(securityContext()))
-//                .securitySchemes(Arrays.asList(apiKey()));
+                .globalResponseMessage(RequestMethod.GET,responseMessages)
+                .securityContexts(Arrays.asList(securityContext()))
+                .securitySchemes(Arrays.asList(apiKey()));
     }
 
     private Set<String> getConsumeContentTypes() {
@@ -72,26 +72,26 @@ public class SwaggerConfiguration {
 
     }
 
-//    private ApiKey apiKey() {
-//        return new ApiKey("JWT", accessToken, "header");
-//    }
-//
-//    private SecurityContext securityContext() {
-//        return springfox
-//                .documentation
-//                .spi.service
-//                .contexts
-//                .SecurityContext
-//                .builder()
-//                .securityReferences(defaultAuth()).forPaths(PathSelectors.any()).build();
-//    }
-//
-//    List<SecurityReference> defaultAuth() {
-//        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
-//        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
-//        authorizationScopes[0] = authorizationScope;
-//
-//        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
-//    }
+    private ApiKey apiKey() {
+        return new ApiKey("JWT", accessToken, "header");
+    }
+
+    private SecurityContext securityContext() {
+        return springfox
+                .documentation
+                .spi.service
+                .contexts
+                .SecurityContext
+                .builder()
+                .securityReferences(defaultAuth()).forPaths(PathSelectors.any()).build();
+    }
+
+    List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope("global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+
+        return Arrays.asList(new SecurityReference("JWT", authorizationScopes));
+    }
 
 }

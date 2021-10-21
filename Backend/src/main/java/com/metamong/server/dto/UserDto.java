@@ -64,6 +64,7 @@ public class UserDto {
         @NotNull
         private String name;
 
+
         @NotNull
         @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d$@$!%*#?&]{8,}$")
         private String password;
@@ -80,7 +81,10 @@ public class UserDto {
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class updateRequest{
+    public static class UpdateRequest{
+
+        private String nickname;
+
         @NotNull
         @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d$@$!%*#?&]{8,}$")
         private String originPassword;
@@ -96,6 +100,17 @@ public class UserDto {
         private String email;
         private String password;
         private  String firebaseToken;
+    }
+
+    @Setter
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class LoginRes{
+        private Integer id;
+        private String email;
+        private String name;
+        private String nickname;
     }
 
     @Getter

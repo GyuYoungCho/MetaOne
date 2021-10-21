@@ -1,12 +1,17 @@
 package com.metamong.server.controller;
 
+
 import com.metamong.server.dto.UserDto;
 import com.metamong.server.entity.User;
+import com.metamong.server.exception.ApplicationException;
 import com.metamong.server.repository.UserRepository;
+import com.metamong.server.service.JwtService;
 import com.metamong.server.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -28,6 +33,15 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private JwtService jwtService;
+
+    @Value("${token.accesstoken}")
+    private String accessToken;
+
+    @Value("${token.refreshtoken}")
+    private String refreshToken;
+
     /***
      *
      * @param registerInfo : 회원가입 정보
@@ -47,6 +61,8 @@ public class UserController {
         if (userService.isExistEmail(registerInfo.getEmail()))
             return ResponseEntity.status(409).build();
 
+        userService.validatePassword(registerInfo.getPassword());
+
         Map<String, Integer> map = new HashMap<>();
         map.put("id", userService.register(registerInfo));
         return new ResponseEntity<>(map, HttpStatus.valueOf(201));
@@ -61,12 +77,19 @@ public class UserController {
     @PutMapping("")
     @ApiOperation(value="회원정보 수정", notes = "사용자가 자신의 정보를 수정한다.")
     public ResponseEntity update(
-            @RequestBody @ApiParam(value="회원수정 정보", required = true) Object updateInfo, HttpServletRequest request
+            @RequestBody @ApiParam(value="회원수정 정보", required = true) UserDto.UpdateRequest updateInfo, HttpServletRequest request
         ) throws IOException{
-        int userId = (Integer) request.getAttribute("userId");
-        // 닉네임이랑 비번만 바꾸기 가능요
-//        if (userService.isExistEmail(updateInfo.getEmail()))
-//            return ResponseEntity.status(409).build();
+        // int userId = (Integer) request.getAttribute("userId");
+        if(updateInfo.getOriginPassword() == null) return ResponseEntity.status(401).build();
+        if(updateInfo.getNickname() != null){
+            userService.updateNickname(updateInfo, request);
+        }
+        if(updateInfo.getNewPassword() != null){
+            userService.validatePassword(updateInfo.getNewPassword());
+            userService.updatePassword(updateInfo, request);
+        }
+        if(updateInfo.getNewPassword() == null & updateInfo.getNickname() == null)
+            throw new ApplicationException(HttpStatus.valueOf(401), "수정할 정보가 없습니다.");
 
         return ResponseEntity.status(200).build();
     }
@@ -78,9 +101,15 @@ public class UserController {
      */
     @DeleteMapping("")
     @ApiOperation(value="회원탈퇴", notes = "사용자가 자신의 정보를 삭제하고 탈퇴한다.")
-    public ResponseEntity delete() throws IOException{
-
-        return ResponseEntity.status(200).build();
+    public ResponseEntity delete(HttpServletRequest request) throws IOException{
+        int userId = (int) request.getAttribute("userId");
+        User user = userRepository.findById(userId).orElse(null);
+        if(user != null) {
+            userRepository.delete(user);
+            return ResponseEntity.status(200).build();
+        }else{
+            throw new ApplicationException(HttpStatus.valueOf(401), "삭제할 정보가 없습니다.");
+        }
     }
 
     /***
@@ -91,12 +120,23 @@ public class UserController {
      */
     @PostMapping("login")
     @ApiOperation(value="로그인", response =UserDto.Response.class)
-    public ResponseEntity<UserDto.Response> login(
+    public ResponseEntity login(
             @RequestBody  @ApiParam(value="로그인 정보", required = true) UserDto.LoginRequest loginInfo
             ) throws InterruptedException, IOException{
+        UserDto.LoginRes loginRes = userService.login(loginInfo);
+        Map<String, Object> map = jwtService.createToken(loginRes.getId());
+        System.out.println("map : "+ map.get(accessToken));
 
-        // 유저 서비스 로그인 로직
-        return ResponseEntity.status(200).build();
+        HttpHeaders resHeader = new HttpHeaders();
+
+        resHeader.set(accessToken, (String) map.get(accessToken));
+        System.out.println("resHeader : "+ resHeader.get(accessToken));
+        resHeader.set(refreshToken, (String) map.get(refreshToken));
+        System.out.println("resHeader : "+ resHeader.get(refreshToken));
+
+        //if(loginInfo.getFirebaseToken() != null) fcmService.save(myRes, myReq.getFirebaseToken());
+
+        return ResponseEntity.ok().headers(resHeader).body(loginRes);
     }
 
     /***
@@ -112,19 +152,21 @@ public class UserController {
             @RequestParam @ApiParam(value="닉네임 or 이메일", required = true) String type, @RequestParam @ApiParam(value="닉네임이나 이메일 정보", required = true) String data
             ) throws IOException{
         // type Email 중복검사
-        if (type == "email"){
+        System.out.println("중복검사 시작합니다... "+ type +" / "+ data);
+        if (type.equals("email")){
             if (userService.isExistEmail(data)) return new ResponseEntity(HttpStatus.valueOf(400));
             return new ResponseEntity(HttpStatus.valueOf(200));
        // type Nickname 중복검사
-        }else if(type == "nickname"){
+        }else if(type.equals("nickname")){
             if (userService.isExistNickname(data)) return new ResponseEntity(HttpStatus.valueOf(400));
             return new ResponseEntity(HttpStatus.valueOf(200));
-
-        }else return ResponseEntity.status(400).build();
+        }else 
+            System.out.println("수정할 정보를 입력하세요");
+            return ResponseEntity.status(400).build();
     }
 
     /***
-     *
+     *ㄴ
      * @return
      * @throws IOException
      */
@@ -133,8 +175,7 @@ public class UserController {
     public ResponseEntity checkEmail(
             @RequestBody @ApiParam(value="이메일", required = true) UserDto.TokenRequest tokenReq
             ) throws IOException{
-
-
+        userService.TokenGeneration(tokenReq.getId(), tokenReq.getEmail(), "");
         return ResponseEntity.status(200).build();
     }
 
