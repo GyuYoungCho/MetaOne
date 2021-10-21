@@ -1,6 +1,7 @@
 package com.metamong.server.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.metamong.server.entity.Characters;
 import lombok.*;
 import org.apache.ibatis.type.Alias;
 
@@ -120,6 +121,14 @@ public class UserDto {
         private String email;
         private String nickname;
         private String name;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class allCharactersResponse {
+        private List<Characters> list;
     }
 
     @Getter

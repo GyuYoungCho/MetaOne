@@ -13,5 +13,6 @@ public interface UserService {
     public void kakaoRegister(String email, String name);
     public UserDto.userInfoResponse getUserInfo(String nickname);
     public UserDto.characterResponse getCharacter(int userId);
+    public UserDto.allCharactersResponse getAllCharacter();
 
 }

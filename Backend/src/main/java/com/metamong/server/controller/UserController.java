@@ -232,9 +232,11 @@ public class UserController {
      */
     @GetMapping("characters")
     @ApiOperation(value="모든 캐릭터 조회")
-    public ResponseEntity allcharacters() throws IOException{
+    public ResponseEntity<UserDto.allCharactersResponse> allcharacters() throws IOException{
 
-        return ResponseEntity.status(200).build();
+        UserDto.allCharactersResponse res = userService.getAllCharacter();
+
+        return ResponseEntity.ok().body(res);
     }
 }
 

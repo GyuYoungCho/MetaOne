@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -121,6 +122,14 @@ public class UserServiceImpl implements UserService{
             res.setFileUrl(characters.getFileUrl());
             res.setName(characters.getName());
         }
+
+        return res;
+    }
+
+    @Override
+    public UserDto.allCharactersResponse getAllCharacter() {
+        UserDto.allCharactersResponse res = new UserDto.allCharactersResponse();
+        res.setList(charactersRepository.findAll());
 
         return res;
     }
