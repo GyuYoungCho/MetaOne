@@ -2,7 +2,9 @@ package com.metamong.server.service;
 
 import com.metamong.server.dto.UserDto;
 import com.metamong.server.dto.encode.Encoder;
+import com.metamong.server.entity.Characters;
 import com.metamong.server.entity.User;
+import com.metamong.server.repository.CharactersRepository;
 import com.metamong.server.exception.ApplicationException;
 import com.metamong.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Optional;
@@ -22,6 +25,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CharactersRepository charactersRepository;
 
     private final String ENCODE_ID = "bcrypt";
     private static final Map<String, PasswordEncoder> encoders = Encoder.getEncoder();      // 인코더 : 여러 타입의 암호화 방식을 저장
@@ -70,10 +76,87 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public UserDto.Response login(String email) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        UserDto.Response res = new UserDto.Response();
+
+        if(user!=null) {
+            res.setId(user.getId());
+            res.setEmail(user.getEmail());
+            res.setNickname(user.getNickname());
+        }
+
+        return res;
+    }
+
+    @Override
+    public void kakaoRegister(String email, String name){
+        User user = new User();
+
+        user.setEmail(email);
+        user.setName(name);
+        user.setPassword("0");  // 비밀번호 사용X
+        userRepository.save(user);
+
+        // Auto increment Id 값 가져와서 닉네임 초기설정해줌
+        user.setNickname("회원"+userRepository.findByEmail(email).get().getId());
+        userRepository.save(user);
+    }
+
+    @Override
     public String TokenGeneration(int userId, String receiverEmail, String url) {
 
         return null;
     }
+
+    @Override
+    public UserDto.userInfoResponse getUserInfo(String nickname) {
+        User user = userRepository.findByNickname(nickname).orElse(null);
+        UserDto.userInfoResponse res = new UserDto.userInfoResponse();
+
+        if(user!=null) {
+            res.setName(user.getName());
+            res.setEmail(user.getEmail());
+            res.setNickname(user.getNickname());
+        }
+
+        return res;
+    }
+
+    @Override
+    public void setCharacter(int userId, int character) {
+        // token에 저장된 id
+        User user = userRepository.findById(userId).orElse(null);
+        Characters characters = charactersRepository.findById(character).orElse(null);
+
+        user.setCharacter(characters);
+        userRepository.save(user);
+    }
+
+    @Override
+    public UserDto.characterResponse getCharacter(int userId) {
+        // token에 저장된 id
+        User user = userRepository.findById(userId).orElse(null);
+        Characters characters = charactersRepository.findById(user.getCharacter().getId()).orElse(null);
+
+        UserDto.characterResponse res = new UserDto.characterResponse();
+
+        if(characters!=null) {
+            res.setFileUrl(characters.getFileUrl());
+            res.setName(characters.getName());
+        }
+
+        return res;
+    }
+
+    @Override
+    public UserDto.allCharactersResponse getAllCharacter() {
+        UserDto.allCharactersResponse res = new UserDto.allCharactersResponse();
+        res.setList(charactersRepository.findAll());
+
+        return res;
+    }
+
     public void validatePassword( String password){
         String pattern = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d$@$!%*#?&]{8,}$";
         if(!password.matches(pattern)) throw new ApplicationException(HttpStatus.valueOf(400), "비밀번호 형식 오류");
@@ -109,4 +192,5 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findById(id)
                                 .orElseThrow(IllegalArgumentException::new);
         if(user != null) userRepository.delete(user);
-}   }
+    }
+}
