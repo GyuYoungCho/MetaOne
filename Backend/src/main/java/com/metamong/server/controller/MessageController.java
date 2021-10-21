@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -59,16 +60,16 @@ public class MessageController {
 	
 	@PostMapping("/private")
 	@ApiOperation(value = "개인 쪽지를 발신한다.")
-	public ResponseEntity<String> sendOne(@RequestBody MessageDto.RegisterRequest messageForm, HttpServletRequest request) throws IOException {
+	public ResponseEntity<String> sendOne(@RequestBody @Valid MessageDto.MRegisterRequest messageForm, HttpServletRequest request) throws IOException {
 		
 		Optional<User> recv_user = userRepository.findByNickname(messageForm.getNickname());
 		// int userId = (int) request.getAttribute("userId");
 		int userId = 1;
 		Optional<User> send_user = userRepository.findById(userId);
-		
+		System.out.println(recv_user.get().getEmail());
 		if(!send_user.isPresent() || !recv_user.isPresent())
 			return ResponseEntity.noContent().build();
-		
+		System.out.println("hi");
 		messageService.registerMessage(messageForm,recv_user.get(),send_user.get());
 		return ResponseEntity.status(201).build();
 	}

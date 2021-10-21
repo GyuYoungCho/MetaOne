@@ -13,25 +13,21 @@ import org.springframework.transaction.annotation.Transactional;
 import com.metamong.server.dto.MessageDto;
 import com.metamong.server.dto.MessageDto.MyMessageResponse;
 import com.metamong.server.dto.MessageDto.OneMessageResponse;
-import com.metamong.server.dto.MessageDto.ResponseList;
 import com.metamong.server.entity.Message;
 import com.metamong.server.entity.User;
-import com.metamong.server.repository.FirebaseTokenRepository;
 import com.metamong.server.repository.MessageRepository;
-import com.metamong.server.repository.UserRepository;
+
 
 @Service
 @Transactional
 public class MessageServiceImpl implements MessageService {
-	@Autowired
-	private UserRepository userRepository;
+
 	@Autowired
 	private MessageRepository messageRepository;
-	@Autowired
-	private FirebaseTokenRepository firebaseTokenRepository;
+	
 	
 	@Override
-	public void registerMessage(MessageDto.RegisterRequest messageForm, User sent_user, User recv_user) {
+	public void registerMessage(MessageDto.MRegisterRequest messageForm, User sent_user, User recv_user) {
 		
 		Message message = new Message(sent_user,recv_user,messageForm.getTitle(),
 					messageForm.getContent(),new Date(),0);

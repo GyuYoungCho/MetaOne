@@ -3,7 +3,6 @@ package com.metamong.server.dto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.apache.ibatis.type.Alias;
-import org.hibernate.validator.constraints.Length;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -34,9 +33,10 @@ public class MessageDto {
     
     @Getter
     @Setter
+    @Builder
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class RegisterRequest{
+    public static class MRegisterRequest{
     	
     	private String nickname;
     	private String title;
