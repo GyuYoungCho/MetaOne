@@ -39,11 +39,11 @@
 -----
 <br>
 
-### Mysql
-port: 3306
-user: root
-pw : 12345
+### Mysql  
+port: 3306  
+user: root  
+pw : 12345  
 
-### Redis
-port: 6379
+### Redis  
+port: 6379  
 
