@@ -279,7 +279,7 @@ public class UserController {
         // token에 저장되어 있는 userId를 service로 보내줌
         UserDto.characterResponse res = userService.getCharacter(userId);
 
-        return ResponseEntity.status(200).build();
+        return ResponseEntity.ok().body(res);
     }
 
     /***
