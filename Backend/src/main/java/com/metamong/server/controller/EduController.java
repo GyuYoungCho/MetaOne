@@ -61,9 +61,11 @@ public class EduController {
     @GetMapping("/attendance/{education}")
     @ApiOperation(value = "특정 교육 수강 여부 조회")
     public ResponseEntity getAttendance(@PathVariable("education") String education, HttpServletRequest request){
+        int userId = 1;
+        // int userId = request.getAttribute("userId");
 
-        Map<String, Boolean> map = new HashMap<>();
-        map.put("educated", true);
+        Map<String, Boolean> map = attendanceService.isAttended(education, userId);
+
         return ResponseEntity.ok().body(map);
     }
 
