@@ -35,3 +35,15 @@
 | CSS 등 사용자 UI 디자인 변경	| 🎨 `:art:`	| design:|
 | 필요한 주석 추가 및 변경 | 💡 `:bulb:` | comment: |
 | 충돌 해결 | :wrench: `:wrench:` | conflict: |
+
+-----
+<br>
+
+### Mysql
+port: 3306
+user: root
+pw : 12345
+
+### Redis
+port: 6379
+
