@@ -1,8 +1,7 @@
 package com.metamong.server.entity;
 
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,6 +9,9 @@ import java.util.Date;
 @Entity
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Certificate extends BaseEntity{
 
     @ManyToOne
@@ -25,9 +27,9 @@ public class Certificate extends BaseEntity{
     private Integer passTime;
 
     @Column(name="is_educated", columnDefinition = "TINYINT", length=4)
-    private int isEducated;
+    private boolean isEducated;
 
     @Column(name="is_authenticated", columnDefinition = "TINYINT", length=4)
-    private int isAuthenticated;
+    private boolean isAuthenticated;
 
 }

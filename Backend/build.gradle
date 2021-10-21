@@ -130,13 +130,17 @@ dependencies {
     implementation("org.projectlombok:lombok:1.18.20")
     annotationProcessor("org.projectlombok:lombok:1.18.20")
 
+    // JWT
     implementation 'javax.xml.bind:jaxb-api'
     implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.2'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
-    
+
     // Firebase 관련 의존성 추가
     implementation group: 'com.google.firebase', name: 'firebase-admin', version: '6.8.1'
+
+    // Redis
+    compile 'org.springframework.boot:spring-boot-starter-data-redis:2.3.1.RELEASE'
 }
 
 //querydsl 적용

@@ -44,7 +44,6 @@ public class User extends BaseEntity {
     @OneToOne(mappedBy = "user")
     private Characters character;
 
-
 //    @OneToMany(mappedBy = "user")
 //    private List<Message> messages = new ArrayList<>();
 
