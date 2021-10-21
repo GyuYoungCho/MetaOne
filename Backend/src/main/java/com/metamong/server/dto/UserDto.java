@@ -122,4 +122,13 @@ public class UserDto {
         private String name;
     }
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class characterResponse{
+        private String fileUrl;
+        private String name;
+    }
+
 }

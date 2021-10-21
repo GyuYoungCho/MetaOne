@@ -44,14 +44,9 @@ public class User extends BaseEntity {
         super();
     }
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne
+    @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Characters character;
-
-    @OneToMany(mappedBy = "user")
-    private List<Certificate> certificates = new ArrayList<>();
-
-//    @OneToMany(mappedBy = "user")
-//    private List<Message> messages = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<GuestBook> guestBooks = new ArrayList<>();

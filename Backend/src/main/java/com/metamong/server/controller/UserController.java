@@ -216,7 +216,11 @@ public class UserController {
      */
     @GetMapping("character")
     @ApiOperation(value="현재 사용자 캐릭터 조회")
-    public ResponseEntity character() throws IOException{
+    public ResponseEntity character(HttpServletRequest request) throws IOException{
+
+        int userId = (Integer) request.getAttribute("userId");
+        // token에 저장되어 있는 userId를 service로 보내줌
+        UserDto.characterResponse res = userService.getCharacter(userId);
 
         return ResponseEntity.status(200).build();
     }

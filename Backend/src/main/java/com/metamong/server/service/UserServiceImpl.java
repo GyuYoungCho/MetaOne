@@ -2,7 +2,9 @@ package com.metamong.server.service;
 
 import com.metamong.server.dto.UserDto;
 import com.metamong.server.dto.encode.Encoder;
+import com.metamong.server.entity.Characters;
 import com.metamong.server.entity.User;
+import com.metamong.server.repository.CharactersRepository;
 import com.metamong.server.repository.UserRepository;
 import org.omg.CORBA.portable.ApplicationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +23,9 @@ public class UserServiceImpl implements UserService{
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private CharactersRepository charactersRepository;
 
     private final String ENCODE_ID = "bcrypt";
     private static final Map<String, PasswordEncoder> encoders = Encoder.getEncoder();      // 인코더 : 여러 타입의 암호화 방식을 저장
@@ -103,4 +108,20 @@ public class UserServiceImpl implements UserService{
         return res;
     }
 
+
+    @Override
+    public UserDto.characterResponse getCharacter(int userId) {
+        // token에 저장된 id
+        User user = userRepository.findById(userId).orElse(null);
+        Characters characters = charactersRepository.findById(user.getCharacter().getId()).orElse(null);
+
+        UserDto.characterResponse res = new UserDto.characterResponse();
+
+        if(characters!=null) {
+            res.setFileUrl(characters.getFileUrl());
+            res.setName(characters.getName());
+        }
+
+        return res;
+    }
 }
