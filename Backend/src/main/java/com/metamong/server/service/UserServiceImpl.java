@@ -109,6 +109,15 @@ public class UserServiceImpl implements UserService{
         return res;
     }
 
+    @Override
+    public void setCharacter(int userId, int character) {
+        // token에 저장된 id
+        User user = userRepository.findById(userId).orElse(null);
+        Characters characters = charactersRepository.findById(character).orElse(null);
+
+        user.setCharacter(characters);
+        userRepository.save(user);
+    }
 
     @Override
     public UserDto.characterResponse getCharacter(int userId) {

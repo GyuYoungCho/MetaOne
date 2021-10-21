@@ -196,15 +196,21 @@ public class UserController {
 
     /***
      *
-     * @param fileUrl : 캐릭터 file url
+     * @param characterId : 캐릭터 file url
      * @return
      * @throws IOException
      */
     @PutMapping("charater")
     @ApiOperation(value="사용자 캐릭터 선택")
+//    public ResponseEntity selectcharacter(
+//            @RequestBody @ApiParam(value = "캐릭터 file url", required = true) Object fileUrl
+//            ) throws IOException{
     public ResponseEntity selectcharacter(
-            @RequestBody @ApiParam(value = "캐릭터 file url", required = true) Object fileUrl
-            ) throws IOException{
+            @RequestBody @ApiParam(value = "캐릭터 Id", required = true) int characterId, HttpServletRequest request) throws IOException{
+
+        int userId = (Integer) request.getAttribute("userId");
+        // 선택한 characterId를 token에 저장되어 있는 userId와 함께 service로 보내줌
+        userService.setCharacter(userId, characterId);
 
         return ResponseEntity.status(200).build();
     }
