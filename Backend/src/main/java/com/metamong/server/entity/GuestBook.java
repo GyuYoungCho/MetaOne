@@ -25,8 +25,8 @@ public class GuestBook extends BaseEntity{
     private String content;
 
 
-    @OneToMany(mappedBy = "guestBook")
-    private List<User> users = new ArrayList<>();
+//    @OneToMany(mappedBy = "guestBook")
+//    private List<User> users = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "user_id")
