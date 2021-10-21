@@ -217,7 +217,17 @@ public class UserController {
         // 이메일 이미있으면 가입된 유저이므로 유저 정보 가져와서 넘겨줌
         UserDto.Response res = userService.login(email);
 
-        return ResponseEntity.ok().body(res);
+        Map<String, Object> map = jwtService.createToken(res.getId());
+        System.out.println("map : "+ map.get(accessToken));
+
+        HttpHeaders resHeader = new HttpHeaders();
+
+        resHeader.set(accessToken, (String) map.get(accessToken));
+        System.out.println("resHeader : "+ resHeader.get(accessToken));
+        resHeader.set(refreshToken, (String) map.get(refreshToken));
+        System.out.println("resHeader : "+ resHeader.get(refreshToken));
+
+        return ResponseEntity.ok().headers(resHeader).body(res);
     }
 
     /***
