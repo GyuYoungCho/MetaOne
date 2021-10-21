@@ -43,11 +43,15 @@ public class UserDto {
     @JsonIgnore
     private List<MessageDto> messageDto;
 
+    @Getter
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Response{
-        private UserDto data;
+//        private UserDto data;
+        private Integer id;
+        private String email;
+        private String nickname;
     }
 
     @Getter

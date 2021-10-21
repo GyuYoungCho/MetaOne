@@ -56,6 +56,34 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public UserDto.Response login(String email) {
+        User user = userRepository.findByEmail(email).orElse(null);
+        UserDto.Response res = new UserDto.Response();
+
+        if(user!=null) {
+            res.setId(user.getId());
+            res.setEmail(user.getEmail());
+            res.setNickname(user.getNickname());
+        }
+
+        return res;
+    }
+
+    @Override
+    public void kakaoRegister(String email, String name){
+        User user = new User();
+
+        user.setEmail(email);
+        user.setName(name);
+        user.setPassword("0");  // 비밀번호 사용X
+        userRepository.save(user);
+
+        // Auto increment Id 값 가져와서 닉네임 초기설정해줌
+        user.setNickname("회원"+userRepository.findByEmail(email).get().getId());
+        userRepository.save(user);
+    }
+
+    @Override
     public String TokenGeneration(int userId, String receiverEmail, String url) {
 
         return null;

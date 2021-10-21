@@ -160,11 +160,23 @@ public class UserController {
      */
     @PostMapping("login-kakao")
     @ApiOperation(value="카카오톡 로그인")
-    public ResponseEntity loginkakao(@RequestBody Map<String, String> payload) throws IOException{
+    public ResponseEntity<UserDto.Response> loginkakao(@RequestBody Map<String, String> payload) throws IOException{
 
         System.out.println("email >>>> " + payload.get("email"));
         System.out.println("name >>>> " + payload.get("name"));
-        return ResponseEntity.status(200).build();
+
+        String email = payload.get("email");
+        String name = payload.get("name");
+
+        if(!userService.isExistEmail(email)) {
+            // 이메일 없으면 최초 로그인이므로 회원 정보 DB에 등록
+            userService.kakaoRegister(email, name);
+        }
+
+        // 이메일 이미있으면 가입된 유저이므로 유저 정보 가져와서 넘겨줌
+        UserDto.Response res = userService.login(email);
+
+        return ResponseEntity.ok().body(res);
     }
 
     /***
