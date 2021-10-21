@@ -3,12 +3,9 @@ package com.metamong.server.service;
 import com.metamong.server.dto.GuestBookDto;
 import com.metamong.server.entity.GuestBook;
 import com.metamong.server.entity.User;
-import com.metamong.server.exception.ApplicationException;
 import com.metamong.server.repository.GuestBookRepository;
 import com.metamong.server.repository.UserRepository;
-import javafx.application.Application;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
