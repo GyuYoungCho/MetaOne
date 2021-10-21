@@ -41,7 +41,8 @@ public class User extends BaseEntity {
         super();
     }
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne
+    @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Characters character;
 
 //    @OneToMany(mappedBy = "user")

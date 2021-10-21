@@ -236,11 +236,33 @@ public class UserController {
      */
     @PostMapping("login-kakao")
     @ApiOperation(value="카카오톡 로그인")
-    public ResponseEntity loginkakao(@RequestBody Map<String, String> payload) throws IOException{
+    public ResponseEntity<UserDto.Response> loginkakao(@RequestBody Map<String, String> payload) throws IOException{
 
         System.out.println("email >>>> " + payload.get("email"));
         System.out.println("name >>>> " + payload.get("name"));
-        return ResponseEntity.status(200).build();
+
+        String email = payload.get("email");
+        String name = payload.get("name");
+
+        if(!userService.isExistEmail(email)) {
+            // 이메일 없으면 최초 로그인이므로 회원 정보 DB에 등록
+            userService.kakaoRegister(email, name);
+        }
+
+        // 이메일 이미있으면 가입된 유저이므로 유저 정보 가져와서 넘겨줌
+        UserDto.Response res = userService.login(email);
+
+        Map<String, Object> map = jwtService.createToken(res.getId());
+        System.out.println("map : "+ map.get(accessToken));
+
+        HttpHeaders resHeader = new HttpHeaders();
+
+        resHeader.set(accessToken, (String) map.get(accessToken));
+        System.out.println("resHeader : "+ resHeader.get(accessToken));
+        resHeader.set(refreshToken, (String) map.get(refreshToken));
+        System.out.println("resHeader : "+ resHeader.get(refreshToken));
+
+        return ResponseEntity.ok().headers(resHeader).body(res);
     }
 
     /***
@@ -251,22 +273,30 @@ public class UserController {
      */
     @GetMapping("{nickname}")
     @ApiOperation(value="다른 사용자의 정보 조회")
-    public ResponseEntity userinfo( @PathVariable String nickname) throws IOException{
+    public ResponseEntity<UserDto.userInfoResponse> userinfo( @PathVariable String nickname) throws IOException{
 
-        return ResponseEntity.status(200).build();
+        UserDto.userInfoResponse res = userService.getUserInfo(nickname);
+
+        return ResponseEntity.ok().body(res);
     }
 
     /***
      *
-     * @param fileUrl : 캐릭터 file url
+     * @param characterId : 캐릭터 file url
      * @return
      * @throws IOException
      */
-    @PutMapping("charater")
+    @PutMapping("character")
     @ApiOperation(value="사용자 캐릭터 선택")
+//    public ResponseEntity selectcharacter(
+//            @RequestBody @ApiParam(value = "캐릭터 file url", required = true) Object fileUrl
+//            ) throws IOException{
     public ResponseEntity selectcharacter(
-            @RequestBody @ApiParam(value = "캐릭터 file url", required = true) Object fileUrl
-            ) throws IOException{
+            @RequestBody @ApiParam(value = "캐릭터 Id", required = true) int characterId, HttpServletRequest request) throws IOException{
+
+        int userId = (Integer) request.getAttribute("userId");
+        // 선택한 characterId를 token에 저장되어 있는 userId와 함께 service로 보내줌
+        userService.setCharacter(userId, characterId);
 
         return ResponseEntity.status(200).build();
     }
@@ -278,9 +308,13 @@ public class UserController {
      */
     @GetMapping("character")
     @ApiOperation(value="현재 사용자 캐릭터 조회")
-    public ResponseEntity character() throws IOException{
+    public ResponseEntity character(HttpServletRequest request) throws IOException{
 
-        return ResponseEntity.status(200).build();
+        int userId = (Integer) request.getAttribute("userId");
+        // token에 저장되어 있는 userId를 service로 보내줌
+        UserDto.characterResponse res = userService.getCharacter(userId);
+
+        return ResponseEntity.ok().body(res);
     }
 
     /***
@@ -290,9 +324,11 @@ public class UserController {
      */
     @GetMapping("characters")
     @ApiOperation(value="모든 캐릭터 조회")
-    public ResponseEntity allcharacters() throws IOException{
+    public ResponseEntity<UserDto.allCharactersResponse> allcharacters() throws IOException{
 
-        return ResponseEntity.status(200).build();
+        UserDto.allCharactersResponse res = userService.getAllCharacter();
+
+        return ResponseEntity.ok().body(res);
     }
 }
 

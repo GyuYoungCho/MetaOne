@@ -25,6 +25,8 @@ public class WebConfiguration implements WebMvcConfigurer {
                 .addPathPatterns("/api/**")
                 .excludePathPatterns("/api/users/login")
                 .excludePathPatterns("/api/users")
-                .excludePathPatterns("/api/users/duplicate");
+                .excludePathPatterns("/api/users/duplicate")
+                .excludePathPatterns("/api/users/duplicate")
+                .excludePathPatterns("/api/users/login-kakao");
     }
 }
