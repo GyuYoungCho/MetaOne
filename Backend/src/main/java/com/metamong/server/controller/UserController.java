@@ -1,10 +1,14 @@
 package com.metamong.server.controller;
 
 
+import ch.qos.logback.core.net.SyslogOutputStream;
+import com.metamong.server.config.RedisUtil;
+import com.metamong.server.dto.EmailDto;
 import com.metamong.server.dto.UserDto;
 import com.metamong.server.entity.User;
 import com.metamong.server.exception.ApplicationException;
 import com.metamong.server.repository.UserRepository;
+import com.metamong.server.service.EmailSenderService;
 import com.metamong.server.service.JwtService;
 import com.metamong.server.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -32,6 +36,12 @@ public class UserController {
 
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private EmailSenderService emailSenderService;
+
+    @Autowired
+    private RedisUtil redisUtil;
 
     @Autowired
     private JwtService jwtService;
@@ -166,18 +176,43 @@ public class UserController {
     }
 
     /***
-     *ㄴ
+     *
      * @return
      * @throws IOException
      */
     @PostMapping("email")
     @ApiOperation(value="이메일 인증")
     public ResponseEntity checkEmail(
-            @RequestBody @ApiParam(value="이메일", required = true) UserDto.TokenRequest tokenReq
+            @RequestBody @ApiParam(value="이메일", required = true) UserDto.EmailRequest emailReq
             ) throws IOException{
-        userService.TokenGeneration(tokenReq.getId(), tokenReq.getEmail(), "");
+        System.out.println("----이메일 인증-----");
+        EmailDto emailDto = new EmailDto();
+        emailDto.setCode(emailSenderService.createKey());
+        emailDto.setToEmail(emailReq.getEmail());
+        emailDto.setTitle("메타몽 서비스 인증메일입니다.");
+        emailDto.setValidTime(30 * 60 * 1000L);
+
+        emailSenderService.sendEmail(emailDto);
+        System.out.println("----이메일 인증 보냄----");
         return ResponseEntity.status(200).build();
     }
+
+    @PostMapping("email-check")
+    @ApiOperation(value="이메일 인증 확인")
+    public boolean checkEmailConfirm(
+            @RequestBody @ApiParam(value="이메일 인증 확인", required = true) UserDto.EmailResponse emailRes
+    ) throws IOException{
+
+        String email = redisUtil.getData(emailRes.getCode());
+        if (email == null) { // email이 존재하지 않으면, 유효 기간 만료이거나 코드 잘못 입력
+            throw new ApplicationException(HttpStatus.valueOf(401), "이메일 인증이 만료되었거나, 코드가 맞지 앉습니다.ㄴ");
+        }
+        if (email.equals(emailRes.getEmail())) return true;
+
+        return false;
+    }
+
+
 
     /***
      *

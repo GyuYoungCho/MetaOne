@@ -111,9 +111,16 @@ public class UserDto {
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class TokenRequest {                // 요청
-        private Integer id;
+    public static class EmailRequest {
         private String email;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class EmailResponse {
+        private String email;
+        private String code;
     }
 
     @Setter
