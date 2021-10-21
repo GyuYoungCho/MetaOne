@@ -17,13 +17,33 @@ import java.util.List;
 @Alias("Education")
 public class EducationDto {
     private Integer id;
-    private Date duration;
+    private Integer duration;
     private String education;
 
     @JsonIgnore
     private List<CertificateDto> certificateDto;
     @JsonIgnore
     private List<MissionDto> missionDto;
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class EduRequest{
+        private String education;
+        private Integer passTime;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class EduResponse{
+        private String nickname;
+        private String education;
+        private Date createAt;
+    }
+
 
     @Setter
     @AllArgsConstructor

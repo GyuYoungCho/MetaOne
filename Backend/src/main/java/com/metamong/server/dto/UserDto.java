@@ -1,6 +1,7 @@
 package com.metamong.server.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.metamong.server.entity.Characters;
 import lombok.*;
 import org.apache.ibatis.type.Alias;
 
@@ -43,11 +44,15 @@ public class UserDto {
     @JsonIgnore
     private List<MessageDto> messageDto;
 
+    @Getter
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Response{
-        private UserDto data;
+//        private UserDto data;
+        private Integer id;
+        private String email;
+        private String nickname;
     }
 
     @Getter
@@ -111,9 +116,16 @@ public class UserDto {
     @Getter
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class TokenRequest {                // 요청
-        private Integer id;
+    public static class EmailRequest {
         private String email;
+    }
+
+    @Getter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class EmailResponse {
+        private String email;
+        private String code;
     }
 
     @Setter
@@ -121,6 +133,33 @@ public class UserDto {
     @NoArgsConstructor
     public static class ResponseList{
         private List<UserDto> data;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class userInfoResponse {
+        private String email;
+        private String nickname;
+        private String name;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class allCharactersResponse {
+        private List<Characters> list;
+    }
+
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class characterResponse{
+        private String fileUrl;
+        private String name;
     }
 
 }

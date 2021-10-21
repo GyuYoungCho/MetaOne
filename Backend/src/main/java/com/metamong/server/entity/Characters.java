@@ -16,7 +16,4 @@ public class Characters extends BaseEntity{
 
     private String name;
 
-    @OneToOne
-    @JoinColumn(name = "id")
-    private User user;
 }
