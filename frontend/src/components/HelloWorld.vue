@@ -83,6 +83,7 @@
         >
       </li>
     </ul>
+    <button @click="testAPI()">카카오 test</button>
   </div>
 </template>
 
@@ -92,6 +93,14 @@ export default {
   props: {
     msg: String,
   },
+  methods: {
+      testAPI() {
+        window.Kakao.Auth.authorize({
+          redirectUri: 'http://localhost:8081/auth'
+        })
+        
+      },
+    }
 };
 </script>
 
