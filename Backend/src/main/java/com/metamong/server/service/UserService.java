@@ -10,5 +10,6 @@ public interface UserService {
     public UserDto.Response login(String email);
     public String TokenGeneration(int userId, String receiverEmail, String url);
     public void kakaoRegister(String email, String name);
+    public UserDto.userInfoResponse getUserInfo(String nickname);
 
 }

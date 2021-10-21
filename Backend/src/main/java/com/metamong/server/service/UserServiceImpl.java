@@ -88,4 +88,19 @@ public class UserServiceImpl implements UserService{
 
         return null;
     }
+
+    @Override
+    public UserDto.userInfoResponse getUserInfo(String nickname) {
+        User user = userRepository.findByNickname(nickname).orElse(null);
+        UserDto.userInfoResponse res = new UserDto.userInfoResponse();
+
+        if(user!=null) {
+            res.setName(user.getName());
+            res.setEmail(user.getEmail());
+            res.setNickname(user.getNickname());
+        }
+
+        return res;
+    }
+
 }

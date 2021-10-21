@@ -112,4 +112,14 @@ public class UserDto {
         private List<UserDto> data;
     }
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class userInfoResponse {
+        private String email;
+        private String nickname;
+        private String name;
+    }
+
 }

@@ -187,9 +187,11 @@ public class UserController {
      */
     @GetMapping("{nickname}")
     @ApiOperation(value="다른 사용자의 정보 조회")
-    public ResponseEntity userinfo( @PathVariable String nickname) throws IOException{
+    public ResponseEntity<UserDto.userInfoResponse> userinfo( @PathVariable String nickname) throws IOException{
 
-        return ResponseEntity.status(200).build();
+        UserDto.userInfoResponse res = userService.getUserInfo(nickname);
+
+        return ResponseEntity.ok().body(res);
     }
 
     /***
