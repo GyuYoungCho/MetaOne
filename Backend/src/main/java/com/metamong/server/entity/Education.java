@@ -7,7 +7,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,7 +14,7 @@ import java.util.List;
 @Setter
 public class Education extends BaseEntity {
 
-    private Date duration;
+    private Integer duration;
 
     @Column(unique=true)
     private String education;

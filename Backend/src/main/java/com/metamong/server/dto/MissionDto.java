@@ -23,6 +23,16 @@ public class MissionDto {
     @JsonIgnore
     private EducationDto educationDto;
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class RankRequest{
+        private String nickname;
+        private String education;
+        private Integer passTime;
+    }
+
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor

@@ -1,14 +1,14 @@
 package com.metamong.server.controller;
 
-import com.metamong.server.dto.EducationDto;
-import com.metamong.server.dto.MyAttendDto;
+import com.metamong.server.dto.*;
 import com.metamong.server.service.AttendanceService;
+import com.metamong.server.service.CertificateService;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -21,6 +21,9 @@ public class EduController {
     public EduController(AttendanceService attendance){
         this.attendanceService = attendance;
     };
+
+    @Autowired
+    private CertificateService certificateService;
 
     /**
      * 교육 내역 조회
@@ -77,33 +80,45 @@ public class EduController {
      */
     @GetMapping("/certificate")
     @ApiOperation(value = "교육 증명서 조회")
-    public ResponseEntity getCertificate(@PathVariable("education") String education, HttpServletRequest request){
+    public ResponseEntity<EducationDto.EduResponse> getCertificate(@RequestParam String education, HttpServletRequest request){
 
-        return ResponseEntity.ok().build();
+        int userId = (Integer) request.getAttribute("userId");
+
+        EducationDto.EduResponse eduResponse = certificateService.getCertificate(education, userId);
+
+        return ResponseEntity.ok().body(eduResponse);
     }
 
     /**
      *
-     * @param edu : 교육명, 통과시간
+     * @param eduReq : 교육명, 통과시간
      * @param request : Client 요청 정보
      * @return
      */
     @PostMapping("/certificate")
     @ApiOperation(value = "교육 증명서 신청")
-    public ResponseEntity registerCertificate(@RequestBody Object edu, HttpServletRequest request){
+    public ResponseEntity registerCertificate(@RequestBody EducationDto.EduRequest eduReq, HttpServletRequest request){
+
+        int userId = (Integer) request.getAttribute("userId");
+
+        certificateService.registerCertificate(eduReq, userId);
 
         return ResponseEntity.status(201).build();
     }
 
     /**
      *
-     * @param edu : 교육명, 통과시간
+     * @param eduReq : 교육명, 통과시간
      * @param request : Client 요청 정보
      * @return
      */
     @PutMapping("/certificate")
     @ApiOperation(value = "교육 증명서 수정")
-    public ResponseEntity updateCertificate(@RequestBody Object edu, HttpServletRequest request){
+    public ResponseEntity updateCertificate(@RequestBody EducationDto.EduRequest eduReq, HttpServletRequest request){
+
+        int userId = (Integer) request.getAttribute("userId");
+
+        certificateService.updateCertificate(eduReq, userId);
 
         return ResponseEntity.status(200).build();
     }
@@ -111,25 +126,30 @@ public class EduController {
     /**
      *
      * @param education : 교육 명
-     * @param request : Client 요청 정보
      * @return
      */
     @GetMapping("/rank")
     @ApiOperation(value = "유저 랭킹(미션 기록) 조회")
-    public ResponseEntity getRank(@RequestParam String education, HttpServletRequest request){
+    public ResponseEntity<RankDto.ResponseList> getRank(@RequestParam String education){
 
-        return ResponseEntity.ok().build();
+        RankDto.ResponseList responseList = certificateService.getRank(education);
+
+        return ResponseEntity.ok().body(responseList);
     }
 
     /**
      *
-     * @param rank : 닉네임, 교육명, 등록 시각
+     * @param rankReq : 닉네임, 교육명, 등록 시각
      * @param request : Client 요청 정보
      * @return
      */
     @PostMapping("/rank")
     @ApiOperation(value = "미션 기록 저장")
-    public ResponseEntity registerRank(@RequestBody Object rank, HttpServletRequest request){
+    public ResponseEntity registerRank(@RequestBody MissionDto.RankRequest rankReq, HttpServletRequest request){
+
+        int userId = (Integer) request.getAttribute("userId");
+
+        certificateService.registerRank(rankReq, userId);
 
         return ResponseEntity.status(201).build();
     }
