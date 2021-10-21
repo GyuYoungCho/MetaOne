@@ -1,5 +1,6 @@
 # Metamong Mysql v8.0.25
 
+-- DROP SCHEMA metamong;
 CREATE SCHEMA if not exists metamong;
  
 USE metamong;
@@ -39,6 +40,7 @@ CREATE TABLE if NOT EXISTS Message(
 id INT PRIMARY KEY AUTO_INCREMENT,
 sent_user_id INT,
 recv_user_id INT,
+title VARCHAR(100) DEFAULT NULL,
 content VARCHAR(500) DEFAULT NULL,
 create_at TIMESTAMP DEFAULT NULL,
 is_read TINYINT DEFAULT 0,
