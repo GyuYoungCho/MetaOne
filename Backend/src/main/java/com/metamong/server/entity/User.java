@@ -30,9 +30,6 @@ public class User extends BaseEntity {
     @Column(name="state", columnDefinition = "TINYINT", length=4)
     private int state;
 
-    @OneToMany(mappedBy = "user")
-    private List<Certificate> certificates = new ArrayList<>();
-
     public User(String email, String password, String name, String nickname) {
         this.email = email;
         this.password = password;
