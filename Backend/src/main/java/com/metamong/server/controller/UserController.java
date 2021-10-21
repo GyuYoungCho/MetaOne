@@ -251,7 +251,7 @@ public class UserController {
      * @return
      * @throws IOException
      */
-    @PutMapping("charater")
+    @PutMapping("character")
     @ApiOperation(value="사용자 캐릭터 선택")
 //    public ResponseEntity selectcharacter(
 //            @RequestBody @ApiParam(value = "캐릭터 file url", required = true) Object fileUrl
