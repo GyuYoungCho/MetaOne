@@ -4,13 +4,12 @@
   </div>
 </template>
 
+
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  font-family: "Noto Sans KR", sans-serif;
+  margin-top: 0px;
+  background-color: rgba(154, 69, 235, 0.8);
+  height: 1080px;
 }
 </style>
