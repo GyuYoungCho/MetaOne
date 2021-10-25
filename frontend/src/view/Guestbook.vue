@@ -1,14 +1,13 @@
 <template>
   <div>
-    <div>
-      <section class="guestbook">
-      <h4>방명록</h4>
-      
-      <!-- <v-list class="user-potlist mt-5 px-0" color="#EBF4ED">
-        
-      </v-list> -->
-      </section>
-    </div>
+    <section class="guestbookList">
+      <div class="sketch">
+        <img src="@/assets/image/sketch.png" alt="">
+        <div class="writer justify-content-center">
+          <h4>방명록</h4>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 

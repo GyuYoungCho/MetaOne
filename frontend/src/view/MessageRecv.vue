@@ -1,10 +1,9 @@
 <template>
   <div>
-    <section class="educateList">
-      <div class="m-contain">
-        <div >
-            <h2>gg</h2>
-        </div>
+    <section class="messageList">
+      <div class="m-container">
+        <h4>gi</h4>
+        
       </div>
     </section>
   </div>

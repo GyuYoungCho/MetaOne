@@ -3,7 +3,11 @@ import VueRouter from "vue-router";
 import Auth from "@/components/Auth.vue";
 import Login from "@/view/Login.vue";
 import Join from "@/view/Join.vue";
-import FindPw from "@/view/FindPw.vue";
+import EducateList from "@/view/EducateList.vue";
+import Certificate from "@/view/Certificate.vue";
+import Guestbook from "@/view/Guestbook.vue";
+import MessageSend from "@/view/MessageSend.vue";
+import MessageRecv from "@/view/MessageRecv.vue";
 
 Vue.use(VueRouter);
 
@@ -29,21 +33,21 @@ const routes = [
   //   name: "Mypage",
   //   component: Mypage,
   // },
+  // {
+  //   path: "/find-pw",
+  //   name: "FindPw",
+  //   component: FindPw,
+  // },
   {
-    path: "/find-pw",
-    name: "FindPw",
-    component: FindPw,
+    path: "/educate-list",
+    name: "EducateList",
+    component: EducateList,
   },
-  // {
-  //   path: "/educate-list",
-  //   name: "EducateList",
-  //   component: EducateList,
-  // },
-  // {
-  //   path: "/certificate",
-  //   name: "Certificate",
-  //   component: Certificate,
-  // },
+  {
+    path: "/certificate",
+    name: "Certificate",
+    component: Certificate,
+  },
   // {
   //   path: "/character-select",
   //   name: "Character",
@@ -59,21 +63,21 @@ const routes = [
   //   name: "Room",
   //   component: Room,
   // },
-  // {
-  //   path: "/guestbook",
-  //   name: "Guestbook",
-  //   component: Guestbook,
-  // },
-  // {
-  //   path: "/message-send",
-  //   name: "MessageSend",
-  //   component: MessageSend,
-  // },
-  // {
-  //   path: "/message-recv",
-  //   name: "MessageRecv",
-  //   component: MessageRecv,
-  // },
+  {
+    path: "/guestbook",
+    name: "Guestbook",
+    component: Guestbook,
+  },
+  {
+    path: "/message-send",
+    name: "MessageSend",
+    component: MessageSend,
+  },
+  {
+    path: "/message-recv",
+    name: "MessageRecv",
+    component: MessageRecv,
+  },
   // {
   //   path: "/unity-map",
   //   name: "UnityMap",
