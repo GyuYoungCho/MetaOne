@@ -1,0 +1,12 @@
+.messageList {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 3%;
+
+  .m-container {
+    background-color: white;
+    width: 50%;
+    height: 45%;
+  }
+}
