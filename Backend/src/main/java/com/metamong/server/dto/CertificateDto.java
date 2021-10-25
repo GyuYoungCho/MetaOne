@@ -20,7 +20,7 @@ public class CertificateDto {
     private Integer userId;
     private Integer educationId;
     private Date createAt;
-    private Date passTime;
+    private Integer passTime;
     private boolean is_educated;
     private boolean is_authenticated;
 
