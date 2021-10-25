@@ -32,8 +32,8 @@ public class EduController {
     @GetMapping("/attendance")
     @ApiOperation(value = "나의 교육 내역 조회")
     public ResponseEntity<MyAttendDto.ResponseList> getMyAttendance(HttpServletRequest request){
-        int userId = 1;
-        // int userId = request.getAttribute("userId");
+
+        int userId = (Integer) request.getAttribute("userId");
 
         return ResponseEntity.ok().body(attendanceService.getMyAttendance(userId));
     }
@@ -47,8 +47,8 @@ public class EduController {
     @PostMapping("/attendance")
     @ApiOperation(value = "교육 수강 완료")
     public ResponseEntity registerAttendance(@RequestParam String education, HttpServletRequest request){
-        int userId = 1;
-        // int userId = request.getAttribute("userId");
+
+        int userId = (Integer) request.getAttribute("userId");
 
         attendanceService.registerAttendance(education, userId);
 
@@ -64,8 +64,8 @@ public class EduController {
     @GetMapping("/attendance/{education}")
     @ApiOperation(value = "특정 교육 수강 여부 조회")
     public ResponseEntity getAttendance(@PathVariable("education") String education, HttpServletRequest request){
-        int userId = 1;
-        // int userId = request.getAttribute("userId");
+
+        int userId = (Integer) request.getAttribute("userId");
 
         Map<String, Boolean> map = attendanceService.isAttended(education, userId);
 
@@ -95,25 +95,8 @@ public class EduController {
      * @param request : Client 요청 정보
      * @return
      */
-    @PostMapping("/certificate")
-    @ApiOperation(value = "교육 증명서 신청")
-    public ResponseEntity registerCertificate(@RequestBody EducationDto.EduRequest eduReq, HttpServletRequest request){
-
-        int userId = (Integer) request.getAttribute("userId");
-
-        certificateService.registerCertificate(eduReq, userId);
-
-        return ResponseEntity.status(201).build();
-    }
-
-    /**
-     *
-     * @param eduReq : 교육명, 통과시간
-     * @param request : Client 요청 정보
-     * @return
-     */
-    @PutMapping("/certificate")
-    @ApiOperation(value = "교육 증명서 수정")
+    @PutMapping("/rank")
+    @ApiOperation(value = "미션 기록 저장 및 수정")
     public ResponseEntity updateCertificate(@RequestBody EducationDto.EduRequest eduReq, HttpServletRequest request){
 
         int userId = (Integer) request.getAttribute("userId");
@@ -135,23 +118,6 @@ public class EduController {
         RankDto.ResponseList responseList = certificateService.getRank(education);
 
         return ResponseEntity.ok().body(responseList);
-    }
-
-    /**
-     *
-     * @param rankReq : 닉네임, 교육명, 등록 시각
-     * @param request : Client 요청 정보
-     * @return
-     */
-    @PostMapping("/rank")
-    @ApiOperation(value = "미션 기록 저장")
-    public ResponseEntity registerRank(@RequestBody MissionDto.RankRequest rankReq, HttpServletRequest request){
-
-        int userId = (Integer) request.getAttribute("userId");
-
-        certificateService.registerRank(rankReq, userId);
-
-        return ResponseEntity.status(201).build();
     }
 
 }
