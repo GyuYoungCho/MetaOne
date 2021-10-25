@@ -28,6 +28,7 @@ import com.metamong.server.entity.User;
 import com.metamong.server.repository.FirebaseTokenRepository;
 import com.metamong.server.repository.MessageRepository;
 import com.metamong.server.repository.UserRepository;
+import com.metamong.server.service.FirebaseInitService;
 import com.metamong.server.service.MessageService;
 
 
@@ -43,6 +44,7 @@ public class MessageController {
 	
 	@Autowired
 	private FirebaseTokenRepository firebaseTokenRepository;
+	
 	
 	@Autowired
     private MessageService messageService;
