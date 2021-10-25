@@ -53,7 +53,13 @@ public class CertificateServiceImpl implements CertificateService{
         Optional<Certificate> certificate = certificateRepository.findByEducationAndUserId(edu.get(), userId);
         if(!certificate.isPresent()) throw new ApplicationException(HttpStatus.valueOf(404), "There is no certification");
 
-        if(certificate.get().getPassTime() == null || eduReq.getPassTime() < certificate.get().getPassTime()){
+        if(certificate.get().getPassTime() == null){
+            if(eduReq.getPassTime() > edu.get().getDuration()) throw new ApplicationException(HttpStatus.valueOf(404), "TIME OUT");
+            certificate.get().setPassTime(eduReq.getPassTime());
+            certificateRepository.save(certificate.get());
+        }
+
+        else if(eduReq.getPassTime() < certificate.get().getPassTime()){
             certificate.get().setPassTime(eduReq.getPassTime());
             certificateRepository.save(certificate.get());
         }
