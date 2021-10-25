@@ -1,0 +1,13 @@
+.educateList {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 3%;
+
+  .m-contain {
+    position: relative;
+    background-color: white;
+    width: 50%;
+    height: 45%;
+  }
+}

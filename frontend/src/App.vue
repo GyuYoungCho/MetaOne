@@ -1,16 +1,22 @@
 <template>
   <div id="app">
+    <Menubar />
     <router-view/>
   </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+<script>
+import "./assets/css/index.scss"
+import Menubar from "@/components/Menubar"
+
+export default {
+  name: 'App',
+  components:{
+    Menubar
+  }
 }
+</script>
+
+<style>
+
 </style>
