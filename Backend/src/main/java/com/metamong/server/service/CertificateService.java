@@ -8,13 +8,9 @@ import org.springframework.http.ResponseEntity;
 
 public interface CertificateService {
 
-    public void registerRank(MissionDto.RankRequest rankReq, int userId);
-
-    public RankDto.ResponseList getRank(String education);
+    public EducationDto.EduResponse getCertificate(String education, int userId);
 
     public void updateCertificate(EducationDto.EduRequest eduReq, int userId);
 
-    public void registerCertificate(EducationDto.EduRequest eduReq, int userId);
-
-    public EducationDto.EduResponse getCertificate(String education, int userId);
+    public RankDto.ResponseList getRank(String education);
 }

@@ -33,17 +33,36 @@ public class CertificateServiceImpl implements CertificateService{
     @Autowired
     private EducationRepository educationRepository;
 
-    public void registerRank(MissionDto.RankRequest rankReq, int userId) {
-        Optional<User> user = userRepository.findById(userId);
-        Optional<Education> education = educationRepository.findByEducation(rankReq.getEducation());
+    public EducationDto.EduResponse getCertificate(String education, int userId){
+        Optional<Education> edu = educationRepository.findByEducation(education);
 
-        Certificate certificate = new Certificate();
-        certificate.setUser(user.get());
-        certificate.setEducation(education.get());
-        certificate.setCreateAt(new Date());
-        certificate.setPassTime(rankReq.getPassTime());
+        Optional<Certificate> certificate = certificateRepository.findByEducationAndUserId(edu.get(), userId);
+        if(!certificate.isPresent()) throw new ApplicationException(HttpStatus.valueOf(404), "There is no certification");
 
-        certificateRepository.save(certificate);
+        EducationDto.EduResponse eduResponse = new EducationDto.EduResponse();
+        eduResponse.setNickname(certificate.get().getUser().getNickname());
+        eduResponse.setEducation(certificate.get().getEducation().getEducation());
+        eduResponse.setCreateAt(certificate.get().getCreateAt());
+
+        return eduResponse;
+    }
+
+    public void updateCertificate(EducationDto.EduRequest eduReq, int userId){
+        Optional<Education> edu = educationRepository.findByEducation(eduReq.getEducation());
+
+        Optional<Certificate> certificate = certificateRepository.findByEducationAndUserId(edu.get(), userId);
+        if(!certificate.isPresent()) throw new ApplicationException(HttpStatus.valueOf(404), "There is no certification");
+
+        if(certificate.get().getPassTime() == null){
+            if(eduReq.getPassTime() > edu.get().getDuration()) throw new ApplicationException(HttpStatus.valueOf(404), "TIME OUT");
+            certificate.get().setPassTime(eduReq.getPassTime());
+            certificateRepository.save(certificate.get());
+        }
+
+        else if(eduReq.getPassTime() < certificate.get().getPassTime()){
+            certificate.get().setPassTime(eduReq.getPassTime());
+            certificateRepository.save(certificate.get());
+        }
     }
 
     public RankDto.ResponseList getRank(String education){
@@ -67,47 +86,6 @@ public class CertificateServiceImpl implements CertificateService{
         responseList.setData(rankDtoList);
 
         return responseList;
-    }
-
-    public void updateCertificate(EducationDto.EduRequest eduReq, int userId){
-        Optional<Education> edu = educationRepository.findByEducation(eduReq.getEducation());
-
-        Optional<Certificate> certificate = certificateRepository.findByEducationAndUserId(edu.get(), userId);
-        if(!certificate.isPresent()) throw new ApplicationException(HttpStatus.valueOf(404));
-
-        certificate.get().setPassTime(eduReq.getPassTime());
-        certificateRepository.save(certificate.get());
-    }
-
-    public void registerCertificate(EducationDto.EduRequest eduReq, int userId){
-        Optional<Education> edu = educationRepository.findByEducation(eduReq.getEducation());
-
-        if(eduReq.getPassTime() > edu.get().getDuration()) throw new ApplicationException(HttpStatus.valueOf(405));
-
-        Optional<User> user = userRepository.findById(userId);
-        Optional<Education> education = educationRepository.findByEducation(eduReq.getEducation());
-
-        Certificate certificate = new Certificate();
-        certificate.setUser(user.get());
-        certificate.setEducation(education.get());
-        certificate.setCreateAt(new Date());
-        certificate.setPassTime(eduReq.getPassTime());
-        certificate.setAuthenticated(true);
-
-        certificateRepository.save(certificate);
-    }
-
-    public EducationDto.EduResponse getCertificate(String education, int userId){
-        Optional<Education> edu = educationRepository.findByEducation(education);
-
-        Optional<Certificate> certificate = certificateRepository.findByEducationAndUserId(edu.get(), userId);
-
-        EducationDto.EduResponse eduResponse = new EducationDto.EduResponse();
-        eduResponse.setNickname(certificate.get().getUser().getNickname());
-        eduResponse.setEducation(certificate.get().getEducation().getEducation());
-        eduResponse.setCreateAt(certificate.get().getCreateAt());
-
-        return eduResponse;
     }
 
 }
