@@ -36,5 +36,4 @@ public class FcmMessage {
     public static class Data{
         private String msgId;
     }
-
 }
