@@ -78,40 +78,6 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
 
         return objectMapper.writeValueAsString(fcmMessage);
     }
-    
-    /**
-     * Firebase 서버에 Push 알림 1:다 발송 요청 : FcmDto 데이터 모두 발송
-     * @param tokens : 수신받을 클라이언트의 토큰 리스트
-     * @param fcm : FcmDto
-     * @throws InterruptedException
-     * @throws IOException
-     * @throws FirebaseMessagingException
-     */
-//    @Override
-//    public void sends(List<FirebaseToken> tokens, FcmMessage fcm) throws InterruptedException, IOException, FirebaseMessagingException {
-//        if(tokens.size() == 0) return;
-//        if(fcm.getMessage().getData().getUserId().equals(fcm.getMessage().getData().getTargetUserId())) return;
-//
-//        System.out.println(fcm.getMessage().getData().getNickname());
-//        MulticastMessage multicastMessage = makeMulticastMessage(tokens, fcm);
-//
-//        BatchResponse response = FirebaseMessaging.getInstance()
-//                .sendMulticast(multicastMessage);
-//
-//
-//        if (response.getFailureCount() > 0) {
-//            List<SendResponse> responses = response.getResponses();
-//            List<String> failedTokens = new ArrayList<>();
-//            for (int i = 0; i < responses.size(); i++) {
-//                if (!responses.get(i).isSuccessful()) {
-//                    System.out.println(responses.get(i).getException());
-//                    failedTokens.add(tokens.get(i).getToken());
-//                }
-//            }
-//            System.out.println("List of tokens that caused failures: " + failedTokens);
-//        }
-//        System.out.println("Success Push Alarm Count : " + response.getSuccessCount());
-//    }
 
     /**
      * 로그인 시 DB에 Firebase 연동 토큰 저장
