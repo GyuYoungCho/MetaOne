@@ -8,6 +8,7 @@ import Certificate from "@/view/Certificate.vue";
 import Guestbook from "@/view/Guestbook.vue";
 import MessageSend from "@/view/MessageSend.vue";
 import MessageRecv from "@/view/MessageRecv.vue";
+import NotFound from "@/view/errorpages/404.vue";
 
 Vue.use(VueRouter);
 
@@ -83,6 +84,11 @@ const routes = [
   //   name: "UnityMap",
   //   component: UnityMap,
   // },
+  {
+    path: "/404",
+    name: "NotFound",
+    component: NotFound,
+  },
 ];
 
 const router = new VueRouter({

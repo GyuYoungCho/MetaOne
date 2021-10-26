@@ -1,21 +1,56 @@
 <template>
   <div>
-    <section class="nav">
-      <div class="d-flex justify-content-end mr-3">
-        <img src="@/assets/image/buttonImage.png" alt="">
+    <section class="menu">
+      <div class="d-flex justify-content-end">
+        <div class="row">
+          <button class="icon-btn" @click="isShow = !isShow">
+            <img class="menuImg" src="@/assets/image/buttonImage.png" alt="">
+          </button>
+        </div>
+        <transition name="slide">
+          <div class="row menuSelectMenu" v-if="isShow">
+            <ul class="list-group mt-2">
+              <li class="list-group-item bg-transparent">
+                <i class="menuIcon fas fa-map-marker-alt"></i>
+                {{selectors[0]}}
+              </li>
+              <RouterLink :to="{name:'MessageRecv'}" @click.native="isShow=!isShow">
+                <li class="list-group-item bg-transparent">
+                  <i class="menuAddIcon fas fa-envelope-square"></i>
+                  {{selectors[1]}}
+                </li>
+              </RouterLink>
+              <li class="list-group-item bg-transparent">
+                <i class="menuIcon fas fa-map-marker-alt"></i>
+                {{selectors[2]}}
+              </li>
+              <li class="list-group-item bg-transparent">
+                <i class="menuIcon fas fa-question"></i>
+                {{selectors[3]}}
+              </li>
+              <li class="list-group-item bg-transparent">
+                <i class="menuAddIcon fas fa-sign-out-alt"></i>
+                {{selectors[4]}}
+              </li>
+            </ul>
+          </div>
+        </transition>
       </div>
     </section>
   </div>
 </template>
 
 <script>
-
+export default {
+  data(){
+    return{
+      selectors : ["기본 맵", "쪽지", "마이페이지", "도움말", "로그아웃"],
+      isShow : false,
+    }
+  }
+}
 </script>
 
-<style lang="scss" scoped>
-.text-dec {
-  text-decoration: none !important;
-  color: black !important;
-}
+<style>
 
 </style>

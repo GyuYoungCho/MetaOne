@@ -1,12 +1,12 @@
 <template>
-  <div>
-    <section class="educateList">
+  <div> 
+    <div class="educateList">
       <div class="m-contain">
-        <div >
+        <div>
             <h2>gg</h2>
         </div>
       </div>
-    </section>
+    </div>
   </div>
 </template>
 

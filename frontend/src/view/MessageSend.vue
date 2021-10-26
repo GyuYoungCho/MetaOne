@@ -1,9 +1,10 @@
 <template>
   <div>
     <section class="messageList">
-      <div class="m-container justify-content-center">
-        <h4>gi</h4>
-        
+      <div class="m-contain">
+        <div>
+            <h2>gg</h2>
+        </div>
       </div>
     </section>
   </div>
