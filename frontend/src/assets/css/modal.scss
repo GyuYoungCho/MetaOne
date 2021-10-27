@@ -1,4 +1,4 @@
-.modal {
+.FormModal {
   .overlay {
     width: 100%;
     height: 100%;
@@ -18,5 +18,29 @@
     min-height: 500px;
     z-index: 10;
     opacity: 1;
+  }
+  .modal-dialog {
+    top: 100px;
+    .modal-content {
+      border: none;
+      .modal-header {
+        background-color: $medium-light-yellow;
+        color: white;
+      }
+
+      .modal-body {
+        textarea {
+          width: 450px;
+        }
+      }
+
+      .modal-footer {
+        button {
+          font-size: 15px;
+          width: 60px;
+          height: 40px;
+        }
+      }
+    }
   }
 }

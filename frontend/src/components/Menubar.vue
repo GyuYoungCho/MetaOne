@@ -21,7 +21,7 @@
                 </li>
               </RouterLink>
               <li class="list-group-item bg-transparent">
-                <i class="menuIcon fas fa-map-marker-alt"></i>
+                <i class="menuAddIcon fas fa-user"></i>
                 {{selectors[2]}}
               </li>
               <li class="list-group-item bg-transparent">
