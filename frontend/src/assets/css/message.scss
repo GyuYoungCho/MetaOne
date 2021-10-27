@@ -1,16 +1,11 @@
-.messageList {
+.messages {
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin-top: 3%;
-  margin-left: 25%;
 
-  .m-contain {
-    display: inline;
-    position: relative;
-    background-color: white;
-    width: 70%;
-    height: 500px;
+  p {
+    color: white;
+    font-size: 2rem;
   }
 
   &BtnControll {
@@ -23,5 +18,39 @@
     width: 10%;
     height: 50px;
     font-size: 20px;
+  }
+
+  .MessageList {
+    .m-contain {
+      display: flex;
+      position: relative;
+      background-color: white;
+      opacity: 0.7;
+      border-radius: 10px;
+      height: 500px;
+    }
+
+    .avatar {
+      img {
+        position: relative;
+      }
+
+      span {
+        color: black;
+        font-size: 25px;
+      }
+    }
+
+    li {
+      border: none;
+    }
+  }
+
+  .MessageForm {
+    @extend .MessageList;
+
+    .m-contain {
+      opacity: 1;
+    }
   }
 }
