@@ -4,21 +4,22 @@
       <div class="sketch">
         <img src="@/assets/image/sketch.png" alt="">
         <p class="guest_title">방명록</p>
-        <div class="writer justify-content-center">
-          <table class="table table-borderless table-responsive mt-3">
-            
-            <tbody>
-              <tr v-for="(guestitem, index) in column" :key="index" :guestitem="guestitem">
-                <td class="nickname col-2">{{guestitem}}</td>
-                <td class="guest-content col-6">{{guestitem}}</td>
-                <td class="createAt">{{register_time(new Date())}}</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
       </div>
+      <ul class="list-group mt-2">
+        <li class="list-group-item bg-transparent" v-for="(guestitem, index) in column" :key="index" :guestitem="guestitem">
+          <div class="row">
+            <div class="pt-2 col-2 txl">{{guestitem.nickname}}</div>
+            <div class="pt-2 col-3 txl">{{guestitem.content}}</div>
+            <div class="pt-2 col-5 txr">{{register_time(guestitem.createAt)}}</div>
+            <div class="pt-1 col txl">
+              <button class="btn-modify" @click="openModal('modify',guestitem.content)" v-if="guestitem.userid==userid"
+              data-bs-toggle="modal" data-bs-target="#FormModal">수정</button>
+            </div>
+          </div>
+        </li>
+      </ul>
       <div class="justify-content-center">
-        <button @click="openModal('register')" data-bs-toggle="modal" data-bs-target="#FormModal">작성</button>
+        <button @click="openModal('register','')" data-bs-toggle="modal" data-bs-target="#FormModal">작성</button>
       </div>
       <FormModal :sign="sign" :content="content" @openModal="openModal"></FormModal>
     </section>
@@ -35,7 +36,12 @@ export default {
   },
   data(){
     return{
-      column : ['nickname','content','createAt'],
+      column : [
+        {nickname:'JO',content:'ㅊㅊ',createAt: new Date(),userid:1},
+        {nickname:'KWON',content:'뉴비 만반잘부',createAt: new Date(),userid:2},
+        {nickname:'KIM',content:'1빠',createAt: new Date(),userid:3}
+      ],
+      userid : 1,
       sign : '',
       content: ''
     }
@@ -47,9 +53,8 @@ export default {
     ...mapActions('guestbook', ['selectGuestbook','getGuestbooks']),
     openModal(sign,content){
         this.sign = sign
-        if(sign=="register") this.content='f'
-        // this.selectGuestbook(this.guestbook)
-        // this.$emit('openModal', val)
+        this.content = content;
+        
     },
     register_time(val){
         return moment(val).format("yyyy.MM.DD HH:mm")

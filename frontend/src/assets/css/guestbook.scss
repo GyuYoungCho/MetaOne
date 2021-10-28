@@ -2,12 +2,11 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin-top: 3%;
   .sketch {
     position: relative;
     img {
-      width: 50%;
-      height: 45%;
+      width: 54%;
+      height: 40%;
     }
     p {
       position: absolute;
@@ -28,21 +27,19 @@
       transform: translate(-50%, -50%);
 
       .guest_title {
-        font-size: 1.5rem;
+        font-size: 2rem;
       }
+    }
+  }
 
-      table {
-        font-size: 1rem;
-        td {
-          text-align: left;
-        }
-        .guest-content {
-          margin-top: 1px;
-        }
-        .createAt {
-          text-align: right;
-        }
-      }
+  ul {
+    position: absolute;
+    width: 50%;
+    top: 35%;
+    left: 26%;
+    li {
+      margin: 0px;
+      border: none;
     }
   }
 
@@ -63,5 +60,18 @@
       box-shadow: 200px 0 0 0 rgba(0, 0, 0, 0.2) inset;
       color: $offwhite;
     }
+  }
+
+  .btn-modify {
+    width: 50px;
+    height: 30px;
+    font-size: 1rem;
+  }
+
+  .txr {
+    text-align: right;
+  }
+  .txl {
+    text-align: left;
   }
 }
