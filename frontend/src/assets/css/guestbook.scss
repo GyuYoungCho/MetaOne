@@ -56,5 +56,12 @@
     width: 10%;
     height: 50px;
     font-size: 20px;
+    cursor: pointer;
+    transition: all 0.5s;
+
+    &:hover {
+      box-shadow: 200px 0 0 0 rgba(0, 0, 0, 0.2) inset;
+      color: $offwhite;
+    }
   }
 }

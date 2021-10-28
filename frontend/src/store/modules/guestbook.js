@@ -2,7 +2,7 @@ import axios from "@/api/default.js";
 import guestbookAPI from "@/api/guestbook.js";
 
 export default {
-  namspaced: true,
+  namespaced: true,
   state: {
     guestbooks: [],
     selectguestbook: Object,

@@ -22,11 +22,11 @@
 
 <script>
 import OnlineList from "@/components/messageview/OnlineList.vue"
-import MessageForm from "@/components/messageview/MessageForm.vue"
+import MessageList from "@/components/messageview/MessageList.vue"
 import MessageConfirm from "@/components/messageview/MessageConfirm.vue"
 export default {
   components:{
-    OnlineList, MessageForm,MessageConfirm
+    OnlineList, MessageList,MessageConfirm
   },
 }
 </script>

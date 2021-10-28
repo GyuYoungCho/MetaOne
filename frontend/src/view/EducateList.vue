@@ -3,28 +3,30 @@
     <div class="eduCer">
       <p class="edu_title">교육 내역</p>
       <div class="m-contain">
-        <div>
-          <table class="table table-borderless table-responsive mt-3">
-            <thead>
-              <tr class="row-3">
-                <th scope="col">구분</th>
-                <th scope="col">현황</th>
-                <th scope="col">통과 시간</th>
-                <th scope="col">증명서</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr v-for="(guestitem, index) in column" :key="index" :guestitem="guestitem">
-                <td class="pt-2 col-3">{{guestitem[0]}}</td>
-                <td class="pt-2 col-3">{{guestitem[1]}}</td>
-                <td class="pt-2 col-3">{{pass_time(new Date())}}</td>
-                <RouterLink :to="{name:'Certificate'}">
-                <td class="pt-2 col-3">{{guestitem[3]}}</td>
+      </div>
+      <div class="row">
+        <ul class="list-group mt-2">
+          <li class="list-group-item bg-transparent" style="border-bottom : 3px solid">
+            <div class="row">
+              <div class="col">구분</div>
+              <div class="col">현황</div>
+              <div class="col">통과 시간</div>
+              <div class="col">증명서</div>
+            </div>
+          </li>
+          <li class="list-group-item bg-transparent" v-for="(eduitem, index) in column" :key="index" :eduitem="eduitem">
+            <div class="row">
+              <div class="pt-2 col">{{eduitem.education}}</div>
+              <div class="pt-2 col">{{eduitem.complete}}</div>
+              <div class="pt-2 col">{{pass_time(eduitem.pass_day)}}</div>
+              <div class="pt-2 col" >
+                <RouterLink :to="{name:'Certificate'}" @click.native="goCertificate(eduitem)">
+                {{eduitem.pass}}
                 </RouterLink>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -32,20 +34,29 @@
 
 <script>
 import moment from "moment"
+import { mapGetters,mapActions } from "vuex";
+
 export default {
   data(){
     return{
-      column : [['지진','이수완료','1:19:52','발급'],
-      ['지진','이수완료','1:19:52','발급']],
+      column : [{education:'지진',complete:'이수완료',pass_day : new Date(),pass : '발급'},
+      {education:'화재',complete:'이수완료',pass_day : new Date(),pass : '발급'}],
     }
   },
   computed:{
-
+    ...mapGetters("education", ["educations","selecteducation"]),
   },
   methods:{
+    ...mapActions('education', ['getEducation','getEducations']),
     pass_time(val){
-        return moment(val).format("HH:mm:ss")
+      return moment(val).format("HH:mm:ss")
     },
+    goCertificate(item){
+      this.getEducation(item)
+    }
+  },
+  created(){
+    
   }
 }
 </script>

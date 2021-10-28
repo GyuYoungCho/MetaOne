@@ -1,5 +1,5 @@
 export default {
-  namspaced: true,
+  namespaced: true,
   state: {},
   getters: {},
   mutations: {},

@@ -2,7 +2,8 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-
+  z-index: -1;
+  position: relative;
   p {
     color: white;
     font-size: 2rem;
@@ -33,6 +34,8 @@
     .avatar {
       img {
         position: relative;
+        margin: 0px;
+        padding: 0px;
       }
 
       span {
