@@ -22,10 +22,11 @@ export default {
     },
     data(){
         return{
-            onlinelist:[
-                {name:'KIM'},{name:'KWON'},{name:'JO'}
-            ]
+            
         }
+    },
+    props:{
+        onlinelist:Array,
     }
 }
 </script>

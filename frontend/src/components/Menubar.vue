@@ -24,7 +24,8 @@
                 <i class="menuAddIcon fas fa-user"></i>
                 {{selectors[2]}}
               </li>
-              <li class="list-group-item bg-transparent">
+              <li class="list-group-item bg-transparent"
+                data-bs-toggle="modal" data-bs-target="#HelpModal">
                 <i class="menuIcon fas fa-question"></i>
                 {{selectors[3]}}
               </li>
@@ -37,11 +38,17 @@
         </transition>
       </div>
     </section>
+    <HelpModal/>
   </div>
 </template>
 
 <script>
+import HelpModal from '@/components/HelpModal.vue'
+
 export default {
+  components:{
+    HelpModal
+  },
   data(){
     return{
       selectors : ["기본 맵", "쪽지", "마이페이지", "도움말", "로그아웃"],

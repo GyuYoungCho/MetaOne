@@ -21,12 +21,11 @@ export default {
     },
     data(){
         return{
-            messagelist:[
-                {title:'안녕',isRead:false,content:'반가워~~~',sender:'KIM'},
-                {title:'오늘은',isRead:true,content:'뭐한담',sender:'KIM'},
-                {title:'집에',isRead:true,content:'가고싶다',sender:'KWON'},
-            ]
+            
         }
+    },
+    props:{
+      messagelist:Array,
     }
 }
 </script>
