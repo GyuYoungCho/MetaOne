@@ -11,7 +11,7 @@
             <MessageList/>
           </div>
           <div class="col-4">
-            <MessageForm/>
+            <MessageSendForm/>
           </div>
           <div class="col"></div>
         </div>
@@ -22,11 +22,11 @@
 
 <script>
 import OnlineList from "@/components/messageview/OnlineList.vue"
-import MessageForm from "@/components/messageview/MessageForm.vue"
+import MessageSendForm from "@/components/messageview/MessageSendForm.vue"
 import MessageList from "@/components/messageview/MessageList.vue"
 export default {
   components:{
-    OnlineList, MessageForm,MessageList
+    OnlineList, MessageSendForm,MessageList
   },
 }
 </script>

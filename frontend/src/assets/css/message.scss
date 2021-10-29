@@ -4,9 +4,14 @@
   text-align: center;
   z-index: -1;
   position: relative;
+  width: 100%;
   p {
     color: white;
     font-size: 2rem;
+  }
+
+  span {
+    color: white;
   }
 
   &BtnControll {
@@ -21,7 +26,40 @@
     font-size: 20px;
   }
 
+  button {
+    position: absolute;
+    box-shadow: -2px -2px 5px rgba(255, 255, 255, 0.1), 2px 2px 5px rgba(170, 170, 204, 0.25), 5px 5px 10px rgba(170, 170, 204, 0.5),
+      -5px -5px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    background-color: $medium-light-yellow;
+    filter: drop-shadow(5px 7px 4px rgba(0, 0, 0, 0.25));
+    margin-top: 2%;
+    width: 10%;
+    height: 50px;
+    font-size: 20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all 0.5s;
+
+    &:hover {
+      box-shadow: 200px 0 0 0 rgba(0, 0, 0, 0.2) inset;
+      color: $offwhite;
+    }
+  }
+
   .MessageList {
+    ul {
+      z-index: 1;
+      width: 100%;
+
+      li {
+        background-color: transparent;
+        border: none;
+        padding: 2%;
+      }
+    }
+
     .m-contain {
       display: flex;
       position: relative;
@@ -29,31 +67,86 @@
       opacity: 0.7;
       border-radius: 10px;
       height: 500px;
+      width: 100%;
+      z-index: -99;
     }
 
-    .avatar {
+    .a_card {
+      position: absolute;
+      top: 6%;
+      width: 20%;
+
+      ul {
+        width: 80%;
+      }
       img {
+        width: 50px;
         position: relative;
-        margin: 0px;
         padding: 0px;
       }
 
       span {
         color: black;
-        font-size: 25px;
+        font-size: 1.6rem;
+        margin: 0px;
+      }
+
+      .username {
+        text-align: left;
       }
     }
 
-    li {
-      border: none;
+    .m_card {
+      position: absolute;
+      top: 6%;
+      width: 23%;
+
+      i {
+        width: 30px;
+        margin-top: 13px;
+        position: relative;
+        padding: 0px;
+      }
+
+      span {
+        display: block;
+        font-size: 1.6rem;
+        margin: 0px;
+        background-color: $medium-light-blue;
+        width: 100%;
+      }
+
+      .messagetitle {
+        text-align: center;
+        width: 80%;
+      }
     }
   }
 
   .MessageForm {
     @extend .MessageList;
+    textarea {
+      background-color: $medium-light-blue;
+      width: 80%;
+      margin-left: 2%;
+    }
 
+    input {
+      background-color: $medium-light-blue;
+    }
     .m-contain {
       opacity: 1;
+      display: inline-block;
+      padding: 20px;
+    }
+
+    .send_card {
+      position: absolute;
+      top: 11%;
+      width: 25%;
+      .contentText {
+        text-align: left;
+      }
     }
   }
 }
