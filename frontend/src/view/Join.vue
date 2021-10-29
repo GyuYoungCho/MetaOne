@@ -3,10 +3,11 @@
         <div class="top-padding">
 
         </div>
+
         <li class="input-label" v-for="(e, i) in titles" :key="i">
             <div class="row mb-4 pb-2">
                 <div class="col-md-8">
-                    <inputparam :title="e" :placeholderData="placeholderDatas[i]"></inputparam>
+                    <inputparam :title="e" :placeholderData="placeholderDatas[i]" v-on:data="dataIn"></inputparam>
                 </div>
                 <div class="col-md-4">
                     <div style="float: left;" v-if="i == 1">
@@ -46,8 +47,7 @@ export default {
     data(){
         return{
             titles: ["이름", "Email", "닉네임", "비밀번호", "비밀번호확인", "인증번호"],
-            placeholderDatas: ["바이든", "email@email.com", "메타몽", "Password", "Password Confirm", "이메일 인증번호"],
-
+            placeholderDatas: ["뽀로로", "email@email.com", "메타몽", "Password", "Password Confirm", "이메일 인증번호"],
         }
     },
     methods:{
@@ -84,7 +84,7 @@ export default {
 }
 
 .top-padding{
-    padding-top: 200px;
+    padding-top: 100px;
 }
 
 .yellow-btn{
