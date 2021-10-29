@@ -63,7 +63,6 @@ const routes = [
     name: "SelectCharacter",
     component: SelectCharacter,
   },
-
   {
     path: "/setting-room",
     name: "SettingRoom",
