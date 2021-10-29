@@ -6,15 +6,16 @@
     <div class="m-contain">
     </div>
     <div class="send_card">
-      <div class="row message_com m_title mt-3">
+      <div class="row message_com m_title mt-5">
         <div class="col-md-2 pt-1 px-0">{{titles[0]}}</div>
         <div class="col-md-10">
-            <input type="email" class="form-control" v-model="receiver">
+            <input type="text" readonly class="form-control" v-model="valid_title">
         </div>
       </div>
-      <div class="row message_com m_content mt-3">
+      <div class="row message_com m_content mt-4">
         <label for="ContentArea" class="content-label">{{titles[1]}}</label>
-        <textarea class="form-control" id="ContentArea" rows="10"></textarea>
+        <textarea readonly class="form-control" id="ContentArea" rows="10"
+          v-model="valid_content"></textarea>
       </div>
       <div class="row message_com mt-4 m_answer justify-content-end">
         <button @click="sendMessage()">답장하기</button>
@@ -24,16 +25,33 @@
 </template>
 
 <script>
-import Inputparam from '@/components/Inputparam.vue'
+import { mapGetters } from "vuex";
+
 export default {
-  components:{
-    Inputparam,
-  },
+  
   data(){
     return{
       titles: ["제목", "내용"],
       empty: '',
     }
+  },
+  computed:{
+
+    ...mapGetters("message", ["selectmessage"]),
+    
+    valid_title(){
+      if(this.selectmessage) 
+        return this.selectmessage.title
+      else return ''
+    },
+    valid_content(){
+      if(this.selectmessage) 
+        return this.selectmessage.content
+      else return ''
+    }
+  },
+  methods:{
+    
   }
 }
 </script>

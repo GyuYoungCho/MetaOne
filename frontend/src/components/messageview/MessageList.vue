@@ -15,6 +15,7 @@
 
 <script>
 import MessageCard from "@/components/messageview/MessageCard.vue"
+import { mapActions } from "vuex";
 export default {
     components:{
         MessageCard
@@ -26,6 +27,14 @@ export default {
     },
     props:{
       messagelist:Array,
+    },
+    methods:{
+      ...mapActions('messages', ['getMessage','getMessages']),
+
+
+    },
+    created(){
+
     }
 }
 </script>

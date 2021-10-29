@@ -44,6 +44,9 @@ export default {
       empty: '',
     }
   },
+  props:{
+    recevier : String,
+  },
 
   methods:{
     sendMessage(){

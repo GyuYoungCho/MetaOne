@@ -11,7 +11,7 @@
             <MessageList :messagelist="messagelist"/>
           </div>
           <div class="col-4">
-            <MessageConfirm/>
+            <MessageConfirm :message="selectmessage"/>
           </div>
           <div class="col"></div>
         </div>
@@ -24,6 +24,9 @@
 import OnlineList from "@/components/messageview/OnlineList.vue"
 import MessageList from "@/components/messageview/MessageList.vue"
 import MessageConfirm from "@/components/messageview/MessageConfirm.vue"
+import { mapGetters } from "vuex";
+
+
 export default {
   components:{
     OnlineList, MessageList,MessageConfirm
@@ -37,8 +40,11 @@ export default {
           {title:'안녕',isRead:false,content:'반가워~~~',sender:'KIM'},
           {title:'오늘은',isRead:true,content:'뭐한담',sender:'KIM'},
           {title:'집에',isRead:true,content:'가고싶다',sender:'KWON'},
-      ]
+      ],
     }
+  },
+  computed:{
+    ...mapGetters("message", ["selectmessage"]),
   }
 }
 </script>

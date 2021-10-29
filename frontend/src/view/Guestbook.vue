@@ -19,7 +19,7 @@
         </li>
       </ul>
       <div class="justify-content-center">
-        <button @click="openModal('register','')" data-bs-toggle="modal" data-bs-target="#FormModal">작성</button>
+        <button class="mt-2" @click="openModal('register','')" data-bs-toggle="modal" data-bs-target="#FormModal">작성</button>
       </div>
       <FormModal :sign="sign" :content="content" @openModal="openModal"></FormModal>
     </section>

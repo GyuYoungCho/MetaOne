@@ -76,6 +76,7 @@
       position: absolute;
       top: 8%;
       width: 20%;
+      z-index: 1;
 
       ul {
         width: 80%;
@@ -99,7 +100,7 @@
 
     .m_card {
       position: absolute;
-      z-index: -0;
+      z-index: 1;
       top: 8%;
       width: 23%;
 
