@@ -10,20 +10,24 @@
         <transition name="slide">
           <div class="row menuSelectMenu" v-if="isShow">
             <ul class="list-group mt-2">
-              <li class="list-group-item bg-transparent">
-                <i class="menuIcon fas fa-map-marker-alt"></i>
-                {{selectors[0]}}
-              </li>
+              <RouterLink :to="{name:'UnityMap'}" @click.native="isShow=!isShow">
+                <li class="list-group-item bg-transparent">
+                  <i class="menuIcon fas fa-map-marker-alt"></i>
+                  {{selectors[0]}}
+                </li>
+              </RouterLink>
               <RouterLink :to="{name:'MessageRecv'}" @click.native="isShow=!isShow">
                 <li class="list-group-item bg-transparent">
                   <i class="menuAddIcon fas fa-envelope-square"></i>
                   {{selectors[1]}}
                 </li>
               </RouterLink>
-              <li class="list-group-item bg-transparent">
-                <i class="menuAddIcon fas fa-user"></i>
-                {{selectors[2]}}
-              </li>
+              <RouterLink :to="{name:'MyPage'}" @click.native="isShow=!isShow">
+                <li class="list-group-item bg-transparent">
+                  <i class="menuAddIcon fas fa-user"></i>
+                  {{selectors[2]}}
+                </li>
+              </RouterLink>
               <li class="list-group-item bg-transparent"
                 data-bs-toggle="modal" data-bs-target="#HelpModal">
                 <i class="menuIcon fas fa-question"></i>

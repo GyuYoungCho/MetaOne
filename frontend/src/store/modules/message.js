@@ -2,11 +2,15 @@ export default {
   namespaced: true,
   state: {
     selectmessage: Object,
+    selectreceiver: String,
     messages: [],
   },
   getters: {
     selectmessage(state) {
       return state.selectmessage;
+    },
+    selectreceiver(state) {
+      return state.selectreceiver;
     },
     messages(state) {
       return state.messages;
@@ -16,6 +20,9 @@ export default {
     SELECT_MESSAGE(state, message) {
       state.selectmessage = message;
     },
+    SELECT_RECEIVER(state, receiver) {
+      state.selectreceiver = receiver;
+    },
     SET_MESSAGES(state, messages) {
       state.messages = messages;
     },
@@ -23,6 +30,9 @@ export default {
   actions: {
     getMessage({ commit }, item) {
       commit("SELECT_MESSAGE", item);
+    },
+    getReceiver({ commit }, item) {
+      commit("SELECT_RECEIVER", item);
     },
     getMessages(store) {
       // axios

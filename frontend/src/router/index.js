@@ -13,6 +13,7 @@ import Certificate from "@/view/Certificate.vue";
 import Guestbook from "@/view/Guestbook.vue";
 import MessageSend from "@/view/MessageSend.vue";
 import MessageRecv from "@/view/MessageRecv.vue";
+import UnityMap from "@/view/UnityMap.vue";
 import NotFound from "@/view/errorpages/404.vue";
 
 Vue.use(VueRouter);
@@ -84,11 +85,11 @@ const routes = [
     name: "MessageRecv",
     component: MessageRecv,
   },
-  // {
-  //   path: "/unity-map",
-  //   name: "UnityMap",
-  //   component: UnityMap,
-  // },
+  {
+    path: "/unity-map",
+    name: "UnityMap",
+    component: UnityMap,
+  },
   {
     path: "/404",
     name: "NotFound",
@@ -101,5 +102,46 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+//// 로그인한 사람만 갈 수 있는 페이지와 아닌 사람만 갈 수 있는 페이지 구분
+// router.beforeEach((to, from, next) => {
+//   // 로그인 안 해야 갈 수 있는 페이지
+//   const outerPages = ["Join", "Login", "FindPW","Auth"];
+//   // 로그인 해야 갈 수 있는 페이지
+//   const privatePages = [
+//     "NotFound",
+//     "MyPage",
+//     "EducateList",
+//     "Certificate",
+//     "SelectRoom",
+//     "SelectCharacter",
+//     "SettingRoom",
+//     "Guestbook",
+//     "MessageSend",
+//     "MessageRecv",
+//     "UnityMap",
+//   ];
+
+//   const authRequired = privatePages.includes(to.name);
+//   const guestRequired = outerPages.includes(to.name);
+//   // 로그인했는지
+//   const isLoggedIn;
+
+//   // 존재하지 않는 페이지로 이동하려 한다면
+//   if (!to.name) {
+//     next({ name: "NotFound" });
+//   }
+
+//   // 로그인한 사용자가 로그인하면 못 가는 페이지로 이동하려 할 때
+//   if (isLoggedIn && guestRequired) {
+//     next({ name: "Login" });
+//   }
+//   // 로그인 안 한 사용자가 로그인해야 갈 수 있는 페이지로 이동하려 할 때
+//   if (!isLoggedIn && authRequired) {
+//     next({ name: "Login" });
+//   } else {
+//     next();
+//   }
+// });
 
 export default router;
