@@ -1,6 +1,6 @@
 <template>
   <div> 
-    <div class="eduCer">
+    <div class="education">
       <p class="edu_title">교육 내역</p>
       <div class="m-contain">
       </div>

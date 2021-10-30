@@ -24,6 +24,7 @@
 import OnlineList from "@/components/messageview/OnlineList.vue"
 import MessageSendForm from "@/components/messageview/MessageSendForm.vue"
 import MessageList from "@/components/messageview/MessageList.vue"
+
 export default {
   components:{
     OnlineList, MessageSendForm,MessageList
@@ -39,7 +40,8 @@ export default {
           {title:'집에',isRead:true,content:'가고싶다',sender:'KWON'},
       ]
     }
-  }
+  },
+
 }
 </script>
 

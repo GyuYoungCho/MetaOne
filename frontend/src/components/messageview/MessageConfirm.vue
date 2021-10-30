@@ -18,14 +18,14 @@
           v-model="valid_content"></textarea>
       </div>
       <div class="row message_com mt-4 m_answer justify-content-end">
-        <button @click="sendMessage()">답장하기</button>
+        <button @click="sendMessage()" :disabled="valid_title == ''">답장하기</button>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 export default {
   
@@ -51,7 +51,11 @@ export default {
     }
   },
   methods:{
-    
+    ...mapActions("message", ["getReceiver"]),
+    sendMessage(){
+      this.getReceiver(this.selectmessage.sender)
+      this.$router.push({ name: 'MessageSend' }) 
+    }
   }
 }
 </script>

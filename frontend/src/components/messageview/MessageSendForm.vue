@@ -8,20 +8,20 @@
     <div class="send_card">
       <div class="row message_com m_user mt-3">
         
-        <div class="col-md-3 pt-1 px-0">{{titles[0]}}</div>
+        <div class="col-md-3 pt-1 px-0">{{form_content[0]}}</div>
         <div class="col-md-9">
-            <input type="email" class="form-control" v-model="receiver">
+            <input type="text" readonly class="form-control" v-model="valid_receiver">
         </div>
       </div>
       <div class="row message_com m_title mt-3">
-        <div class="col-md-2 pt-1 px-0">{{titles[1]}}</div>
+        <div class="col-md-2 pt-1 px-0">{{form_content[1]}}</div>
         <div class="col-md-10">
-            <input type="email" class="form-control" v-model="receiver">
+            <input type="text" class="form-control" v-model="title">
         </div>
       </div>
       <div class="row message_com m_content mt-3">
-        <label for="ContentArea" class="content-label">내용</label>
-        <textarea class="form-control" id="ContentArea" rows="10"></textarea>
+        <label for="ContentArea" class="content-label">{{form_content[2]}}</label>
+        <textarea class="form-control" id="ContentArea" rows="10" v-model="content"></textarea>
       </div>
       <div class="row message_com mt-4 m_submit">
         <button @click="sendMessage()">전송</button>
@@ -33,6 +33,7 @@
 
 <script>
 import Inputparam from '@/components/Inputparam.vue'
+import { mapGetters } from "vuex";
 
 export default {
   components:{
@@ -40,12 +41,19 @@ export default {
   },
   data(){
     return{
-      titles: ["받는 사람", "제목", "내용"],
+      form_content: ["받는 사람", "제목", "내용"],
       empty: '',
+      title:'',
+      content:'',
     }
   },
-  props:{
-    recevier : String,
+  computed:{
+    ...mapGetters("message", ["selectreceiver"]),
+    valid_receiver(){
+      if(this.selectreceiver && typeof this.selectreceiver =="string") 
+        return this.selectreceiver
+      else return ''
+    }
   },
 
   methods:{

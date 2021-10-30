@@ -1,4 +1,4 @@
-.eduCer {
+.education {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -22,44 +22,81 @@
     display: inline;
     position: relative;
     background-color: white;
+    border-radius: 10px;
     width: 70%;
     height: 500px;
-    z-index: -99;
-
-    img {
-      width: 15%;
-      height: 30%;
-    }
-    .stamp {
-      width: 22%;
-      height: 25%;
-    }
-  }
-
-  &BtnConfirm {
-    box-shadow: -2px -2px 5px rgba(255, 255, 255, 0.1), 2px 2px 5px rgba(170, 170, 204, 0.25), 5px 5px 10px rgba(170, 170, 204, 0.5),
-      -5px -5px 10px rgba(0, 0, 0, 0.25);
-    border-radius: 5px;
-    background-color: $medium-light-yellow;
-    filter: drop-shadow(5px 7px 4px rgba(0, 0, 0, 0.25));
-    margin-top: 2%;
-    width: 10%;
-    height: 50px;
-    font-size: 20px;
+    z-index: -2;
   }
 
   a {
     &:link {
       color: $medium-light-blue;
     }
-    &:visited {
-      color: click-blue;
-    }
     &:hover {
       color: $medium-light-yellow;
     }
     &:active {
-      color: click-yellow;
+      color: greenyellow;
+    }
+  }
+
+  ul {
+    position: absolute;
+    top: 18%;
+    font-size: 1.7rem;
+    width: 57%;
+    li {
+      margin: 0px;
+      color: $medium-light-blue;
+      border: none;
+    }
+  }
+}
+
+.certificate {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin-top: 3%;
+  margin-left: 23%;
+
+  p {
+    font-size: 20px;
+  }
+
+  .edu_title {
+    position: absolute;
+    color: white;
+    font-size: 2rem;
+    top: 12%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .cert-contain {
+    margin: 0px;
+    padding: 0px;
+    text-align: center;
+    width: 70%;
+    height: 500px;
+    z-index: -2;
+
+    perspective: 1000px;
+
+    .m-contain {
+      transition: all 0.7s;
+      background-color: white;
+      border-radius: 10px;
+      height: 90%;
+
+      img {
+        width: 15%;
+        height: 30%;
+      }
+      .stamp {
+        width: 22%;
+        height: 25%;
+      }
     }
   }
 
@@ -84,16 +121,15 @@
       color: $offwhite;
     }
   }
+}
 
-  ul {
-    position: absolute;
-    top: 18%;
-    font-size: 1.7rem;
-    width: 57%;
-    li {
-      margin: 0px;
-      color: $medium-light-blue;
-      border: none;
-    }
-  }
+.cert_content {
+  transition: all 0.7s;
+
+  transform: rotateX(60deg) scale(0.75) translateY(20%);
+  transform-origin: 50% 90%;
+}
+
+.show-Certificate {
+  transform: rotateX(0) scale(1) translateY(0);
 }

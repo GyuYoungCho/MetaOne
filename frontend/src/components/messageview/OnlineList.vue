@@ -7,7 +7,8 @@
     </div>
     <div class="a_card">
         <ul class="list-group mt-3">
-            <AvatarCard  v-for="(user, index) in onlinelist" :key="index" :user="user"/>
+            <AvatarCard  v-for="(user, index) in onlinelist" :key="index" :user="user"
+              @click.native="getReceiver(user.name)"/>
         </ul>
     </div>
     
@@ -15,6 +16,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 import AvatarCard from "@/components/AvatarCard.vue"
 export default {
     components:{
@@ -27,6 +29,10 @@ export default {
     },
     props:{
         onlinelist:Array,
+    },
+    methods:{
+      ...mapActions('message', ['getReceiver']),
+      
     }
 }
 </script>

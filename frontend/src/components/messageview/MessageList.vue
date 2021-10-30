@@ -7,7 +7,8 @@
     </div>
     <div class="m_card">
       <ul class="list-group overflow-auto pt-3">
-        <MessageCard  v-for="(message, index) in messagelist" :key="index" :message="message"/>
+        <MessageCard  v-for="(message, index) in messagelist" :key="index" :message="message"
+        @click.native="getMessage(message)"/>
       </ul>
     </div>
   </section>
@@ -29,8 +30,8 @@ export default {
       messagelist:Array,
     },
     methods:{
-      ...mapActions('messages', ['getMessage','getMessages']),
-
+      ...mapActions('message', ['getMessage']),
+      
 
     },
     created(){

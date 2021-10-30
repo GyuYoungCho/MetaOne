@@ -15,8 +15,6 @@ const store = new Vuex.Store({
     message,
     education,
   },
-
-  plugins: [createPersistedState(guestbook, message, education)],
 });
 
 export default store;
