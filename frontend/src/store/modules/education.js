@@ -6,6 +6,7 @@ export default {
   state: {
     selecteducation: Object,
     educations: [],
+    certificate: Object,
   },
   getters: {
     selecteducation(state) {
@@ -14,6 +15,9 @@ export default {
     educations(state) {
       return state.educations;
     },
+    certificate(state) {
+      return state.certificate;
+    },
   },
   mutations: {
     SELECT_EDUCATION(state, education) {
@@ -21,6 +25,9 @@ export default {
     },
     SET_EDUCATIONS(state, educations) {
       state.educations = educations;
+    },
+    SET_CERTIFICATE(state, certificate) {
+      state.certificate = certificate;
     },
   },
   actions: {
@@ -37,6 +44,9 @@ export default {
           alert("못가져옴");
           console.log(error);
         });
+    },
+    getCertificate({ commit }, item) {
+      commit("SET_CERTIFICATE", item);
     },
   },
 };

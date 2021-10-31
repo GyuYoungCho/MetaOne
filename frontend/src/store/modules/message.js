@@ -3,7 +3,9 @@ export default {
   state: {
     selectmessage: Object,
     selectreceiver: String,
-    messages: [],
+    mymessages: [],
+    onebyonemessages: [],
+    onlinelist: [],
   },
   getters: {
     selectmessage(state) {
@@ -12,8 +14,14 @@ export default {
     selectreceiver(state) {
       return state.selectreceiver;
     },
-    messages(state) {
-      return state.messages;
+    mymessages(state) {
+      return state.mymessages;
+    },
+    onebyonemessages(state) {
+      return state.onebyonemessages;
+    },
+    onlinelist(state) {
+      return state.onlinelist;
     },
   },
   mutations: {
@@ -23,8 +31,14 @@ export default {
     SELECT_RECEIVER(state, receiver) {
       state.selectreceiver = receiver;
     },
-    SET_MESSAGES(state, messages) {
-      state.messages = messages;
+    SET_MYMESSAGES(state, mymessages) {
+      state.mymessages = mymessages;
+    },
+    SET_ONEBYONEMESSAGES(state, onebyonemessages) {
+      state.onebyonemessages = onebyonemessages;
+    },
+    SET_ONLINELIST(state, onlinelist) {
+      state.onlinelist = onlinelist;
     },
   },
   actions: {
@@ -34,7 +48,7 @@ export default {
     getReceiver({ commit }, item) {
       commit("SELECT_RECEIVER", item);
     },
-    getMessages(store) {
+    getMyMessages(store) {
       // axios
       //   .get(messageAPI.selectMyMessage())
       //   .then((res) => {
@@ -45,5 +59,7 @@ export default {
       //     console.log(error);
       //   });
     },
+    getOnebyOneMessages(store) {},
+    getOnlineList(store) {},
   },
 };
