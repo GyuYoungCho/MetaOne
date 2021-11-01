@@ -216,7 +216,25 @@ public class UserController {
         return email.equals(emailRes.getEmail());
     }
 
+    @PostMapping("/find-pw")
+    @ApiOperation(value = "이메일로 임시 비밀번호 전송")
+    public ResponseEntity sendTempPw(UserDto.userInfoResponse userInfo){
 
+        // 이름과 이메일 매칭 검증
+
+        // emaildto 만들기
+
+        // 이메일 발송
+
+//        String uuid = UUID.randomUUID().toString();
+//
+//        private String toEmail;
+//        private String title;
+//        private String code;
+//        emailSenderService.sendEmail();
+
+        return ResponseEntity.ok().build();
+    }
 
     /***
      *

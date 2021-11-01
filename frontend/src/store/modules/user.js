@@ -20,6 +20,8 @@ const state = {
     firebaseToken: "",
     accessToken: "",
     refreshToken: "",
+
+    isLogin: false,
 }
 
 const actions = {
@@ -90,6 +92,7 @@ const actions = {
                     console.log(res)
                     commit('SET_USER_ACCESSTOKEN', res.headers.accesstoken)
                     commit('SET_USER_REFRESHTOKEN', res.headers.refreshtoken)
+                    state.isLogin = true
                     router.push({name: 'SelectCharacter'})
                 }
             })
@@ -115,14 +118,14 @@ const actions = {
             console.log(err)
         })
     },
-    async updateInfo({state}) {
+    async updateInfo({ state }) {
 
         await userApi.updateInfo(state)
             .then((res) => {
                 console.log(res)
                 if (res.status == 200) {
                     alert("성공적으로 수정되었습니다.")
-                    router.go()         // 새로고침
+                    router.go()                          // 새로고침
                 }
             })
             .catch ((err) => {
@@ -130,7 +133,15 @@ const actions = {
                 alert("올바르지 않은 비밀번호입니다.")
         })
     },
-
+    async sendTempPw({ state }) {
+        await userApi.sendTempPw(state)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+        })
+    },
 }
 
 const mutations = {

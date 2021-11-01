@@ -28,6 +28,8 @@ public class WebConfiguration implements WebMvcConfigurer {
                 .excludePathPatterns("/api/users/email-check")
                 .excludePathPatterns("/api/users/login-kakao")
                 .excludePathPatterns("/api/users/duplicate")
-                .excludePathPatterns("/api/users/");
+                .excludePathPatterns("/api/users/")
+                .excludePathPatterns("/api/users/find-pw");
+
     }
 }

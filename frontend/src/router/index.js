@@ -37,6 +37,7 @@ const routes = [
     path: "/my-page",
     name: "MyPage",
     component: MyPage,
+    // meta: { requireAuth: true },
   },
   {
     path: "/find-pw",
@@ -47,41 +48,49 @@ const routes = [
     path: "/educate-list",
     name: "EducateList",
     component: EducateList,
+    // meta: { requireAuth: true },
   },
   {
     path: "/certificate",
     name: "Certificate",
     component: Certificate,
+    // meta: { requireAuth: true },
   },
   {
     path: "/select-room",
     name: "SelectRoom",
     component: SelectRoom,
+    // meta: { requireAuth: true },
   },
   {
     path: "/select-character",
     name: "SelectCharacter",
     component: SelectCharacter,
+    // meta: { requireAuth: true },
   },
   {
     path: "/setting-room",
     name: "SettingRoom",
     component: SettingRoom,
+    // meta: { requireAuth: true },
   },
   {
     path: "/guestbook",
     name: "Guestbook",
     component: Guestbook,
+    // meta: { requireAuth: true },
   },
   {
     path: "/message-send",
     name: "MessageSend",
     component: MessageSend,
+    // meta: { requireAuth: true },
   },
   {
     path: "/message-recv",
     name: "MessageRecv",
     component: MessageRecv,
+    // meta: { requireAuth: true },
   },
   // {
   //   path: "/unity-map",
@@ -95,5 +104,29 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+
+// router.beforeEach(function (to, from, next) {
+//   if (to.matched.some(function(routeInfo) {
+//     return routeInfo.meta.requireAuth
+//   })) {
+//     if (!store.state.user.isLogin) {
+//       next('/')
+//     } else {
+//       next()
+//     }
+//   } else {
+//     if (to.name === 'Login') {
+//       if (store.state.user.isLogin) {
+//         next('/feed')
+//       } else {
+//         next()
+//       }
+//     } else {
+//       next()
+//     }
+//   }
+  
+// })
 
 export default router;

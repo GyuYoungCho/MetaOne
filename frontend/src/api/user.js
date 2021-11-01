@@ -64,5 +64,13 @@ export default {
                 newPassword: data.newPassword,
             }
         })
-    }
+    },
+    sendTempPw(data) {
+
+        return _axios({
+            url: `/users/find-pw`,
+            method: 'post',
+            data: data
+        })
+    },
 }
