@@ -20,11 +20,11 @@
         </div>
 
         <div class=" row col-md-9">
-            <div class="col-md-4"> </div>
-            <div class="row col-md-8" style="text-align:left;">
-                <button class="btn yellow-btn col-md-5">확인하기</button>
+            <div class="col-md-5"> </div>
+            <div class="row col-md-7" style="text-align:left;">
+                <button class="btn yellow-btn col-md-5" @click="sendTempPw()">임시 비밀번호 발송</button>
                 <div class="col-md-1"></div>
-                <button class="btn yellow-btn col-md-5">취소</button>
+                <button class="btn yellow-btn col-md-5" @click="cancel()">취소</button>
             </div>
         </div>
         
@@ -35,6 +35,7 @@
 <script>
 import Inputparam from '../components/Inputparam.vue'
 import MainTitle from '../components/MainTitle.vue'
+import {mapState, mapActions} from 'vuex'
 
 export default {
     name: "FindPw",
@@ -50,16 +51,30 @@ export default {
         }
     },
     methods:{
+        ...mapActions('user', ['sendTempPw']),
+        init(){
+            this.$store.commit('user/SET_JOIN_NAME', "")
+            this.$store.commit('user/SET_JOIN_EMAIL', "")
 
+        },
+        async sendTempPw(){
+            // 이름, 이메일 비었는지 체크
+            
+            // 임시 메일 발송 API 호출
+
+        },
+        cancel(){
+            this.$router.push({name: 'Login'}).catch(() => {})
+        },
     }, 
     mounted(){
 
     },
-    created(){
-
+    async created(){
+        await this.init()
     },
     computed:{
-
+        ...mapState('user', ['name', 'email'])
     },
     watch:{
 
@@ -84,7 +99,7 @@ export default {
 }
 
 .top-padding{
-    padding-top: 100px;
+    padding-top: 50px;
 }
 
 .yellow-btn{

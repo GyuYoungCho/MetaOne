@@ -60,9 +60,9 @@ public class UserController {
      */
     @PostMapping("")
     @ApiOperation(value="회원가입", notes = "사용자가 회원가입을 시도한다.")
-    public ResponseEntity <Map<String, Integer>> resgister(
-            @RequestBody  @ApiParam(value="회원가입 정보", required = true)
-            @Valid UserDto.RegisterRequest registerInfo, BindingResult bindingResult
+    public ResponseEntity register(
+            @RequestBody  @ApiParam(value="회원가입 정보")
+            UserDto.RegisterRequest registerInfo, BindingResult bindingResult
             ) throws IOException {
 
         if (bindingResult.hasErrors())
@@ -75,7 +75,8 @@ public class UserController {
 
         Map<String, Integer> map = new HashMap<>();
         map.put("id", userService.register(registerInfo));
-        return new ResponseEntity<>(map, HttpStatus.valueOf(201));
+        System.out.println("here");
+        return ResponseEntity.status(201).body(map);
     }
 
     /***
@@ -89,16 +90,17 @@ public class UserController {
     public ResponseEntity update(
             @RequestBody @ApiParam(value="회원수정 정보", required = true) UserDto.UpdateRequest updateInfo, HttpServletRequest request
         ) throws IOException{
-        // int userId = (Integer) request.getAttribute("userId");
-        if(updateInfo.getOriginPassword() == null) return ResponseEntity.status(401).build();
-        if(updateInfo.getNickname() != null){
+        if(updateInfo.getOriginPassword() == null || updateInfo.getOriginPassword().equals("")) return ResponseEntity.status(401).build();
+        userService.checkPassword(updateInfo, request);
+
+        if(updateInfo.getNickname() != null && !updateInfo.getNickname().equals("")){
             userService.updateNickname(updateInfo, request);
         }
-        if(updateInfo.getNewPassword() != null){
+        if(updateInfo.getNewPassword() != null && !updateInfo.getNewPassword().equals("")){
             userService.validatePassword(updateInfo.getNewPassword());
             userService.updatePassword(updateInfo, request);
         }
-        if(updateInfo.getNewPassword() == null & updateInfo.getNickname() == null)
+        if(updateInfo.getNewPassword() == null && updateInfo.getNickname() == null)
             throw new ApplicationException(HttpStatus.valueOf(401), "수정할 정보가 없습니다.");
 
         return ResponseEntity.status(200).build();
@@ -159,7 +161,7 @@ public class UserController {
     @GetMapping("duplicate")
     @ApiOperation(value="중복확인", notes="이메일/닉네임 중복확인")
     public ResponseEntity duplicate(
-            @RequestParam @ApiParam(value="닉네임 or 이메일", required = true) String type, @RequestParam @ApiParam(value="닉네임이나 이메일 정보", required = true) String data
+            @RequestParam @ApiParam(value="닉네임 or 이메일") String type, @RequestParam @ApiParam(value="닉네임이나 이메일 정보") String data
             ) throws IOException{
         // type Email 중복검사
         System.out.println("중복검사 시작합니다... "+ type +" / "+ data);
@@ -202,14 +204,16 @@ public class UserController {
     public boolean checkEmailConfirm(
             @RequestBody @ApiParam(value="이메일 인증 확인", required = true) UserDto.EmailResponse emailRes
     ) throws IOException{
+        System.out.println(emailRes.getCode());
+
 
         String email = redisUtil.getData(emailRes.getCode());
         if (email == null) { // email이 존재하지 않으면, 유효 기간 만료이거나 코드 잘못 입력
             throw new ApplicationException(HttpStatus.valueOf(401), "이메일 인증이 만료되었거나, 코드가 맞지 앉습니다.ㄴ");
         }
-        if (email.equals(emailRes.getEmail())) return true;
-
-        return false;
+        System.out.println(email);
+        System.out.println(emailRes.getEmail());
+        return email.equals(emailRes.getEmail());
     }
 
 
@@ -265,6 +269,16 @@ public class UserController {
         return ResponseEntity.ok().headers(resHeader).body(res);
     }
 
+    @GetMapping("/my-info")
+    @ApiOperation(value = "본인 정보 가져오기")
+    public ResponseEntity getMyInfo(HttpServletRequest request) throws IOException {
+        int userId = (int) request.getAttribute("userId");
+
+        UserDto.userInfoResponse res = userService.getMyInfo(userId);
+
+        return ResponseEntity.ok().body(res);
+    }
+
     /***
      *
      * @param nickname : 다른 사용자의 닉네임
@@ -273,7 +287,7 @@ public class UserController {
      */
     @GetMapping("{nickname}")
     @ApiOperation(value="다른 사용자의 정보 조회")
-    public ResponseEntity<UserDto.userInfoResponse> userinfo( @PathVariable String nickname) throws IOException{
+    public ResponseEntity<UserDto.userInfoResponse> userinfo( @PathVariable String nickname) throws IOException {
 
         UserDto.userInfoResponse res = userService.getUserInfo(nickname);
 

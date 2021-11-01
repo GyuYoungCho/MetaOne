@@ -20,15 +20,16 @@ export default {
     props: ["title", "placeholderData"],
     data(){
         return{
-            dataIn: null,
+            dataIn: "",
         }
     },
     methods:{ 
         saveJoinForm(){
             let joinTitle = ""
             
-            this.$store.commit('join/SET_JOIN_EMAILPASS', false)
-            this.$store.commit('join/SET_JOIN_NICKNAMEPASS', false)
+            if(this.title == 'Email') this.$store.commit('user/SET_JOIN_EMAILPASS', false)
+            if(this.title == '닉네임') this.$store.commit('user/SET_JOIN_NICKNAMEPASS', false)
+           
 
             if(this.title =='이름') joinTitle = "SET_JOIN_NAME"
             else if(this.title =='Email') joinTitle = "SET_JOIN_EMAIL"
@@ -37,7 +38,12 @@ export default {
             else if(this.title =='비밀번호확인') joinTitle = "SET_JOIN_PASSWORDCONFIRM"
             else if(this.title =='인증번호') joinTitle = "SET_JOIN_AUTHNUMBER"
 
-            this.$store.commit('join/' + joinTitle, this.dataIn);
+            else if(this.title =='기존 비밀번호') joinTitle = "SET_USER_ORIGINPASSWORD"
+            else if(this.title =='비밀번호 수정') joinTitle = "SET_USER_NEWPASSWORD"
+            else if(this.title =='비밀번호 확인') joinTitle = "SET_JOIN_PASSWORDCONFIRM"
+
+
+            this.$store.commit('user/' + joinTitle, this.dataIn);
         },
         typing:function(e){
             this.dataIn = e.target.value;
@@ -50,22 +56,25 @@ export default {
 
     },
     computed:{
-        ...mapState('join', ['name', 'email', 'nickname', 'password', 'passwordConfirm', 'authNumber']),
+        ...mapState('user', ['name', 'email', 'nickname', 'password', 'passwordConfirm', 'authNumber']),
     },
     watch:{
         dataIn(){
             var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/
 
             if(this.title == 'Email' && exptext.test(this.dataIn)){
-                console.log("이메일형식이 올바릅니다.");
-                this.$store.commit('join/SET_JOIN_EMAILFORMAT', true);
+                console.log("이메일 형식이 올바릅니다.");
+                this.$store.commit('user/SET_JOIN_EMAILFORMAT', true);
             }
             else if(this.title == 'Email'){
-                console.log("이메일형식이 올바르지 않습니다.");
-                this.$store.commit('join/SET_JOIN_EMAILFORMAT', false);
+                console.log("이메일 형식이 올바르지 않습니다.");
+                this.$store.commit('user/SET_JOIN_EMAILFORMAT', false);
             }
             
         },
+        // placeholderData(){
+        //     console.log("변경")
+        // },
     }
 }
 </script>

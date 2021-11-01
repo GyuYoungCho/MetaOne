@@ -1,19 +1,15 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import guestbook from "./modules/guestbook.js";
-import join from "./modules/join.js";
+import user from "./modules/user.js";
+import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
+export default new Vuex.Store({
+  plugins: [createPersistedState()],
+  guestbook,
   modules: {
-    guestbook,
-    join,
+    user,
   }
-})
-
-export default store
-// export default new Vuex.Store({
-//   guestbook,
-//   join,
-// });
+});
