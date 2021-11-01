@@ -11,6 +11,7 @@ const API_BASE_URL = "https://i5a305.p.ssafy.io:8000";
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyCKsCv78jJlewnvHKNk30YzevYaaOY74fI",
   authDomain: "favorable-bolt-113915.firebaseapp.com",
+  databaseURL: "https://favorable-bolt-113915-default-rtdb.firebaseio.com",
   projectId: "favorable-bolt-113915",
   storageBucket: "favorable-bolt-113915.appspot.com",
   messagingSenderId: "906874790684",
