@@ -18,7 +18,7 @@ export default {
   name: "404",
   methods: {
     onHomeBtnClick () {
-      this.$router.push({ name: 'Main' })
+      this.$router.push({ name: 'UnityMap' })
     },
     onBackBtnClick () {
       this.$router.back()

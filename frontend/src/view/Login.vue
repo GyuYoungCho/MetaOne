@@ -27,8 +27,8 @@
         
         <div class="row" >
             <div class="col-md-3"></div>
-            <button class="col-md-1" style="text-align:left; width:100px;" @click="toJoin()">회원가입</button>
-            <button class="col-md-2" style="text-align:left; width:150px;" @click="toFindPw()">비밀번호 찾기</button>
+            <button class="col-md-1 not-submit" style="text-align:left; width:100px;" @click="toJoin()">회원가입</button>
+            <button class="col-md-2 not-submit" style="text-align:left; width:150px;" @click="toFindPw()">비밀번호 찾기</button>
         </div>
     </div>
 </template>

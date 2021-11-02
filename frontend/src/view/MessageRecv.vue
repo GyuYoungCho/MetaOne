@@ -8,7 +8,7 @@
             <OnlineList :onlinelist="onlinelist" />
           </div>
           <div class="col-3">
-            <MessageList :messagelist="messagelist"/>
+            <MessageList :messagelist="mymessages"/>
           </div>
           <div class="col-4">
             <MessageConfirm :message="selectmessage"/>
@@ -24,7 +24,7 @@
 import OnlineList from "@/components/messageview/OnlineList.vue"
 import MessageList from "@/components/messageview/MessageList.vue"
 import MessageConfirm from "@/components/messageview/MessageConfirm.vue"
-import { mapGetters } from "vuex";
+import { mapGetters, mapActions } from "vuex";
 
 
 export default {
@@ -41,10 +41,20 @@ export default {
           {title:'오늘은',isRead:true,content:'뭐한담',sender:'KIM'},
           {title:'집에',isRead:true,content:'가고싶다',sender:'KWON'},
       ],
+      sendmode:true,
     }
   },
   computed:{
-    ...mapGetters("message", ["selectmessage"]),
+    ...mapGetters("message", ["selectmessage","onlinelist","mymessages"]),
+  },
+  methods:{
+    ...mapActions("message", ["getMessage","getMyMessages","getOnlineList"]),
+  },
+  created(){
+    this.getMessage(null)
+    this.getOnlineList()
+    this.getMyMessages()
+    this.messagelist = this.mymessages
   }
 }
 </script>
