@@ -39,6 +39,7 @@ const routes = [
     path: "/my-page",
     name: "MyPage",
     component: MyPage,
+    // meta: { requireAuth: true },
   },
   {
     path: "/find-pw",
@@ -49,41 +50,49 @@ const routes = [
     path: "/educate-list",
     name: "EducateList",
     component: EducateList,
+    // meta: { requireAuth: true },
   },
   {
     path: "/certificate",
     name: "Certificate",
     component: Certificate,
+    // meta: { requireAuth: true },
   },
   {
     path: "/select-room",
     name: "SelectRoom",
     component: SelectRoom,
+    // meta: { requireAuth: true },
   },
   {
     path: "/select-character",
     name: "SelectCharacter",
     component: SelectCharacter,
+    // meta: { requireAuth: true },
   },
   {
     path: "/setting-room",
     name: "SettingRoom",
     component: SettingRoom,
+    // meta: { requireAuth: true },
   },
   {
     path: "/guestbook",
     name: "Guestbook",
     component: Guestbook,
+    // meta: { requireAuth: true },
   },
   {
     path: "/message-send",
     name: "MessageSend",
     component: MessageSend,
+    // meta: { requireAuth: true },
   },
   {
     path: "/message-recv",
     name: "MessageRecv",
     component: MessageRecv,
+    // meta: { requireAuth: true },
   },
   {
     path: "/unity-map",
@@ -103,45 +112,27 @@ const router = new VueRouter({
   routes,
 });
 
-//// 로그인한 사람만 갈 수 있는 페이지와 아닌 사람만 갈 수 있는 페이지 구분
-// router.beforeEach((to, from, next) => {
-//   // 로그인 안 해야 갈 수 있는 페이지
-//   const outerPages = ["Join", "Login", "FindPW","Auth"];
-//   // 로그인 해야 갈 수 있는 페이지
-//   const privatePages = [
-//     "NotFound",
-//     "MyPage",
-//     "EducateList",
-//     "Certificate",
-//     "SelectRoom",
-//     "SelectCharacter",
-//     "SettingRoom",
-//     "Guestbook",
-//     "MessageSend",
-//     "MessageRecv",
-//     "UnityMap",
-//   ];
-
-//   const authRequired = privatePages.includes(to.name);
-//   const guestRequired = outerPages.includes(to.name);
-//   // 로그인했는지
-//   const isLoggedIn;
-
-//   // 존재하지 않는 페이지로 이동하려 한다면
-//   if (!to.name) {
-//     next({ name: "NotFound" });
-//   }
-
-//   // 로그인한 사용자가 로그인하면 못 가는 페이지로 이동하려 할 때
-//   if (isLoggedIn && guestRequired) {
-//     next({ name: "Login" });
-//   }
-//   // 로그인 안 한 사용자가 로그인해야 갈 수 있는 페이지로 이동하려 할 때
-//   if (!isLoggedIn && authRequired) {
-//     next({ name: "Login" });
+// router.beforeEach(function (to, from, next) {
+//   if (to.matched.some(function(routeInfo) {
+//     return routeInfo.meta.requireAuth
+//   })) {
+//     if (!store.state.user.isLogin) {
+//       next('/')
+//     } else {
+//       next()
+//     }
 //   } else {
-//     next();
+//     if (to.name === 'Login') {
+//       if (store.state.user.isLogin) {
+//         next('/feed')
+//       } else {
+//         next()
+//       }
+//     } else {
+//       next()
+//     }
 //   }
-// });
+
+// })
 
 export default router;

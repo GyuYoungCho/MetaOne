@@ -137,6 +137,7 @@ public class UserDto {
 
     @Getter
     @Setter
+    @Builder
     @AllArgsConstructor
     @NoArgsConstructor
     public static class userInfoResponse {
