@@ -149,6 +149,26 @@ const actions = {
                 console.log(err)
         })
     },
+    async logout({ state, commit }) {
+        
+        await userApi.logout(state)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        
+        commit('SET_JOIN_USERID', "")
+        commit('SET_JOIN_NAME', "")
+        commit('SET_JOIN_EMAIL', "")
+        commit('SET_JOIN_NICKNAME', "")
+        commit('SET_JOIN_PASSWORD', "")
+        commit('SET_USER_ISLOGIN', false)
+        commit('SET_USER_ACCESSTOKEN', "")
+        commit('SET_USER_REFRESHTOKEN', "")
+        
+    },
 }
 
 const mutations = {

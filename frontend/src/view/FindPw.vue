@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <div class="user">
         <main-title :title="'비밀번호 찾기'"></main-title>
         <div class="top-padding">
 
@@ -88,34 +88,9 @@ export default {
 </script>
 
 <style>
-@page {
-    size: 4in 6in landscape;
-}
-
-.page{
-    /* background-color: rgba(154, 69, 235, 0.8); */
-    color: white;
-    padding-left: 10%;
-    padding-right: 10%;
-}
-
-.input-label{
-    list-style-type: none;
-}
 
 .top-padding{
     padding-top: 50px;
-}
-
-.yellow-btn{
-    background-color: rgba(248, 248, 16, 0.8);
-    box-shadow: 2px 2px 3px rgb(70, 69, 69);
-}
-
-.yellow-btn:hover{
-    background-color: rgba(248, 248, 16, 0.8);
-    box-shadow: 2px 2px 3px rgb(70, 69, 69);
-    border: 2px black solid;
 }
 
 

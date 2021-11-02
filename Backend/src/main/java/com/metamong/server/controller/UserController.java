@@ -243,8 +243,12 @@ public class UserController {
     @DeleteMapping("login")
     @ApiOperation(value="로그아웃")
     public ResponseEntity logout(
-            @RequestParam @ApiParam(value="Token", required = true) String firebaseToken
+            @RequestParam @ApiParam(value="Token") String firebaseToken, HttpServletRequest request
             ) throws IOException{
+        System.out.println("firebase token: " + firebaseToken);
+        int userId = (int) request.getAttribute("userId");
+        // DB 파이어베이스 토큰 삭제하기
+
 
         return ResponseEntity.status(200).build();
     }

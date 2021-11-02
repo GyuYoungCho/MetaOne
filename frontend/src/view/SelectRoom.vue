@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <div class="user">
         <main-title :title="'방 선택'"></main-title>
 
         <div class="row" style="height: 400px;">
