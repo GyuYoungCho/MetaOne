@@ -4,9 +4,12 @@ import com.metamong.server.dto.EmailDto;
 import org.springframework.scheduling.annotation.Async;
 
 public interface EmailSenderService {
+    @Async
+    public void sendEmailFindPw(EmailDto emailDto);
 
     @Async
     public void sendEmail(EmailDto emailDto);
+
 
     public String createKey();
 }

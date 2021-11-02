@@ -3,11 +3,20 @@ import VueRouter from "vue-router";
 import Auth from "@/components/Auth.vue";
 import Login from "@/view/Login.vue";
 import Join from "@/view/Join.vue";
+import FindPw from "@/view/FindPw.vue";
+import MyPage from "@/view/MyPage.vue";
+import SelectCharacter from "@/view/SelectCharacter.vue";
+import SelectRoom from "@/view/SelectRoom.vue";
+import SettingRoom from "@/view/SettingRoom.vue";
 import EducateList from "@/view/EducateList.vue";
 import Certificate from "@/view/Certificate.vue";
 import Guestbook from "@/view/Guestbook.vue";
 import MessageSend from "@/view/MessageSend.vue";
 import MessageRecv from "@/view/MessageRecv.vue";
+import UnityMap from "@/view/UnityMap.vue";
+import NotFound from "@/view/errorpages/404.vue";
+
+import store from "@/store/"
 
 Vue.use(VueRouter);
 
@@ -28,61 +37,75 @@ const routes = [
     name: "Join",
     component: Join,
   },
-  // {
-  //   path: "/my-page",
-  //   name: "Mypage",
-  //   component: Mypage,
-  // },
-  // {
-  //   path: "/find-pw",
-  //   name: "FindPw",
-  //   component: FindPw,
-  // },
+  {
+    path: "/my-page",
+    name: "MyPage",
+    component: MyPage,
+    meta: { requireAuth: true },
+  },
+  {
+    path: "/find-pw",
+    name: "FindPw",
+    component: FindPw,
+  },
   {
     path: "/educate-list",
     name: "EducateList",
     component: EducateList,
+    meta: { requireAuth: true },
   },
   {
     path: "/certificate",
     name: "Certificate",
     component: Certificate,
+    meta: { requireAuth: true },
   },
-  // {
-  //   path: "/character-select",
-  //   name: "Character",
-  //   component: Character,
-  // },
-  // {
-  //   path: "/room-select",
-  //   name: "Room",
-  //   component: Room,
-  // },
-  // {
-  //   path: "/room-create",
-  //   name: "Room",
-  //   component: Room,
-  // },
+  {
+    path: "/select-room",
+    name: "SelectRoom",
+    component: SelectRoom,
+    meta: { requireAuth: true },
+  },
+  {
+    path: "/select-character",
+    name: "SelectCharacter",
+    component: SelectCharacter,
+    meta: { requireAuth: true },
+  },
+  {
+    path: "/setting-room",
+    name: "SettingRoom",
+    component: SettingRoom,
+    meta: { requireAuth: true },
+  },
   {
     path: "/guestbook",
     name: "Guestbook",
     component: Guestbook,
+    meta: { requireAuth: true },
   },
   {
     path: "/message-send",
     name: "MessageSend",
     component: MessageSend,
+    meta: { requireAuth: true },
   },
   {
     path: "/message-recv",
     name: "MessageRecv",
     component: MessageRecv,
+    meta: { requireAuth: true },
   },
-  // {
-  //   path: "/unity-map",
-  //   name: "UnityMap",
-  //   component: UnityMap,
-  // },
+  {
+    path: "/unity-map",
+    name: "UnityMap",
+    component: UnityMap,
+  },
+  {
+    path: "/404",
+    name: "NotFound",
+    component: NotFound,
+  },
 ];
 
 const router = new VueRouter({
@@ -90,5 +113,29 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes,
 });
+
+
+router.beforeEach(function (to, from, next) {
+  if (to.matched.some(function(routeInfo) {
+    return routeInfo.meta.requireAuth
+  })) {
+    if (!store.state.user.isLogin) {
+      next('/')
+    } else {
+      next()
+    }
+  } else {
+    if (to.name === 'Login') {
+      if (store.state.user.isLogin) {
+        next('/select-character')
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
+  }
+
+})
 
 export default router;

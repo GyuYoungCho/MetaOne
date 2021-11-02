@@ -47,7 +47,7 @@ public class AuthInterceptor implements HandlerInterceptor {                    
         }else if(result.equals("invalid")){
             return false;
         }else{
-            //정상s
+            //정상
             request.setAttribute("userId",Integer.parseInt(result));
         }
         return true;

@@ -4,17 +4,16 @@ import com.metamong.server.dto.UserDto;
 import com.metamong.server.dto.encode.Encoder;
 import com.metamong.server.entity.Characters;
 import com.metamong.server.entity.User;
-import com.metamong.server.repository.CharactersRepository;
 import com.metamong.server.exception.ApplicationException;
+import com.metamong.server.repository.CharactersRepository;
 import com.metamong.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 import java.util.Optional;
@@ -32,12 +31,13 @@ public class UserServiceImpl implements UserService{
     private final String ENCODE_ID = "bcrypt";
     private static final Map<String, PasswordEncoder> encoders = Encoder.getEncoder();      // 인코더 : 여러 타입의 암호화 방식을 저장
 
+    private final PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(ENCODE_ID, encoders);
+
     @Override
     public int register(UserDto.RegisterRequest registerInfo) {
-        PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(ENCODE_ID, encoders);
         String encPassword = passwordEncoder.encode(registerInfo.getPassword());
         // 암호화 확인 작업
-        //if(!passwordEncoder.matches(registerInfo.getPassword(), encPassword)) throw new ApplicationException(HttpStatus.INTERNAL_SERVER_ERROR, "비밀번호 암호화 중 불일치 오류");
+        if(!passwordEncoder.matches(registerInfo.getPassword(), encPassword)) throw new ApplicationException(HttpStatus.INTERNAL_SERVER_ERROR, "비밀번호 암호화 중 불일치 오류");
         User user = new User(registerInfo.getEmail(), encPassword, registerInfo.getName(), registerInfo.getNickname());
 
         return userRepository.save(user).getId();
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public UserDto.LoginRes login(UserDto.LoginRequest loginReq) {
-        PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(ENCODE_ID, encoders);
+//        PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(ENCODE_ID, encoders);
         Optional<User> user = userRepository.findByEmail(loginReq.getEmail());
 
         if (!user.isPresent()) throw new ApplicationException(HttpStatus.valueOf(401), "일치하는 이메일이 없습니다.");
@@ -124,6 +124,23 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public UserDto.userInfoResponse getMyInfo(int userId) {
+
+        Optional<User> user = userRepository.findById(userId);
+
+        if(!user.isPresent()) throw new ApplicationException(HttpStatus.valueOf(404));
+
+        UserDto.userInfoResponse userRes = UserDto.userInfoResponse.builder()
+                .id(String.valueOf(user.get().getId()))
+                .name(user.get().getName())
+                .email(user.get().getEmail())
+                .nickname(user.get().getNickname())
+                .build();
+
+        return userRes;
+    }
+
+    @Override
     public void setCharacter(int userId, int character) {
         // token에 저장된 id
         User user = userRepository.findById(userId).orElse(null);
@@ -163,18 +180,26 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void updatePassword(UserDto.UpdateRequest updateInfo, HttpServletRequest request) {
+    public Optional<User> checkPassword(UserDto.UpdateRequest updateInfo, HttpServletRequest request) {
         Optional<User> user = userRepository.findById((int) request.getAttribute("userId"));
         if(!user.isPresent()) throw new ApplicationException(HttpStatus.valueOf(401), "회원 정보가 없습니다.");
 
-        PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(ENCODE_ID, encoders);
         if(!passwordEncoder.matches(updateInfo.getOriginPassword(), user.get().getPassword())) throw new ApplicationException(HttpStatus.valueOf(401), "비밀번호 불일치");
+
+        return user;
+    }
+
+    @Override
+    public void updatePassword(UserDto.UpdateRequest updateInfo, HttpServletRequest request) {
+        Optional<User> user = this.checkPassword(updateInfo, request);
 
         user.ifPresent(userSelect -> {
             userSelect.setPassword(passwordEncoder.encode(updateInfo.getNewPassword()));
             userRepository.save(userSelect);
         });
     }
+
+
 
     @Override
     public void updateNickname(UserDto.UpdateRequest updateInfo, HttpServletRequest request) {
@@ -192,5 +217,20 @@ public class UserServiceImpl implements UserService{
         User user = userRepository.findById(id)
                                 .orElseThrow(IllegalArgumentException::new);
         if(user != null) userRepository.delete(user);
+    }
+
+    @Override
+    public void resetPassword(String tmpPassword, String email) {
+        String encPassword = passwordEncoder.encode(tmpPassword);
+        // 암호화 확인 작업
+        if(!passwordEncoder.matches(tmpPassword, encPassword)) throw new ApplicationException(HttpStatus.INTERNAL_SERVER_ERROR, "비밀번호 암호화 중 불일치 오류");
+
+        Optional<User> user = userRepository.findByEmail(email);
+
+        user.ifPresent(select -> {
+            select.setPassword(encPassword);
+
+            userRepository.save(select);
+        });
     }
 }

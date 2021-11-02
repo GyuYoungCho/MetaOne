@@ -10,6 +10,7 @@ import com.querydsl.core.Tuple;
 import com.querydsl.core.types.Expression;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -26,6 +27,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     private UserRepository userRepository;
     private CertificateRepository certificateRepository;
 
+    @Autowired
     public AttendanceServiceImpl(EducationRepository educationRepository,
                                  UserRepository userRepository,
                                  CertificateRepository certificateRepository){
@@ -41,6 +43,7 @@ public class AttendanceServiceImpl implements AttendanceService {
     public MyAttendDto.ResponseList getMyAttendance(int userId) {
 
         JPAQueryFactory query = new JPAQueryFactory(entityManager);
+
         QUser qUser = QUser.user;
         QCertificate qCertificate = QCertificate.certificate;
 

@@ -3,6 +3,7 @@ package com.metamong.server.service;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -13,15 +14,19 @@ import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.database.*;
 import com.metamong.server.dto.FcmMessage;
+import com.metamong.server.dto.MessageDto.AllSendRequest;
 import com.metamong.server.dto.UserDto;
 import com.metamong.server.entity.FirebaseToken;
 import com.metamong.server.entity.User;
 import com.metamong.server.repository.FirebaseTokenRepository;
+import com.metamong.server.repository.UserRepository;
 
 import okhttp3.*;
 //import okhttp3;
@@ -33,6 +38,9 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
 
     private final String API_URL = "https://fcm.googleapis.com/v1/projects/greenfingers-3cbec/messages:send";
     private final ObjectMapper objectMapper;
+    
+    @Autowired
+	private UserRepository userRepository;
     
     @Autowired
 	private FirebaseTokenRepository firebaseTokenRepository;
@@ -102,15 +110,13 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
 
     
     /**
-     * 여러 유저에게 캐스팅을 위해 Firebase Auth Token 들 가져오기 (최근 접속한 브라우저 순으로 정렬하여 반환)
-     * @param users  : UserDto 리스트
+     * 특정 유저의 Firebase Auth Token 들 가져오기 -> 사용자가 여러 브라우저로 접속했을 때 모두 캐스팅을 위해
+     * @param userId : 유저 ID
      * @return : Firebase 인증 토큰
      */
     @Override
-    public List<FirebaseToken> getUsersToken(List<UserDto> users) {
-        List<Integer> userIds = new ArrayList<>();
-        for(UserDto user : users) userIds.add(user.getId());
-        Optional<List<FirebaseToken>> firebaseTokens = firebaseTokenRepository.findByUserIdInOrderByCreateAtDesc(userIds);
+    public List<FirebaseToken> getUserToken(int userId) {
+        Optional<List<FirebaseToken>> firebaseTokens = firebaseTokenRepository.findByUserId(userId);
 
         return firebaseTokens.orElse(null);
     }
@@ -167,4 +173,5 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
 
         return googleCredentials.getAccessToken().getTokenValue();
     }
+    
 }

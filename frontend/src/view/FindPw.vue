@@ -1,27 +1,30 @@
 <template>
-    <div class="page">
+    <div class="user">
+        <main-title :title="'비밀번호 찾기'"></main-title>
         <div class="top-padding">
 
         </div>
         <li class="input-label" v-for="(e, i) in titles" :key="i">
             <div class="row mb-4 pb-2">
-                <div class="col-md-8">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-7">
                     <inputparam :title="e" :placeholderData="placeholderDatas[i]"></inputparam>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                 </div>
             </div>
         </li>
-        <div style="height:200px;">
+        <div style="height:50px;">
 
         </div>
 
         <div class=" row col-md-9">
-            <div class="col-md-2"> </div>
-            <div class="row col-md-10" style="text-align:left;">
-                <button class="btn yellow-btn col-md-5">확인하기</button>
+            <div class="col-md-5"> </div>
+            <div class="row col-md-7" style="text-align:left;">
+                <button class="btn yellow-btn col-md-5" @click="sendTempPwMethod()">임시 비밀번호 발송</button>
                 <div class="col-md-1"></div>
-                <button class="btn yellow-btn col-md-5">취소</button>
+                <button class="btn yellow-btn col-md-5" @click="cancel()">취소</button>
             </div>
         </div>
         
@@ -31,29 +34,52 @@
 
 <script>
 import Inputparam from '../components/Inputparam.vue'
+import MainTitle from '../components/MainTitle.vue'
+import {mapState, mapActions} from 'vuex'
+
 export default {
     name: "FindPw",
     components:{
+        MainTitle,
         Inputparam,
     },
     data(){
         return{
             titles: ["이름", "Email"],
-            placeholderDatas: ["바이든", "email@email.com"],
+            placeholderDatas: ["이름", "email@domain.com"],
 
         }
     },
     methods:{
+        ...mapActions('user', ['sendTempPw']),
+        init(){
+            this.$store.commit('user/SET_JOIN_NAME', "")
+            this.$store.commit('user/SET_JOIN_EMAIL', "")
 
+        },
+        async sendTempPwMethod(){
+            // 이름, 이메일 비었는지 체크
+            if(this.name == "" || this.email == ""){
+                alert("이름과 이메일을 입력해주세요.")
+                return
+            }
+
+            // 임시 메일 발송 API 호출
+            await this.sendTempPw()
+
+        },
+        cancel(){
+            this.$router.push({name: 'Login'}).catch(() => {})
+        },
     }, 
     mounted(){
 
     },
-    created(){
-
+    async created(){
+        await this.init()
     },
     computed:{
-
+        ...mapState('user', ['name', 'email'])
     },
     watch:{
 
@@ -62,33 +88,9 @@ export default {
 </script>
 
 <style>
-@page {
-    size: 4in 6in landscape;
-}
-
-.page{
-    /* background-color: rgba(154, 69, 235, 0.8); */
-    color: white;
-    padding-left: 10%;
-}
-
-.input-label{
-    list-style-type: none;
-}
 
 .top-padding{
-    padding-top: 200px;
-}
-
-.yellow-btn{
-    background-color: rgba(248, 248, 16, 0.8);
-    box-shadow: 2px 2px 3px rgb(70, 69, 69);
-}
-
-.yellow-btn:hover{
-    background-color: rgba(248, 248, 16, 0.8);
-    box-shadow: 2px 2px 3px rgb(70, 69, 69);
-    border: 2px black solid;
+    padding-top: 50px;
 }
 
 
