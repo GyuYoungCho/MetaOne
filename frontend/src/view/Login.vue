@@ -1,36 +1,76 @@
 <template>
-    <div class="page">
-        
+    <div class="user">
+        <main-title :title="'위기탈출 메타원'"></main-title>
+        <div class="img_main">
+            <img src="" ref="캐릭터 공간" />
+        </div>
+
         <li class="input-label" v-for="(e, i) in titles" :key="i">
             <div class="row mb-4">
-                <div class="col-md-8">
+                <div class="col-md-3">
+                </div>
+                <div class="col-md-5">
                     <inputparam :title="e" :placeholderData="placeholderDatas[i]"></inputparam>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
+                    <div style="float: left;" v-if="i == 0">
+                        <button class="btn yellow-btn" @click="tryLogin()">&nbsp;&nbsp;&nbsp;&nbsp;시작하기&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                    </div>
+                    <div style="float: left;" v-if="i == 1">
+                        <button class="btn yellow-btn">카카오 로그인</button>
+                    </div>
+                </div>
+                <div class="col-md-2">
                 </div>
             </div>
-            
         </li>
         
+        <div class="row" >
+            <div class="col-md-3"></div>
+            <button class="col-md-1" style="text-align:left; width:100px;" @click="toJoin()">회원가입</button>
+            <button class="col-md-2" style="text-align:left; width:150px;" @click="toFindPw()">비밀번호 찾기</button>
+        </div>
     </div>
 </template>
 
 <script>
 import Inputparam from '../components/Inputparam.vue'
+import MainTitle from '../components/MainTitle.vue'
+import { mapState, mapActions } from 'vuex'
+
 export default {
     name: "Login",
     components:{
+        MainTitle,
         Inputparam,
     },
     data(){
         return{
-            titles: ["이름", "Email", "닉네임", "비밀번호", "비밀번호확인", "인증번호"],
-            placeholderDatas: ["바이든", "email@email.com", "메타몽", "Password", "Password Confirm", "이메일 인증번호"],
+            titles: ["Email", "비밀번호"],
+            placeholderDatas: ["Email", "Password"],
 
         }
     },
     methods:{
+        ...mapActions('user', ['login']),
+        tryLogin(){
+            if(this.email == "") {
+                alert("이메일을 입력해주세요.")
+                return
+            }
+            else if(this.password == "") {
+                alert("비밀번호를 입력해주세요.")
+                return
+            }
 
+            this.login()
+        },
+        toJoin(){
+            this.$router.push({name: 'Join'}).catch(() => {})
+        },
+        toFindPw(){
+            this.$router.push({name: 'FindPw'}).catch(() => {})
+        }
     }, 
     mounted(){
 
@@ -39,7 +79,7 @@ export default {
 
     },
     computed:{
-
+        ...mapState('user', ['email', 'password'])
     },
     watch:{
 
@@ -48,12 +88,10 @@ export default {
 </script>
 
 <style>
-.page{
-    /* background-color: rgba(154, 69, 235, 0.8); */
-    color: white;
-}
 
-.input-label{
-    list-style-type: none;
+
+.img_main{
+    width: 50%;
+    height: 30%;
 }
 </style>

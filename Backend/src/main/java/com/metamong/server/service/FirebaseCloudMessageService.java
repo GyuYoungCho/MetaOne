@@ -14,7 +14,7 @@ public interface FirebaseCloudMessageService {
 	
 	void deleteLastDay();
 
-	List<FirebaseToken> getUsersToken(List<UserDto> users);
+	List<FirebaseToken> getUserToken(int userId);
 
 	List<FirebaseToken> getBroadcastToken();
 

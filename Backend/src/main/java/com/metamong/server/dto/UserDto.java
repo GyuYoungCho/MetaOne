@@ -137,9 +137,11 @@ public class UserDto {
 
     @Getter
     @Setter
+    @Builder
     @AllArgsConstructor
     @NoArgsConstructor
     public static class userInfoResponse {
+        private String id;
         private String email;
         private String nickname;
         private String name;
