@@ -1,5 +1,7 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/messaging";
+// import "firebase/firebase-messaging"
+
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyCKsCv78jJlewnvHKNk30YzevYaaOY74fI",
   authDomain: "favorable-bolt-113915.firebaseapp.com",
@@ -18,4 +20,4 @@ if (firebase.messaging.isSupported()) {
   fire_messaging = firebase.messaging();
 }
 
-export default firebase;
+export default firebase.messaging();

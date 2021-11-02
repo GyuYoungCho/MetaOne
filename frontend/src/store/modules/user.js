@@ -1,5 +1,6 @@
 import userApi from "@/api/user.js";
 import router from "@/router"
+import messaging from '@/api/firebase.js'
 
 const state = {
     userId: "",
@@ -87,6 +88,13 @@ const actions = {
         })
     },
     async login({ state, commit }) {
+        await messaging.getToken({ vapidKey: 'BHNLrFDYFvHeFVnKkYMskZfNTjOu8z5_G_QQJcIdRZdZ2lq3Sl5iMXRdtDdr_M2fboN1EKU_o-DTsxOBwljmXSY' })
+        .then((token) => {
+            console.log(token)
+            
+            commit('SET_USER_FIREBASETOKEN', token)
+        })
+
         await userApi.login(state)
             .then((res) => {
                 if (res.status == 200) {
@@ -169,6 +177,20 @@ const actions = {
         commit('SET_USER_REFRESHTOKEN', "")
         
     },
+    onNotification(payload) {
+        console.log(payload)
+        console.log(payload.notification)
+
+        
+        const notiData = {
+            type: payload.notification.title,
+            data: payload.data
+        }
+        
+        console.log(notiData.type)
+        console.log(notiData.data)
+
+    },
 }
 
 const mutations = {
@@ -213,6 +235,9 @@ const mutations = {
     },
     SET_USER_REFRESHTOKEN(state, payload) {
         state.refreshToken = payload;
+    },
+    SET_USER_FIREBASETOKEN(state, payload) {
+        state.firebaseToken = payload;
     },
 
     SET_USER_ORIGINPASSWORD(state, payload) {

@@ -1,24 +1,5 @@
 package com.metamong.server.controller;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import com.google.firebase.messaging.FirebaseMessagingException;
 import com.metamong.server.dto.MessageDto;
 import com.metamong.server.dto.MessageDto.MyMessageResponse;
@@ -31,9 +12,18 @@ import com.metamong.server.repository.FirebaseTokenRepository;
 import com.metamong.server.repository.UserRepository;
 import com.metamong.server.service.FirebaseCloudMessageService;
 import com.metamong.server.service.MessageService;
-
-
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/message")
@@ -66,10 +56,12 @@ public class MessageController {
 	@PostMapping("/private")
 	@ApiOperation(value = "개인 쪽지를 발신한다.")
 	public ResponseEntity<String> sendOne(@RequestBody @Valid MessageDto.MRegisterRequest messageForm, HttpServletRequest request) throws IOException, FirebaseMessagingException, InterruptedException {
-		
+
+		System.out.println(messageForm.getNickname());
+
 		Optional<User> recv_user = userRepository.findByNickname(messageForm.getNickname());
-		// int userId = (int) request.getAttribute("userId");
-		int userId = 1;
+		int userId = (int) request.getAttribute("userId");
+
 		Optional<User> send_user = userRepository.findById(userId);
 		System.out.println(recv_user.get().getEmail());
 		
@@ -77,13 +69,12 @@ public class MessageController {
 			return ResponseEntity.noContent().build();
 		System.out.println("hi");
 		
-		
 		Message regMessage = messageService.registerMessage(messageForm,recv_user.get(),send_user.get());
 		
 		Optional<List<FirebaseToken>> user_token = firebaseTokenRepository.findByUserId(userId);
 		List<FirebaseToken> recv_token = new ArrayList<>();
 		recv_token.add(user_token.get().get(0));
-		firebaseCloudMessageService.sends(recv_token,  Integer.toString(regMessage.getId()), regMessage.getTitle(), regMessage.getContent());
+		firebaseCloudMessageService.sends(recv_token, Integer.toString(regMessage.getId()), regMessage.getTitle(), regMessage.getContent());
 		
 		return ResponseEntity.status(201).build();
 	}

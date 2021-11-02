@@ -2,6 +2,10 @@ import Vue from "vue";
 import App from "./App.vue";
 import router from "./router";
 import store from "./store";
+import firebaseMessaging from './api/firebase';
+
+Vue.prototype.$messaging = firebaseMessaging
+
 // import { initializeApp } from "firebase/app";
 // import { getDatabase } from "firebase/database";
 // import { FIREBASE_CONFIG } from "./config";

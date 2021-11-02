@@ -1,20 +1,5 @@
 package com.metamong.server.service;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import org.apache.http.HttpHeaders;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
@@ -24,10 +9,23 @@ import com.metamong.server.dto.UserDto;
 import com.metamong.server.entity.FirebaseToken;
 import com.metamong.server.entity.User;
 import com.metamong.server.repository.FirebaseTokenRepository;
-
-import okhttp3.*;
-//import okhttp3;
 import lombok.RequiredArgsConstructor;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+import org.apache.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.*;
+
+//import okhttp3;
 
 @Component
 @RequiredArgsConstructor
@@ -137,12 +135,12 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
      */
     @Override
     @Transactional
-    public void save(UserDto.Response myRes, String token) {
-        Optional<List<FirebaseToken>> firebaseTokens = firebaseTokenRepository.findByUserIdAndToken(myRes.getId(), token);
+    public void save(UserDto.LoginRes loginRes, String token) {
+        Optional<List<FirebaseToken>> firebaseTokens = firebaseTokenRepository.findByUserIdAndToken(loginRes.getId(), token);
         if(firebaseTokens.isPresent() && firebaseTokens.get().size() >= 1) return;
 
         User user = new User();
-        user.setId(myRes.getId());
+        user.setId(loginRes.getId());
         FirebaseToken firebaseToken = FirebaseToken.builder()
                 .user(user)
                 .token(token)

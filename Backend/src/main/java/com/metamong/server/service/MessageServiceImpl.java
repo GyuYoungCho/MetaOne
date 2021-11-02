@@ -1,21 +1,16 @@
 package com.metamong.server.service;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.metamong.server.dto.MessageDto;
 import com.metamong.server.dto.MessageDto.MyMessageResponse;
 import com.metamong.server.dto.MessageDto.OneMessageResponse;
 import com.metamong.server.entity.Message;
 import com.metamong.server.entity.User;
 import com.metamong.server.repository.MessageRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.*;
 
 
 @Service
@@ -31,6 +26,8 @@ public class MessageServiceImpl implements MessageService {
 		
 		Message message = new Message(sent_user,recv_user,messageForm.getTitle(),
 					messageForm.getContent(),new Date(),0);
+
+
 		messageRepository.save(message);
 		
 		return message;
