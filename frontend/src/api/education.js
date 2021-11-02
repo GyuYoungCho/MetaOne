@@ -1,20 +1,51 @@
 export default {
   myAttendance() {
-    return "/edu/attendance";
+    return _axios({
+      url: `/edu/attendance`,
+      method: "get",
+    });
   },
-  registerAttendance() {
-    return "/edu/attendance";
+  registerAttendance(data) {
+    return _axios({
+      url: `/edu/attendance`,
+      method: "post",
+      data: {
+        education: data.education,
+      },
+    });
   },
   getAttendance(education) {
-    return `/edu/attendance/${education}`;
+    return _axios({
+      url: `/edu/attendance/${education}`,
+      method: "get",
+    });
   },
-  getCertificate() {
-    return "/edu/certificate";
+  getCertificate(data) {
+    return _axios({
+      url: `/edu/certificate`,
+      method: "get",
+      data: {
+        education: data.education,
+      },
+    });
   },
-  updateCertificate() {
-    return "/edu/rank";
+  updateCertificate(data) {
+    return _axios({
+      url: `/edu/rank`,
+      method: "put",
+      data: {
+        education: data.education,
+        passtime: data.passtime,
+      },
+    });
   },
-  getRank() {
-    return "/edu/rank";
+  getRank(data) {
+    return _axios({
+      url: `/edu/rank`,
+      method: "get",
+      data: {
+        education: data.education,
+      },
+    });
   },
 };

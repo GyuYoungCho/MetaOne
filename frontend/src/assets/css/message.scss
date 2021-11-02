@@ -220,6 +220,12 @@
     }
   }
 
+  .fa-exclamation-circle {
+    color: red;
+    position: absolute;
+    top: 83%;
+    left: 120px;
+  }
   .offcanvas {
     background-color: $medium-light-blue;
     .offcanvas-body {
@@ -284,8 +290,18 @@
         }
       }
       .msg_history {
-        height: 516px;
+        height: 600px;
         overflow-y: auto;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        height: 17%;
+        background-color: #333861;
+        border-radius: 10px;
       }
     }
 

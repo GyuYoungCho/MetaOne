@@ -41,11 +41,28 @@ export default {
     }
   },
   methods:{
-    registerGuestbook(){
-
+    
+    async registerGuestbook(){
+      await guestbookAPI
+        .regist(data)
+        .then((res) => {
+          console.log(res.data)
+        })
+        .catch((error) => {
+          alert("못가져옴");
+          console.log(error);
+        });
     },
-    modifyGuestbook(){
-
+    async modifyGuestbook(){
+      await guestbookAPI
+        .modify(data)
+        .then((res) => {
+          console.log(res.data)
+        })
+        .catch((error) => {
+          alert("못가져옴");
+          console.log(error);
+        });
     },
   },
   watch:{

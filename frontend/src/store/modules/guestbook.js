@@ -24,11 +24,11 @@ export default {
     },
   },
   actions: {
-    getGuestbooks(store) {
-      axios
-        .get(guestbookAPI.select())
+    async getGuestbooks({ commit }, data) {
+      await guestbookAPI
+        .select(data)
         .then((res) => {
-          store.commit("SET_GUESTBOOKS", res.data);
+          commit("SET_GUESTBOOKS", res.data);
         })
         .catch((error) => {
           alert("못가져옴");

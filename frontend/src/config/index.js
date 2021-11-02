@@ -1,12 +1,10 @@
 // Import the functions you need from the SDKs you need
-// importScripts("https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js");
-// importScripts("https://www.gstatic.com/firebasejs/9.1.3/firebase-messaging.js");
-// importScripts("https://www.gstatic.com/firebasejs/9.1.3/firebase-analytics.js");
+// importScripts("https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js");
+// importScripts("https://www.gstatic.com/firebasejs/9.2.0/firebase-messaging.js");
+// importScripts("https://www.gstatic.com/firebasejs/9.2.0/firebase-analytics.js");
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const API_BASE_URL = "https://i5a305.p.ssafy.io:8000";
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyCKsCv78jJlewnvHKNk30YzevYaaOY74fI",
@@ -19,7 +17,7 @@ const FIREBASE_CONFIG = {
   measurementId: "G-SRZGEB3WSM",
 };
 
-export default { API_BASE_URL, FIREBASE_CONFIG };
+export { API_BASE_URL, FIREBASE_CONFIG };
 // const messaging = firebase.messaging();
 // // Initialize Firebase
 // messaging.setBackgroundMessageHandler((payload) => {

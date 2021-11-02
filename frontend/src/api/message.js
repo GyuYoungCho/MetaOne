@@ -1,17 +1,42 @@
 export default {
-  sendOne() {
-    return "/message/private";
+  sendOne(data) {
+    return _axios({
+      url: `/message/private`,
+      method: "post",
+      data: {
+        nickname: data.nickname,
+        title: data.title,
+        content: data.content,
+        firebaseToken: data.firebaseToken,
+      },
+    });
   },
   selectMyMessage() {
-    return "/message/private";
+    return _axios({
+      url: `/message/private`,
+      method: "get",
+    });
   },
   selectOneByOneMessage(nickname) {
-    return `/message/private/${nickname}`;
+    return _axios({
+      url: `/message/private/${nickname}`,
+      method: "get",
+    });
   },
   sendAll() {
-    return "/message/public";
+    return _axios({
+      url: `/message/public`,
+      method: "post",
+      data: {
+        title: data.title,
+        content: data.content,
+      },
+    });
   },
   userOnline() {
-    return "/message/online";
+    return _axios({
+      url: `/message/online`,
+      method: "get",
+    });
   },
 };
