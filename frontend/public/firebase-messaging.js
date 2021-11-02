@@ -1,6 +1,5 @@
-import firebase from "firebase/compat/app";
-import "firebase/compat/messaging";
-// import "firebase/firebase-messaging"
+importScripts("https://www.gstatic.com/firebasejs/9.2.0/firebase-app.js");
+importScripts("https://www.gstatic.com/firebasejs/9.2.0/firebase-messaging.js");
 
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyCKsCv78jJlewnvHKNk30YzevYaaOY74fI",
@@ -12,12 +11,10 @@ const FIREBASE_CONFIG = {
   appId: "1:906874790684:web:a19307cd8665c262bf50d9",
   measurementId: "G-SRZGEB3WSM",
 };
-firebase.initializeApp(FIREBASE_CONFIG);
 
-let fire_messaging = null;
-
+let app = null;
+let messaging = null;
 if (firebase.messaging.isSupported()) {
-  fire_messaging = firebase.messaging();
+  app = firebase.initializeApp(FIREBASE_CONFIG);
+  messaging = firebase.messaging();
 }
-
-export default firebase.messaging();

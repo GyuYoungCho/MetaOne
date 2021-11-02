@@ -8,7 +8,7 @@
     <div class="a_card">
         <ul class="list-group mt-3">
             <AvatarCard  v-for="(user, index) in onlinelist" :key="index" :user="user"
-              @click.native="getReceiver(user.name)"/>
+              @click.native="getOneMessage(user)"/>
         </ul>
     </div>
     
@@ -32,7 +32,9 @@ export default {
     },
     methods:{
       ...mapActions('message', ['getReceiver']),
-      
+      getOneMessage(user){
+        
+      }
     }
 }
 </script>

@@ -1,5 +1,8 @@
+import _axios from './default.js'
+
 export default {
   sendOne(data) {
+
     return _axios({
       url: `/message/private`,
       method: "post",

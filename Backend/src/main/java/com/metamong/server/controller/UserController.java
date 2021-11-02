@@ -8,6 +8,7 @@ import com.metamong.server.entity.User;
 import com.metamong.server.exception.ApplicationException;
 import com.metamong.server.repository.UserRepository;
 import com.metamong.server.service.EmailSenderService;
+import com.metamong.server.service.FirebaseCloudMessageService;
 import com.metamong.server.service.JwtService;
 import com.metamong.server.service.UserService;
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +45,9 @@ public class UserController {
 
     @Autowired
     private JwtService jwtService;
+
+    @Autowired
+    private FirebaseCloudMessageService firebaseCloudMessageService;
 
     @Value("${token.accesstoken}")
     private String accessToken;
@@ -137,6 +141,10 @@ public class UserController {
         UserDto.LoginRes loginRes = userService.login(loginInfo);
         Map<String, Object> map = jwtService.createToken(loginRes.getId());
         System.out.println("map : "+ map.get(accessToken));
+        System.out.println("firebase 토큰 오나? : " + loginInfo.getFirebaseToken());
+
+        firebaseCloudMessageService.save(loginRes, loginInfo.getFirebaseToken());
+        System.out.println("파베토큰 저장 완료");
 
         HttpHeaders resHeader = new HttpHeaders();
 
@@ -246,9 +254,9 @@ public class UserController {
             @RequestParam @ApiParam(value="Token") String firebaseToken, HttpServletRequest request
             ) throws IOException{
         System.out.println("firebase token: " + firebaseToken);
-        int userId = (int) request.getAttribute("userId");
-        // DB 파이어베이스 토큰 삭제하기
 
+        // DB 파이어베이스 토큰 삭제하기
+        firebaseCloudMessageService.del(firebaseToken);
 
         return ResponseEntity.status(200).build();
     }

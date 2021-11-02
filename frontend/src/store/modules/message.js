@@ -1,3 +1,5 @@
+import messageAPI from "@/api/message.js";
+
 export default {
   namespaced: true,
   state: {
@@ -48,18 +50,38 @@ export default {
     getReceiver({ commit }, item) {
       commit("SELECT_RECEIVER", item);
     },
-    getMyMessages(store) {
-      // axios
-      //   .get(messageAPI.selectMyMessage())
-      //   .then((res) => {
-      //     store.commit("SET_MESSAGES", res.data);
-      //   })
-      //   .catch((error) => {
-      //     alert("못가져옴");
-      //     console.log(error);
-      //   });
+    getMyMessages({ commit }) {
+      messageAPI
+        .selectMyMessage()
+        .then((res) => {
+          commit("SET_MYMESSAGES", res.data);
+        })
+        .catch((error) => {
+          alert("못가져옴");
+          console.log(error);
+        });
     },
-    getOnebyOneMessages(store) {},
-    getOnlineList(store) {},
+    getOnebyOneMessages({ commit }, item) {
+      messageAPI
+        .selectOneByOneMessage(item)
+        .then((res) => {
+          commit("SET_ONEBYONEMESSAGES", res.data);
+        })
+        .catch((error) => {
+          alert("못가져옴");
+          console.log(error);
+        });
+    },
+    getOnlineList({ commit }) {
+      messageAPI
+        .userOnline()
+        .then((res) => {
+          commit("SET_ONLINELIST", res.data);
+        })
+        .catch((error) => {
+          alert("못가져옴");
+          console.log(error);
+        });
+    },
   },
 };
