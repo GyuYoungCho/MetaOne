@@ -10,7 +10,7 @@
         
         <div class="col-md-3 pt-1 px-0">{{form_content[0]}}</div>
         <div class="col-md-9">
-            <input type="text" readonly class="form-control" v-model="valid_receiver">
+            <input type="text"  class="form-control">  <!-- readonly  v-model="valid_receiver" -->
         </div>
       </div>
       <div class="row message_com m_title mt-3">
@@ -33,7 +33,8 @@
 
 <script>
 import Inputparam from '@/components/Inputparam.vue'
-import { mapGetters } from "vuex";
+import { mapState, mapGetters } from "vuex";
+import messageAPI from "@/api/message.js";
 
 export default {
   components:{
@@ -48,6 +49,7 @@ export default {
     }
   },
   computed:{
+    ...mapState('user', ["firebaseToken"]),
     ...mapGetters("message", ["selectreceiver"]),
     valid_receiver(){
       if(this.selectreceiver && typeof this.selectreceiver =="string") 
@@ -57,8 +59,24 @@ export default {
   },
 
   methods:{
+    
     sendMessage(){
-      console.log("hi");
+      const message = {
+        nickname: "테스트입니다",
+        title: this.title,
+        content: this.content,
+        firebaseToken: this.firebaseToken,
+      }
+
+      messageAPI
+        .sendOne(message)
+        .then((res) => {
+          commit("SET_MYMESSAGES", res.data);
+        })
+        .catch((error) => {
+          alert("못가져옴");
+          console.log(error);
+        });
     }
   }
 }

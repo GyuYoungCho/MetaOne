@@ -67,7 +67,7 @@ export default {
 
       await this.logout()
 
-      this.$router.push({name: 'Login'})
+      this.$router.push({name: 'Login'}).catch(() => {})
     },
   }
 }

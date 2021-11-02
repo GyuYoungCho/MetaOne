@@ -1,4 +1,3 @@
-import axios from "@/api/default.js";
 import guestbookAPI from "@/api/guestbook.js";
 
 export default {
