@@ -66,11 +66,23 @@ export default {
         })
     },
     sendTempPw(data) {
-
+        
         return _axios({
             url: `/users/find-pw`,
             method: 'post',
-            data: data
+            data: {
+                toEmail: data.email,
+            }
+        })
+    },
+    logout(data) {
+
+        return _axios({
+            url: `/users/login`,
+            method: 'delete',
+            params: {
+                firebaseToken: data.firebaseToken
+            }
         })
     },
 }

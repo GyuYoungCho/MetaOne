@@ -16,6 +16,8 @@ import MessageRecv from "@/view/MessageRecv.vue";
 import UnityMap from "@/view/UnityMap.vue";
 import NotFound from "@/view/errorpages/404.vue";
 
+import store from "@/store/"
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -39,7 +41,7 @@ const routes = [
     path: "/my-page",
     name: "MyPage",
     component: MyPage,
-    // meta: { requireAuth: true },
+    meta: { requireAuth: true },
   },
   {
     path: "/find-pw",
@@ -50,49 +52,49 @@ const routes = [
     path: "/educate-list",
     name: "EducateList",
     component: EducateList,
-    // meta: { requireAuth: true },
+    meta: { requireAuth: true },
   },
   {
     path: "/certificate",
     name: "Certificate",
     component: Certificate,
-    // meta: { requireAuth: true },
+    meta: { requireAuth: true },
   },
   {
     path: "/select-room",
     name: "SelectRoom",
     component: SelectRoom,
-    // meta: { requireAuth: true },
+    meta: { requireAuth: true },
   },
   {
     path: "/select-character",
     name: "SelectCharacter",
     component: SelectCharacter,
-    // meta: { requireAuth: true },
+    meta: { requireAuth: true },
   },
   {
     path: "/setting-room",
     name: "SettingRoom",
     component: SettingRoom,
-    // meta: { requireAuth: true },
+    meta: { requireAuth: true },
   },
   {
     path: "/guestbook",
     name: "Guestbook",
     component: Guestbook,
-    // meta: { requireAuth: true },
+    meta: { requireAuth: true },
   },
   {
     path: "/message-send",
     name: "MessageSend",
     component: MessageSend,
-    // meta: { requireAuth: true },
+    meta: { requireAuth: true },
   },
   {
     path: "/message-recv",
     name: "MessageRecv",
     component: MessageRecv,
-    // meta: { requireAuth: true },
+    meta: { requireAuth: true },
   },
   {
     path: "/unity-map",
@@ -112,27 +114,28 @@ const router = new VueRouter({
   routes,
 });
 
-// router.beforeEach(function (to, from, next) {
-//   if (to.matched.some(function(routeInfo) {
-//     return routeInfo.meta.requireAuth
-//   })) {
-//     if (!store.state.user.isLogin) {
-//       next('/')
-//     } else {
-//       next()
-//     }
-//   } else {
-//     if (to.name === 'Login') {
-//       if (store.state.user.isLogin) {
-//         next('/feed')
-//       } else {
-//         next()
-//       }
-//     } else {
-//       next()
-//     }
-//   }
 
-// })
+router.beforeEach(function (to, from, next) {
+  if (to.matched.some(function(routeInfo) {
+    return routeInfo.meta.requireAuth
+  })) {
+    if (!store.state.user.isLogin) {
+      next('/')
+    } else {
+      next()
+    }
+  } else {
+    if (to.name === 'Login') {
+      if (store.state.user.isLogin) {
+        next('/select-character')
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
+  }
+
+})
 
 export default router;

@@ -33,7 +33,7 @@
                 <i class="menuIcon fas fa-question"></i>
                 {{selectors[3]}}
               </li>
-              <li class="list-group-item bg-transparent">
+              <li class="list-group-item bg-transparent" @click="logoutMethod()">
                 <i class="menuAddIcon fas fa-sign-out-alt"></i>
                 {{selectors[4]}}
               </li>
@@ -48,6 +48,7 @@
 
 <script>
 import HelpModal from '@/components/HelpModal.vue'
+import { mapActions , mapState } from 'vuex'
 
 export default {
   components:{
@@ -58,6 +59,16 @@ export default {
       selectors : ["기본 맵", "쪽지", "마이페이지", "도움말", "로그아웃"],
       isShow : false,
     }
+  },
+  methods:{
+    ...mapActions('user', ['logout']),
+    async logoutMethod(){
+      this.$store.commit('user/SET_USER_ISLOGIN', false)
+
+      await this.logout()
+
+      this.$router.push({name: 'Login'})
+    },
   }
 }
 </script>

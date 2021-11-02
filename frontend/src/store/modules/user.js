@@ -2,6 +2,7 @@ import userApi from "@/api/user.js";
 import router from "@/router"
 
 const state = {
+    userId: "",
     name: "",
     email: "",
     nickname: "",
@@ -90,9 +91,15 @@ const actions = {
             .then((res) => {
                 if (res.status == 200) {
                     console.log(res)
+                    commit('SET_JOIN_USERID', res.data.id)
+                    commit('SET_JOIN_NAME', res.data.name)
+                    commit('SET_JOIN_EMAIL', res.data.email)
+                    commit('SET_JOIN_NICKNAME', res.data.nickname)
+
                     commit('SET_USER_ACCESSTOKEN', res.headers.accesstoken)
                     commit('SET_USER_REFRESHTOKEN', res.headers.refreshtoken)
-                    state.isLogin = true
+                    commit('SET_USER_ISLOGIN', true)
+
                     router.push({name: 'SelectCharacter'})
                 }
             })
@@ -103,12 +110,12 @@ const actions = {
         })
     },
     async getMyInfo({ state, commit }) {
-        console.log("getMyInfo")
 
         await userApi.getMyInfo(state)
             .then((res) => {
                 console.log(res)
                 if (res.status == 200) {
+                    commit('SET_JOIN_USERID', res.data.id)
                     commit('SET_JOIN_NAME', res.data.name)
                     commit('SET_JOIN_EMAIL', res.data.email)
                     commit('SET_JOIN_NICKNAME', res.data.nickname)
@@ -142,9 +149,32 @@ const actions = {
                 console.log(err)
         })
     },
+    async logout({ state, commit }) {
+        
+        await userApi.logout(state)
+            .then((res) => {
+                console.log(res)
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+        
+        commit('SET_JOIN_USERID', "")
+        commit('SET_JOIN_NAME', "")
+        commit('SET_JOIN_EMAIL', "")
+        commit('SET_JOIN_NICKNAME', "")
+        commit('SET_JOIN_PASSWORD', "")
+        commit('SET_USER_ISLOGIN', false)
+        commit('SET_USER_ACCESSTOKEN', "")
+        commit('SET_USER_REFRESHTOKEN', "")
+        
+    },
 }
 
 const mutations = {
+    SET_JOIN_USERID(state, payload) {
+        state.userId = payload;
+    },
     SET_JOIN_NAME(state, payload) {
         state.name = payload;
     },
@@ -162,6 +192,10 @@ const mutations = {
     },
     SET_JOIN_AUTHNUMBER(state, payload) {
         state.authNumber = payload;
+    },
+
+    SET_USER_ISLOGIN(state, payload) {
+        state.isLogin = payload;
     },
 
     SET_JOIN_NICKNAMEPASS(state, payload) {

@@ -34,6 +34,7 @@
 <script>
 import Inputparam from '@/components/Inputparam.vue'
 import { mapGetters } from "vuex";
+import messageAPI from "@/api/message.js";
 
 export default {
   components:{
@@ -57,8 +58,24 @@ export default {
   },
 
   methods:{
+    
     sendMessage(){
-      console.log("hi");
+      const message = {
+        nickname: this.valid_receiver,
+        title: this.title,
+        content: this.content,
+        firebaseToken: "",
+      }
+
+      messageAPI
+        .sendOne(message)
+        .then((res) => {
+          commit("SET_MYMESSAGES", res.data);
+        })
+        .catch((error) => {
+          alert("못가져옴");
+          console.log(error);
+        });
     }
   }
 }

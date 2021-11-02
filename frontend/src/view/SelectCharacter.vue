@@ -1,5 +1,5 @@
 <template>
-    <div class="page">
+    <div class="user">
         <main-title :title="'캐릭터 선택'"></main-title>
 
         <div class="row" style="height: 400px;">
@@ -8,9 +8,9 @@
 
         <div class="row">
             <div class="col-md-2"></div>
-            <button class="btn yellow-btn col-md-3">선택하기</button>
+            <button class="btn yellow-btn col-md-3" @click="confirm()">선택하기</button>
             <div class="col-md-2"></div>
-            <button class="btn yellow-btn col-md-3">취소</button>
+            <button class="btn yellow-btn col-md-3" @click="cancel()">취소</button>
             <div class="col-md-2"></div>
         </div>
     </div>
@@ -23,6 +23,14 @@ export default {
     name: "SelectCharacter",
     components:{
         MainTitle,
+    },
+    methods:{
+        confirm(){
+            this.$router.push({name: 'SelectRoom'})
+        },
+        cancel(){
+            this.$router.push({name: 'MyPage'})
+        },
     }
 }
 </script>
