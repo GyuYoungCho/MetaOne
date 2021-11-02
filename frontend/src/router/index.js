@@ -13,6 +13,8 @@ import Certificate from "@/view/Certificate.vue";
 import Guestbook from "@/view/Guestbook.vue";
 import MessageSend from "@/view/MessageSend.vue";
 import MessageRecv from "@/view/MessageRecv.vue";
+import UnityMap from "@/view/UnityMap.vue";
+import NotFound from "@/view/errorpages/404.vue";
 
 import store from "@/store/"
 
@@ -94,11 +96,16 @@ const routes = [
     component: MessageRecv,
     // meta: { requireAuth: true },
   },
-  // {
-  //   path: "/unity-map",
-  //   name: "UnityMap",
-  //   component: UnityMap,
-  // },
+  {
+    path: "/unity-map",
+    name: "UnityMap",
+    component: UnityMap,
+  },
+  {
+    path: "/404",
+    name: "NotFound",
+    component: NotFound,
+  },
 ];
 
 const router = new VueRouter({
@@ -128,7 +135,7 @@ router.beforeEach(function (to, from, next) {
       next()
     }
   }
-  
+
 })
 
 export default router;
