@@ -27,11 +27,13 @@ public class MessageServiceImpl implements MessageService {
 	
 	
 	@Override
-	public void registerMessage(MessageDto.MRegisterRequest messageForm, User sent_user, User recv_user) {
+	public Message registerMessage(MessageDto.MRegisterRequest messageForm, User sent_user, User recv_user) {
 		
 		Message message = new Message(sent_user,recv_user,messageForm.getTitle(),
 					messageForm.getContent(),new Date(),0);
 		messageRepository.save(message);
+		
+		return message;
 	}
 
 	@Override
