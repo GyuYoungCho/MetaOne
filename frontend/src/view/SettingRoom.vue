@@ -18,9 +18,9 @@
 
         <div class="row">
             <div class="col-md-2"></div>
-            <button class="btn yellow-btn col-md-3">생성완료</button>
+            <button class="btn yellow-btn col-md-3" @click="confirm()">생성완료</button>
             <div class="col-md-2"></div>
-            <button class="btn yellow-btn col-md-3">취소</button>
+            <button class="btn yellow-btn col-md-3" @click="cancel()">취소</button>
             <div class="col-md-2"></div>
         </div>
     </div>
@@ -35,6 +35,16 @@ export default {
     components:{
         MainTitle,
         Inputparam,
+    },
+    methods:{
+        confirm(){
+            // Unity 맵 입장
+
+            
+        },
+        cancel(){
+            this.$router.push({name: 'SelectRoom'})
+        },
     }
 }
 </script>

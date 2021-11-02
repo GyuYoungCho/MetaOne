@@ -66,11 +66,13 @@ export default {
         })
     },
     sendTempPw(data) {
-
+        console.log(data.email)
         return _axios({
             url: `/users/find-pw`,
             method: 'post',
-            data: data
+            data: {
+                toEmail: data.email
+            }
         })
     },
 }

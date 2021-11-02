@@ -141,6 +141,7 @@ public class UserDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class userInfoResponse {
+        private String id;
         private String email;
         private String nickname;
         private String name;

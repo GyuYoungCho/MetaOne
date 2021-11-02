@@ -14,6 +14,8 @@ import Guestbook from "@/view/Guestbook.vue";
 import MessageSend from "@/view/MessageSend.vue";
 import MessageRecv from "@/view/MessageRecv.vue";
 
+import store from "@/store/"
+
 Vue.use(VueRouter);
 
 const routes = [
@@ -37,7 +39,7 @@ const routes = [
     path: "/my-page",
     name: "MyPage",
     component: MyPage,
-    // meta: { requireAuth: true },
+    meta: { requireAuth: true },
   },
   {
     path: "/find-pw",
@@ -106,27 +108,27 @@ const router = new VueRouter({
 });
 
 
-// router.beforeEach(function (to, from, next) {
-//   if (to.matched.some(function(routeInfo) {
-//     return routeInfo.meta.requireAuth
-//   })) {
-//     if (!store.state.user.isLogin) {
-//       next('/')
-//     } else {
-//       next()
-//     }
-//   } else {
-//     if (to.name === 'Login') {
-//       if (store.state.user.isLogin) {
-//         next('/feed')
-//       } else {
-//         next()
-//       }
-//     } else {
-//       next()
-//     }
-//   }
+router.beforeEach(function (to, from, next) {
+  if (to.matched.some(function(routeInfo) {
+    return routeInfo.meta.requireAuth
+  })) {
+    if (!store.state.user.isLogin) {
+      next('/')
+    } else {
+      next()
+    }
+  } else {
+    if (to.name === 'Login') {
+      if (store.state.user.isLogin) {
+        next('/select-character')
+      } else {
+        next()
+      }
+    } else {
+      next()
+    }
+  }
   
-// })
+})
 
 export default router;

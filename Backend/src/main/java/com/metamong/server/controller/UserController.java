@@ -1,7 +1,6 @@
 package com.metamong.server.controller;
 
 
-import ch.qos.logback.core.net.SyslogOutputStream;
 import com.metamong.server.config.RedisUtil;
 import com.metamong.server.dto.EmailDto;
 import com.metamong.server.dto.UserDto;
@@ -22,10 +21,10 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -162,7 +161,7 @@ public class UserController {
     @ApiOperation(value="중복확인", notes="이메일/닉네임 중복확인")
     public ResponseEntity duplicate(
             @RequestParam @ApiParam(value="닉네임 or 이메일") String type, @RequestParam @ApiParam(value="닉네임이나 이메일 정보") String data
-            ) throws IOException{
+            , HttpServletRequest request) throws IOException{
         // type Email 중복검사
         System.out.println("중복검사 시작합니다... "+ type +" / "+ data);
         if (type.equals("email")){
@@ -209,7 +208,7 @@ public class UserController {
 
         String email = redisUtil.getData(emailRes.getCode());
         if (email == null) { // email이 존재하지 않으면, 유효 기간 만료이거나 코드 잘못 입력
-            throw new ApplicationException(HttpStatus.valueOf(401), "이메일 인증이 만료되었거나, 코드가 맞지 앉습니다.ㄴ");
+            throw new ApplicationException(HttpStatus.valueOf(401), "이메일 인증이 만료되었거나, 코드가 맞지 앉습니다.");
         }
         System.out.println(email);
         System.out.println(emailRes.getEmail());
@@ -218,20 +217,19 @@ public class UserController {
 
     @PostMapping("/find-pw")
     @ApiOperation(value = "이메일로 임시 비밀번호 전송")
-    public ResponseEntity sendTempPw(UserDto.userInfoResponse userInfo){
+    public ResponseEntity sendTempPw(@RequestBody EmailDto emailInfo){
+        if(userService.isExistEmail(emailInfo.getToEmail())){       // 이메일 검증
 
-        // 이름과 이메일 매칭 검증
+            String tmpPassword = UUID.randomUUID().toString().split("-")[0];
+            EmailDto emailDto = EmailDto.builder()
+            .toEmail(emailInfo.getToEmail())
+                    .title("메타몽 서비스 : 임시 비밀번호")
+                    .code(tmpPassword)
+                    .build();
 
-        // emaildto 만들기
-
-        // 이메일 발송
-
-//        String uuid = UUID.randomUUID().toString();
-//
-//        private String toEmail;
-//        private String title;
-//        private String code;
-//        emailSenderService.sendEmail();
+            userService.resetPassword(tmpPassword, emailInfo.getToEmail());
+            emailSenderService.sendEmailFindPw(emailDto);
+        }
 
         return ResponseEntity.ok().build();
     }

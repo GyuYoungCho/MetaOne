@@ -62,23 +62,34 @@ export default {
         return{
             titles: ["이름", "Email", "닉네임", "기존 비밀번호", "비밀번호 수정", "비밀번호 확인"],
             placeholderDatas: ["이름 자리", "이메일 자리", "닉네임 자리", "Origin Password", "New Password", "Password Confirm"],
+            originNickname: "",
         }
     },
     methods:{
         ...mapActions('user', ['getMyInfo', 'checkDuplicate', 'updateInfo']),
 
-        async init(){
-            await this.getMyInfo()
+        async init(){     
             
+            await this.getMyInfo()
+
             this.$store.commit('user/SET_JOIN_PASSWORD', "")
             this.$store.commit('user/SET_USER_ORIGINPASSWORD', "")
             this.$store.commit('user/SET_USER_NEWPASSWORD', "")
-            this.$store.commit('user/SET_JOIN_NICKNAME', "")
+            this.$store.commit('user/SET_JOIN_PASSWORDCONFIRM', "")
+            // this.$store.commit('user/SET_JOIN_NICKNAME', "")
             this.$store.commit('user/SET_JOIN_NICKNAMEPASS', false)
+
+            this.originNickname = this.nickname
         },
         async checkDuplication(){
             if(this.nickname == ""){
                 alert("닉네임을 입력해주세요.")
+                return
+            }
+
+            if(this.originNickname == this.nickname){
+                this.$store.commit('user/SET_JOIN_NICKNAMEPASS', true)
+                alert("기존 닉네임과 동일한 사용 가능한 닉네임입니다.")
                 return
             }
 
@@ -107,10 +118,11 @@ export default {
             this.$router.push({name: 'EducateList'}).catch(() => {})
         }
     }, 
-    mounted(){
+    async mounted(){
         this.init()
     },
     async created(){
+        this.getMyInfo()
         this.placeholderDatas[0] = this.name
         this.placeholderDatas[1] = this.email
         this.placeholderDatas[2] = this.nickname
