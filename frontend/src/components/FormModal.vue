@@ -9,13 +9,13 @@
           </div>
           <div class="modal-body">
             <form>
-              <textarea class="form-content" v-model="content"></textarea>
+              <textarea class="form-content" v-model="selectguestbook.content"></textarea>
             </form>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-            <button type="button" class="btn btn-primary" v-if="buttontype">작성</button>
-            <button type="button" class="btn btn-primary" v-if="!buttontype">수정</button>
+            <button type="button" class="btn btn-primary" v-if="buttontype" @click="registerGuestbook(selectguestbook.content)" data-bs-dismiss="modal">작성</button>
+            <button type="button" class="btn btn-primary" v-if="!buttontype" @click="modifyGuestbook(selectguestbook)" data-bs-dismiss="modal">수정</button>
           </div>
         </div>
       </div>
@@ -25,26 +25,28 @@
 </template>
 
 <script>
+import { mapGetters,mapActions } from "vuex";
+import guestbookAPI from "@/api/guestbook.js";
 export default {
   data(){
     return{
-      notuse : ''
+      content : ''
     }
   },
   props:{
       sign : String,
-      content : String,
   },
   computed:{
+    ...mapGetters("guestbook", ["selectguestbook"]),
     buttontype(){
       return this.sign=="register"
-    }
+    },
   },
   methods:{
-    
-    async registerGuestbook(){
+    ...mapActions('guestbook', ['selectGuestbook','getGuestbooks']),
+    async registerGuestbook(val){
       await guestbookAPI
-        .regist(data)
+        .regist(val)
         .then((res) => {
           console.log(res.data)
         })
@@ -53,9 +55,9 @@ export default {
           console.log(error);
         });
     },
-    async modifyGuestbook(){
+    async modifyGuestbook(val){
       await guestbookAPI
-        .modify(data)
+        .modify(val)
         .then((res) => {
           console.log(res.data)
         })
@@ -65,9 +67,6 @@ export default {
         });
     },
   },
-  watch:{
-    
-  }
 };
 </script>
 

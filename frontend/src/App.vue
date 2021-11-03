@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Menubar v-if="isLogin"/>
-    <div style="width: 50px;height: 105px"></div>
+    <div v-else style="width: 50px;height: 105px"></div>
     <router-view/>
   </div>
 </template>
