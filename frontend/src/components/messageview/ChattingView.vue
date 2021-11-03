@@ -119,6 +119,7 @@ export default {
                 })
                 
             } catch (e) {
+              console.log("catch")
                 throw e
             }
         },
