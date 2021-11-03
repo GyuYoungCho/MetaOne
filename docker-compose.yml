@@ -3,7 +3,7 @@ services:
   server:
     container_name: back
     build:
-      context: ./backend
+      context: ./Backend
     ports:
       - "8080:8080"
   client:
@@ -11,6 +11,6 @@ services:
     build:
       context: ./frontend
     depends_on:
-      - back
+      - server
     ports:
       - "80:80"
