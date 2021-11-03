@@ -153,8 +153,8 @@ public class UserController {
         resHeader.set(refreshToken, (String) map.get(refreshToken));
         System.out.println("resHeader : "+ resHeader.get(refreshToken));
 
-        //if(loginInfo.getFirebaseToken() != null) fcmService.save(myRes, myReq.getFirebaseToken());
-
+        
+        
         return ResponseEntity.ok().headers(resHeader).body(loginRes);
     }
 
@@ -257,7 +257,12 @@ public class UserController {
 
         // DB 파이어베이스 토큰 삭제하기
         firebaseCloudMessageService.del(firebaseToken);
-
+        
+        // 오프라인 변경
+        int userId = (int) request.getAttribute("userId");
+        User user = userRepository.findById(userId).get();
+        user.setState(0);
+        userRepository.save(user);
         return ResponseEntity.status(200).build();
     }
 

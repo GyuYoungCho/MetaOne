@@ -33,9 +33,6 @@ export default {
   },
   data(){
     return{
-      onlinelist:[
-          {name:'KIM'},{name:'KWON'},{name:'JO'}
-      ],
       messagelist:[
           {title:'안녕',isRead:false,content:'반가워~~~',sender:'KIM'},
           {title:'오늘은',isRead:true,content:'뭐한담',sender:'KIM'},
@@ -51,10 +48,11 @@ export default {
     ...mapActions("message", ["getMessage","getMyMessages","getOnlineList"]),
   },
   created(){
-    this.getMessage(null)
     this.getOnlineList()
     this.getMyMessages()
     this.messagelist = this.mymessages
+    console.log(this.$route.name)
+    console.log(this.mymessages)
   }
 }
 </script>

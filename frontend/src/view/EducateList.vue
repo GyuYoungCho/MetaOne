@@ -14,14 +14,14 @@
               <div class="col">증명서</div>
             </div>
           </li>
-          <li class="list-group-item bg-transparent" v-for="(eduitem, index) in column" :key="index" :eduitem="eduitem">
+          <li class="list-group-item bg-transparent" v-for="(eduitem, index) in educations" :key="index" :eduitem="eduitem">
             <div class="row">
               <div class="pt-2 col">{{eduitem.education}}</div>
-              <div class="pt-2 col">{{eduitem.complete}}</div>
-              <div class="pt-2 col">{{pass_time(eduitem.pass_day)}}</div>
-              <div class="pt-2 col" >
-                <RouterLink :to="{name:'Certificate'}" @click.native="goCertificate(eduitem)">
-                {{eduitem.pass}}
+              <div class="pt-2 col">{{isEducated(eduitem)}}</div>
+              <div class="pt-2 col">{{pass_time(eduitem.passTime)}}</div>
+              <div class="pt-2 col">
+                <RouterLink v-if="eduitem.authenticated" :to="{name:'Certificate'}" @click.native="goCertificate(eduitem)">
+                   발급
                 </RouterLink>
               </div>
             </div>
@@ -33,14 +33,12 @@
 </template>
 
 <script>
-import moment from "moment"
 import { mapGetters,mapActions } from "vuex";
 
 export default {
   data(){
     return{
-      column : [{education:'지진',complete:'이수완료',pass_day : new Date(),pass : '발급'},
-      {education:'화재',complete:'이수완료',pass_day : new Date(),pass : '발급'}],
+      
     }
   },
   computed:{
@@ -49,10 +47,16 @@ export default {
   methods:{
     ...mapActions('education', ['getEducation','getEducations']),
     pass_time(val){
-      return moment(val).format("HH:mm:ss")
+      let hour = val/3600 < 10 ? '0'+ parseInt(val/3600) : parseInt(val/3600);
+      let min = (val%3600)/60 < 10 ? '0'+ parseInt((val%3600)/60) : parseInt((val%3600)/60)
+      let sec = val % 60 < 10 ? '0'+parseInt(val % 60) : parseInt(val % 60);
+      return hour +":" + min+":"+sec
     },
     goCertificate(item){
       this.getEducation(item)
+    },
+    isEducated(val){
+      return val?"이수 완료":"미이수"
     }
   },
   created(){
