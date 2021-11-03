@@ -72,6 +72,12 @@ public class UserServiceImpl implements UserService{
         login.setNickname(loginuser.getNickname());
         login.setEmail(loginuser.getEmail());
         login.setId(loginuser.getId());
+        
+        // 온라인 변경
+        User ouser = user.get();
+        ouser.setState(1);
+        userRepository.save(ouser);
+        
         return login;
     }
 

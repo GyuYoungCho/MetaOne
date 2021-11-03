@@ -82,8 +82,8 @@ public class MessageController {
 	@GetMapping("/private")
 	@ApiOperation(value = "개인 쪽지리스트 조회")
 	public ResponseEntity<List<MyMessageResponse>> selectMy(HttpServletRequest request) throws IOException { 
-		// int userId = (int) request.getAttribute("userId");
-		int userId = 1;
+		int userId = (int) request.getAttribute("userId");
+		
 		Optional<User> user = userRepository.findById(userId);
 		if(!user.isPresent()) return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 			
@@ -104,8 +104,8 @@ public class MessageController {
 	@ApiOperation(value = "개인 1:1 쪽지 조회")
 	public ResponseEntity<List<OneMessageResponse>> selectOneByOne(@PathVariable String nickname, HttpServletRequest request) throws IOException { 
 		Optional<User> your = userRepository.findByNickname(nickname);
-		// int userId = (int) request.getAttribute("userId");
-		int userId = 1;
+		int userId = (int) request.getAttribute("userId");
+		
 		Optional<User> my = userRepository.findById(userId);
 		
 		if(!your.isPresent() || !my.isPresent())
@@ -130,8 +130,7 @@ public class MessageController {
 	@PostMapping("/public")
 	@ApiOperation(value = "전체 쪽지를 발신한다")
 	public ResponseEntity<String> sendAll(@RequestBody MessageDto.AllSendRequest allSend, HttpServletRequest request) throws IOException, FirebaseMessagingException, InterruptedException { 
-		// int userId = (int) request.getAttribute("userId");
-		int userId = 1;
+		int userId = (int) request.getAttribute("userId");
 		Optional<User> user = userRepository.findById(userId);
 		if(!user.isPresent()) return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 
@@ -153,10 +152,10 @@ public class MessageController {
 	@GetMapping("/online")
 	@ApiOperation(value = "사용자 전체 Online 정보를 확인한다.")
 	public ResponseEntity<List<OnlineDto>> userOnline( HttpServletRequest request) throws IOException {
-		// int userId = (int) request.getAttribute("userId");
-		int userId = 1;
+		int userId = (int) request.getAttribute("userId");
 		
-		Optional<List<User>> userlist = userRepository.findByIdNot(userId);
+		Optional<List<User>> userlist = userRepository.findByIdNot(1);
+		
 		if(!userlist.isPresent())
 			return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);
 		List<OnlineDto> onlinelist = new ArrayList<>();

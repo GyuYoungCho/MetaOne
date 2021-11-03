@@ -44,6 +44,8 @@ public class MessageServiceImpl implements MessageService {
 			MyMessageResponse mmr = MyMessageResponse.builder()
 					.isRead(m.getIsRead()==1?true:false)
 					.nickname(nickname)
+					.title(m.getTitle())
+					.content(m.getContent())
 					.createAt(new Date())
 					.build();
 			
