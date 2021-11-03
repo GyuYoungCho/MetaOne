@@ -28,6 +28,24 @@ public class EmailSenderServiceImpl implements EmailSenderService {
     }
 
     @Async
+    public void sendEmailFindPw(EmailDto emailDto) {
+        try {
+            System.out.println("----이메일 보내기 시도-----");
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(emailDto.getToEmail());
+            message.setFrom(EmailSenderServiceImpl.FROM_ADDRESS);
+            message.setSubject(emailDto.getTitle());
+            message.setText(emailDto.getCode());
+
+            javaMailSender.send(message);
+            System.out.println("----이메일 보냈다-----");
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new ApplicationException(HttpStatus.valueOf(401), "메일을 보낼 수 없습니다.");
+        }
+    }
+
+    @Async
     public void sendEmail(EmailDto emailDto) {
         try {
             System.out.println("----이메일 보내기 시도-----");

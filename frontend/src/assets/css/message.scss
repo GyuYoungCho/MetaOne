@@ -1,12 +1,339 @@
-.messageList {
+.messages {
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin-top: 3%;
 
-  .m-container {
-    background-color: white;
-    width: 50%;
-    height: 45%;
+  position: relative;
+  width: 100%;
+  p {
+    color: white;
+    font-size: 2rem;
+  }
+
+  span {
+    color: white;
+  }
+
+  &BtnControll {
+    box-shadow: -2px -2px 5px rgba(255, 255, 255, 0.1), 2px 2px 5px rgba(170, 170, 204, 0.25), 5px 5px 10px rgba(170, 170, 204, 0.5),
+      -5px -5px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    background-color: $medium-light-yellow;
+    filter: drop-shadow(5px 7px 4px rgba(0, 0, 0, 0.25));
+    margin-top: 2%;
+    width: 10%;
+    height: 50px;
+    font-size: 20px;
+  }
+
+  button {
+    position: absolute;
+    box-shadow: -2px -2px 5px rgba(255, 255, 255, 0.1), 2px 2px 5px rgba(170, 170, 204, 0.25), 5px 5px 10px rgba(170, 170, 204, 0.5),
+      -5px -5px 10px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    background-color: $medium-light-yellow;
+    filter: drop-shadow(5px 7px 4px rgba(0, 0, 0, 0.25));
+    margin-top: 2%;
+    width: 10%;
+    height: 50px;
+    font-size: 20px;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: all 0.5s;
+
+    &:hover {
+      box-shadow: 200px 0 0 0 rgba(0, 0, 0, 0.2) inset;
+      color: $offwhite;
+    }
+  }
+
+  .MessageList {
+    ul {
+      width: 100%;
+
+      li {
+        background-color: transparent;
+        border: none;
+        padding: 2%;
+        cursor: pointer;
+      }
+    }
+
+    .m-contain {
+      display: flex;
+      position: relative;
+      background-color: white;
+      opacity: 0.7;
+      border-radius: 10px;
+      height: 500px;
+      width: 100%;
+      z-index: -999;
+    }
+
+    .a_card {
+      z-index: -9;
+      position: absolute;
+      top: 8%;
+      width: 20%;
+      z-index: 1;
+
+      ul {
+        width: 80%;
+      }
+      img {
+        width: 50px;
+        position: relative;
+        padding: 0px;
+      }
+
+      span {
+        color: black;
+        font-size: 1.6rem;
+        margin: 0px;
+      }
+
+      .username {
+        text-align: left;
+      }
+    }
+
+    .m_card {
+      position: absolute;
+      z-index: 1;
+      top: 8%;
+      width: 23%;
+
+      i {
+        width: 30px;
+        height: 30px;
+        margin-top: 13px;
+        position: relative;
+        padding-right: 9%;
+        padding-top: 13%;
+      }
+
+      span {
+        display: block;
+        font-size: 1.6rem;
+        margin: 0px;
+        background-color: $medium-light-blue;
+        width: 100%;
+      }
+
+      .messagetitle {
+        text-align: center;
+        width: 80%;
+      }
+    }
+  }
+
+  .MessageForm {
+    @extend .MessageList;
+
+    input {
+      background-color: $medium-light-blue;
+      color: white;
+      border-radius: 5px;
+      width: 99%;
+    }
+    .m-contain {
+      opacity: 1;
+      display: inline-block;
+      padding: 20px;
+      z-index: -999;
+    }
+
+    .send_card {
+      position: absolute;
+      top: 11%;
+      right: 14.5%;
+      width: 30%;
+      z-index: 1;
+
+      .message_com {
+        text-align: left;
+        label {
+          text-align: left;
+          padding-left: 0;
+        }
+      }
+      .m_user {
+        margin-left: 1.5%;
+      }
+
+      .m_title {
+        margin-left: 1.5%;
+      }
+
+      .m_content {
+        margin-left: 1.5%;
+      }
+
+      textarea {
+        background-color: $medium-light-blue;
+        width: 97%;
+        color: white;
+      }
+
+      .m_submit {
+        position: relative;
+        button {
+          left: 90%;
+          color: white;
+          width: 15%;
+          height: 30px;
+          font-size: 1rem;
+        }
+      }
+
+      .m_answer {
+        position: relative;
+        button {
+          left: 85%;
+          color: white;
+          width: 25%;
+          height: 30px;
+          font-size: 1rem;
+        }
+      }
+    }
+  }
+}
+
+.Chatting {
+  position: absolute;
+  top: 0%;
+  width: 1%;
+  height: 100%;
+
+  .icon-btn {
+    position: absolute;
+    top: 83%;
+    left: 15px;
+    i {
+      padding-top: 5%;
+      width: 120px;
+      height: 120px;
+      border-radius: 100px;
+      border: 8px solid;
+    }
+  }
+
+  .fa-exclamation-circle {
+    color: red;
+    position: absolute;
+    top: 83%;
+    left: 120px;
+  }
+  .offcanvas {
+    background-color: $medium-light-blue;
+    .offcanvas-body {
+      height: 90%;
+
+      img {
+        max-width: 100%;
+      }
+
+      .incoming_msg_img {
+        display: inline-block;
+        width: 6%;
+      }
+      .received_msg {
+        display: inline-block;
+        padding: 0 0 0 10px;
+        vertical-align: top;
+        width: 92%;
+      }
+
+      .time_date {
+        color: #747474;
+        display: block;
+        font-size: 12px;
+        margin: 8px 0 0;
+      }
+      .received_withd_msg {
+        width: 57%;
+        p {
+          background: #ebebeb none repeat scroll 0 0;
+          border-radius: 3px;
+          color: #646464;
+          font-size: 14px;
+          margin: 0;
+          padding: 5px 10px 5px 12px;
+          width: 100%;
+        }
+      }
+
+      .mesgs {
+        float: left;
+        padding: 30px 15px 0 25px;
+        width: 60%;
+      }
+
+      .outgoing_msg {
+        overflow: hidden;
+        margin: 26px 0 26px;
+      }
+      .sent_msg {
+        float: right;
+        width: 46%;
+
+        p {
+          background: #05728f none repeat scroll 0 0;
+          border-radius: 3px;
+          font-size: 14px;
+          margin: 0;
+          color: #fff;
+          padding: 5px 10px 5px 12px;
+          width: 100%;
+        }
+      }
+      .msg_history {
+        height: 600px;
+        overflow-y: auto;
+      }
+
+      ::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        height: 17%;
+        background-color: #333861;
+        border-radius: 10px;
+      }
+    }
+
+    .offcanvas-footer {
+      position: absolute;
+      bottom: 3%;
+      width: 100%;
+
+      input {
+        border-radius: 10px;
+        margin-top: 2%;
+      }
+
+      button {
+        position: absolute;
+        box-shadow: -2px -2px 5px rgba(255, 255, 255, 0.1), 2px 2px 5px rgba(170, 170, 204, 0.25), 5px 5px 5px rgba(170, 170, 204, 0.5);
+        border-radius: 10px;
+        background-color: $medium-light-yellow;
+        filter: drop-shadow(5px 7px 4px rgba(0, 0, 0, 0.25));
+        width: 20%;
+        height: 40px;
+        margin-left: 4%;
+        font-size: 20px;
+        transform: translate(-50%, -50%);
+        cursor: pointer;
+        transition: all 0.5s;
+
+        &:hover {
+          box-shadow: 200px 0 0 0 rgba(0, 0, 0, 0.2) inset;
+          color: $offwhite;
+        }
+      }
+    }
   }
 }

@@ -16,4 +16,5 @@ public interface FirebaseTokenRepository extends JpaRepository<FirebaseToken, In
 	Optional<List<FirebaseToken>> findByUserIdInOrderByCreateAtDesc(List<Integer> userIds);
 	Optional<List<FirebaseToken>> findByCreateAtBefore(LocalDateTime ldt);
 	Optional<List<FirebaseToken>> findByToken(String token);
+	Optional<List<FirebaseToken>> findByUserIdNot(int userId);
 }

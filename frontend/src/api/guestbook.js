@@ -1,11 +1,27 @@
+import _axios from "./default.js";
+
 export default {
-  regist() {
-    return "/guestbook";
+  regist(data) {
+    return _axios({
+      url: `/guestbook`,
+      method: "post",
+      data: data,
+    });
   },
-  select() {
-    return "/guestbook";
+  select(data) {
+    return _axios({
+      url: `/guestbook`,
+      method: "get",
+      params: {
+        date: data.date,
+      },
+    });
   },
-  modify() {
-    return "/guestbook";
+  modify(data) {
+    return _axios({
+      url: `/guestbook`,
+      method: "put",
+      data: data,
+    });
   },
 };

@@ -24,9 +24,12 @@ public class WebConfiguration implements WebMvcConfigurer {
         registry.addInterceptor(authInterceptor)
                 .addPathPatterns("/api/**")
                 .excludePathPatterns("/api/users/login")
+                .excludePathPatterns("/api/users/email")
+                .excludePathPatterns("/api/users/email-check")
+                .excludePathPatterns("/api/users/login-kakao")
+                .excludePathPatterns("/api/users/duplicate")
                 .excludePathPatterns("/api/users")
-                .excludePathPatterns("/api/users/duplicate")
-                .excludePathPatterns("/api/users/duplicate")
-                .excludePathPatterns("/api/users/login-kakao");
+                .excludePathPatterns("/api/users/find-pw");
+
     }
 }
