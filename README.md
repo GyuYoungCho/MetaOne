@@ -42,7 +42,7 @@
 ### Mysql  
 port: 3306  
 user: root  
-pw : 12345  
+pw : k5a_meta  
 
 ### Redis  
 port: 6379  
