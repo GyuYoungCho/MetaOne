@@ -50,7 +50,6 @@
 import { mapActions, mapState } from 'vuex'
 import Inputparam from '../components/Inputparam.vue'
 import MainTitle from '../components/MainTitle.vue'
-import EducateListVue from './EducateList.vue'
 
 export default {
     name: "MyPage",

@@ -46,7 +46,7 @@ export default {
             data: data,
         })
     },
-    getMyInfo(data) {
+    getMyInfo() {
         
         return _axios({
             url: `/users/my-info`,

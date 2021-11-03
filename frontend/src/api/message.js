@@ -26,7 +26,7 @@ export default {
       method: "get",
     });
   },
-  sendAll() {
+  sendAll(data) {
     return _axios({
       url: `/message/public`,
       method: "post",

@@ -86,10 +86,10 @@ export default {
             let isPass = false
 
             let data = ""
-            if (type == 'nickname') data = this.nickname
-            else if(type == 'email') data = this.email
+            if(type == "email") data = this.email
+            else if(type == "nickname") data = this.nickname
 
-            await userApi.checkDuplicate(type)
+            await userApi.checkDuplicate(data, type)
             .then((res) => {
                 console.log(res)
                 if (res.status == 200) isPass = true;

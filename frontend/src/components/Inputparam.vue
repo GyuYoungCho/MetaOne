@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
+import { mapState } from "vuex";
 
 export default {
     name: "Inputparam",
@@ -46,7 +46,7 @@ export default {
             this.$store.commit('user/' + joinTitle, this.dataIn);
         },
         typing:function(e){
-            this.dataIn = e.target.value;
+            this.dataIn = e.target.value;               // 한글 입력 대응
         },
     }, 
     mounted(){
@@ -60,7 +60,7 @@ export default {
     },
     watch:{
         dataIn(){
-            var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/
+            var exptext = /^[A-Za-z0-9_]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/
 
             if(this.title == 'Email' && exptext.test(this.dataIn)){
                 console.log("이메일 형식이 올바릅니다.");

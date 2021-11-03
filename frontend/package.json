@@ -17,6 +17,7 @@
     "moment": "^2.29.1",
     "register-service-worker": "^1.7.2",
     "vue": "^2.6.11",
+    "vue-router": "^3.5.3",
     "vue-unity-webgl": "^1.2.0",
     "vuex": "^3.6.2",
     "vuex-persistedstate": "^4.1.0"
@@ -25,10 +26,8 @@
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
-    "@vue/eslint-config-prettier": "^6.0.0",
     "babel-eslint": "^10.1.0",
-    "eslint": "^8.1.0",
-    "eslint-plugin-prettier": "^3.3.1",
+    "eslint": "^6.8.0",
     "eslint-plugin-vue": "^6.2.2",
     "sass": "^1.35.2",
     "sass-loader": "^10.2.0",
@@ -42,8 +41,7 @@
     },
     "extends": [
       "plugin:vue/essential",
-      "eslint:recommended",
-      "@vue/prettier"
+      "eslint:recommended"
     ],
     "parserOptions": {
       "parser": "babel-eslint"
