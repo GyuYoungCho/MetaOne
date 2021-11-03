@@ -50,8 +50,8 @@ export default {
     getReceiver({ commit }, item) {
       commit("SELECT_RECEIVER", item);
     },
-    getMyMessages({ commit }) {
-      messageAPI
+    async getMyMessages({ commit }) {
+      await messageAPI
         .selectMyMessage()
         .then((res) => {
           commit("SET_MYMESSAGES", res.data);
@@ -61,8 +61,8 @@ export default {
           console.log(error);
         });
     },
-    getOnebyOneMessages({ commit }, item) {
-      messageAPI
+    async getOnebyOneMessages({ commit }, item) {
+      await messageAPI
         .selectOneByOneMessage(item)
         .then((res) => {
           commit("SET_ONEBYONEMESSAGES", res.data);
@@ -72,8 +72,8 @@ export default {
           console.log(error);
         });
     },
-    getOnlineList({ commit }) {
-      messageAPI
+    async getOnlineList({ commit }) {
+      await messageAPI
         .userOnline()
         .then((res) => {
           commit("SET_ONLINELIST", res.data);

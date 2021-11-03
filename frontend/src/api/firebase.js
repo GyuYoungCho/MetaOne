@@ -1,6 +1,6 @@
 import firebase from "firebase/compat/app";
 import "firebase/compat/messaging";
-// import "firebase/firebase-messaging"
+import "firebase/compat/database";
 
 const FIREBASE_CONFIG = {
   apiKey: "AIzaSyCKsCv78jJlewnvHKNk30YzevYaaOY74fI",
@@ -13,11 +13,10 @@ const FIREBASE_CONFIG = {
   measurementId: "G-SRZGEB3WSM",
 };
 firebase.initializeApp(FIREBASE_CONFIG);
-
-let fire_messaging = null;
+let messaging = null;
 
 if (firebase.messaging.isSupported()) {
-  fire_messaging = firebase.messaging();
+  messaging = firebase.messaging();
 }
 
-export default firebase.messaging();
+export { firebase, messaging };

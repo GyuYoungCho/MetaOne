@@ -5,6 +5,7 @@
 </template>
 
 <script>
+
 import ChattingView from "@/components/messageview/ChattingView.vue"
 export default {
     components:{

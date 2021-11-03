@@ -10,7 +10,7 @@
         
         <div class="col-md-3 pt-1 px-0">{{form_content[0]}}</div>
         <div class="col-md-9">
-            <input type="text"  class="form-control">  <!-- readonly  v-model="valid_receiver" -->
+            <input type="text" class="form-control" readonly v-model="valid_receiver">
         </div>
       </div>
       <div class="row message_com m_title mt-3">
@@ -62,7 +62,7 @@ export default {
     
     sendMessage(){
       const message = {
-        nickname: "테스트입니다",
+        nickname: this.valid_receiver,
         title: this.title,
         content: this.content,
         firebaseToken: this.firebaseToken,

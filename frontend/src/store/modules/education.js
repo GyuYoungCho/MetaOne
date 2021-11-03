@@ -1,4 +1,3 @@
-import axios from "@/api/default.js";
 import educationAPI from "@/api/education.js";
 
 export default {
@@ -34,11 +33,12 @@ export default {
     getEducation({ commit }, item) {
       commit("SELECT_EDUCATION", item);
     },
-    getEducations(store) {
-      axios
-        .get(educationAPI.myAttendance())
+
+    async getEducations({ commit }) {
+      await educationAPI
+        .myAttendance()
         .then((res) => {
-          store.commit("SET_EDUCATIONS", res.data);
+          commit("SET_EDUCATIONS", res.data);
         })
         .catch((error) => {
           alert("못가져옴");
