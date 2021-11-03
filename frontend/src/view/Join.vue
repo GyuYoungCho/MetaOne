@@ -85,7 +85,11 @@ export default {
         async checkDuplicateMethod(type){
             let isPass = false
 
-            await userApi.checkDuplicate(type)
+            let data = ""
+            if(type == "email") data = this.email
+            else if(type == "nickname") data = this.nickname
+
+            await userApi.checkDuplicate(data, type)
             .then((res) => {
                 console.log(res)
                 if (res.status == 200) isPass = true;
