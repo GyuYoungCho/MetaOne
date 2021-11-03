@@ -32,9 +32,6 @@ export default {
     },
     methods:{
       ...mapActions('message', ['getReceiver']),
-      getOneMessage(user){
-        
-      }
     }
 }
 </script>
