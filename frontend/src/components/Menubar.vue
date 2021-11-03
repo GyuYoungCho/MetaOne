@@ -48,7 +48,7 @@
 
 <script>
 import HelpModal from '@/components/HelpModal.vue'
-import { mapActions , mapState } from 'vuex'
+import { mapActions } from 'vuex'
 
 export default {
   components:{
@@ -63,6 +63,7 @@ export default {
   methods:{
     ...mapActions('user', ['logout']),
     async logoutMethod(){
+      this.isShow=!this.isShow
       this.$store.commit('user/SET_USER_ISLOGIN', false)
 
       await this.logout()

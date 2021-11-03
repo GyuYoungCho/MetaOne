@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import firebase from "@/api/firebase"
+import { firebase } from "@/api/firebase.js"
 import "firebase/compat/database";
 import moment from 'moment';
 

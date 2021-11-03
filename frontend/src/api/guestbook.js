@@ -1,3 +1,5 @@
+import _axios from "./default.js";
+
 export default {
   regist(data) {
     return _axios({

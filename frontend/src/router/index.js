@@ -16,7 +16,7 @@ import MessageRecv from "@/view/MessageRecv.vue";
 import UnityMap from "@/view/UnityMap.vue";
 import NotFound from "@/view/errorpages/404.vue";
 
-import store from "@/store/"
+import store from "@/store/";
 
 Vue.use(VueRouter);
 
@@ -100,11 +100,16 @@ const routes = [
     path: "/unity-map",
     name: "UnityMap",
     component: UnityMap,
+    meta: { requireAuth: true },
   },
   {
     path: "/404",
     name: "NotFound",
     component: NotFound,
+  },
+  {
+    path: "*",
+    redirect: "/404",
   },
 ];
 
@@ -114,28 +119,28 @@ const router = new VueRouter({
   routes,
 });
 
-
 router.beforeEach(function (to, from, next) {
-  if (to.matched.some(function(routeInfo) {
-    return routeInfo.meta.requireAuth
-  })) {
+  if (
+    to.matched.some(function (routeInfo) {
+      return routeInfo.meta.requireAuth;
+    })
+  ) {
     if (!store.state.user.isLogin) {
-      next('/')
+      next("/");
     } else {
-      next()
+      next();
     }
   } else {
-    if (to.name === 'Login') {
+    if (to.name === "Login") {
       if (store.state.user.isLogin) {
-        next('/select-character')
+        next("/select-character");
       } else {
-        next()
+        next();
       }
     } else {
-      next()
+      next();
     }
   }
-
-})
+});
 
 export default router;

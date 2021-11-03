@@ -6,13 +6,13 @@
         <p class="guest_title">방명록</p>
       </div>
       <ul class="list-group mt-2">
-        <li class="list-group-item bg-transparent" v-for="(guestitem, index) in column" :key="index" :guestitem="guestitem">
+        <li class="list-group-item bg-transparent" v-for="(guestitem, index) in guestbooks" :key="index" :guestitem="guestitem">
           <div class="row">
             <div class="pt-2 col-2 txl">{{guestitem.nickname}}</div>
             <div class="pt-2 col-3 txl">{{guestitem.content}}</div>
             <div class="pt-2 col-5 txr">{{register_time(guestitem.createAt)}}</div>
             <div class="pt-1 col txl">
-              <button class="btn-modify" @click="openModal('modify',guestitem.content)" v-if="guestitem.userid==userid"
+              <button class="btn-modify" @click="openModal('modify',guestitem.content)" v-if="guestitem.nickname==nickname"
               data-bs-toggle="modal" data-bs-target="#FormModal">수정</button>
             </div>
           </div>
@@ -29,7 +29,7 @@
 <script>
 import moment from 'moment';
 import FormModal from '@/components/FormModal.vue'
-import { mapGetters,mapActions } from "vuex";
+import { mapState, mapGetters,mapActions } from "vuex";
 export default {
   components:{
     FormModal
@@ -48,6 +48,7 @@ export default {
   },
   computed:{
     ...mapGetters("guestbook", ["guestbooks"]),
+    ...mapState("user", ["nickname"]),
   },
   methods:{
     ...mapActions('guestbook', ['selectGuestbook','getGuestbooks']),

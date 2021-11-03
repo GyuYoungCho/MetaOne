@@ -56,7 +56,7 @@ export default {
     }
   },
   created(){
-    
+    this.getEducations()
   }
 }
 </script>
