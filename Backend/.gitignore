@@ -7,7 +7,7 @@ gradle/
 !**/src/test/**/build/
 
 # Qclass
-**/src/main/generated/com/metamong/server/entity
+#**/src/main/generated/com/metamong/server/entity
 
 ### STS ###
 .apt_generated
