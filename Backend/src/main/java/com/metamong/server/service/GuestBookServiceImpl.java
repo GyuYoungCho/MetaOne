@@ -66,7 +66,8 @@ public class GuestBookServiceImpl implements GuestBookService{
         Date end = Timestamp.valueOf(endTime);
 
         Optional<List<GuestBook>> guestBookList = guestBookRepository.findAllByCreateAtBetween(start, end);
-
+        System.out.println(start.toString());
+        System.out.println(end.toString());
         List<GuestBookDto> guestBookDtoList = new ArrayList<>();
         if(!guestBookList.isPresent()) return null;
         for(GuestBook g : guestBookList.get()){

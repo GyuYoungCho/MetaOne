@@ -12,14 +12,14 @@
             <div class="pt-2 col-3 txl">{{guestitem.content}}</div>
             <div class="pt-2 col-5 txr">{{register_time(guestitem.createAt)}}</div>
             <div class="pt-1 col txl">
-              <button class="btn-modify" @click="openModal('modify',guestitem.content)" v-if="guestitem.nickname==nickname"
+              <button class="btn-modify" @click="openModal('modify',guestitem)" v-if="guestitem.nickname==nickname"
               data-bs-toggle="modal" data-bs-target="#FormModal">수정</button>
             </div>
           </div>
         </li>
       </ul>
       <div class="justify-content-center">
-        <button class="mt-2" @click="openModal('register','')" data-bs-toggle="modal" data-bs-target="#FormModal">작성</button>
+        <button class="mt-2" @click="openModal('register',null)" data-bs-toggle="modal" data-bs-target="#FormModal">작성</button>
       </div>
       <FormModal :sign="sign" :content="content" @openModal="openModal"></FormModal>
     </section>
@@ -36,12 +36,6 @@ export default {
   },
   data(){
     return{
-      column : [
-        {nickname:'JO',content:'ㅊㅊ',createAt: new Date(),userid:1},
-        {nickname:'KWON',content:'뉴비 만반잘부',createAt: new Date(),userid:2},
-        {nickname:'KIM',content:'1빠',createAt: new Date(),userid:3}
-      ],
-      userid : 1,
       sign : '',
       content: ''
     }
@@ -54,7 +48,10 @@ export default {
     ...mapActions('guestbook', ['selectGuestbook','getGuestbooks']),
     openModal(sign,content){
         this.sign = sign
-        this.content = content;
+        let ob = {
+          content:''
+        }
+        this.selectGuestbook(content!=null ? content:ob);
         
     },
     register_time(val){
@@ -62,7 +59,9 @@ export default {
     },
   },
   created(){
-    this.getGuestbooks()
+    let today = moment(new Date()).format("yyyy-MM-DD")
+    this.getGuestbooks(today)
+    console.log(this.guestbooks)
   }
 }
 </script>

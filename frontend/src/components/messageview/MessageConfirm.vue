@@ -53,7 +53,7 @@ export default {
   methods:{
     ...mapActions("message", ["getReceiver"]),
     sendMessage(){
-      this.getReceiver(this.selectmessage.sender)
+      this.getReceiver(this.selectmessage.nickname)
       this.$router.push({ name: 'MessageSend' }) 
     }
   }

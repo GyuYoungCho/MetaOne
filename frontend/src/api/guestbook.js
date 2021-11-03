@@ -5,7 +5,9 @@ export default {
     return _axios({
       url: `/guestbook`,
       method: "post",
-      data: data,
+      data: {
+        content: data,
+      },
     });
   },
   select(data) {
@@ -13,7 +15,7 @@ export default {
       url: `/guestbook`,
       method: "get",
       params: {
-        date: data.date,
+        date: data,
       },
     });
   },

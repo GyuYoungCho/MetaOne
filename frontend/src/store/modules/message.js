@@ -40,7 +40,10 @@ export default {
       state.onebyonemessages = onebyonemessages;
     },
     SET_ONLINELIST(state, onlinelist) {
-      state.onlinelist = onlinelist;
+      state.onlinelist = [];
+      onlinelist.forEach((item) => {
+        if (item.online) state.onlinelist.push(item);
+      });
     },
   },
   actions: {

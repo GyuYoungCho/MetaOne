@@ -23,7 +23,10 @@ export default {
       state.selecteducation = education;
     },
     SET_EDUCATIONS(state, educations) {
-      state.educations = educations;
+      state.educations = [];
+      educations.forEach((item) => {
+        state.educations.push(item);
+      });
     },
     SET_CERTIFICATE(state, certificate) {
       state.certificate = certificate;
@@ -38,7 +41,7 @@ export default {
       await educationAPI
         .myAttendance()
         .then((res) => {
-          commit("SET_EDUCATIONS", res.data);
+          commit("SET_EDUCATIONS", res.data.data);
         })
         .catch((error) => {
           alert("못가져옴");

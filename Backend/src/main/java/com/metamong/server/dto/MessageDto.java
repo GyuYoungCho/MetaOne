@@ -78,7 +78,8 @@ public class MessageDto {
         private boolean isRead;
         private String nickname;
         private Date createAt;
-        
+        private String title;
+        private String content;
     }
     
     @Setter

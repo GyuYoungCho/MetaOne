@@ -7,7 +7,7 @@
             src="@/assets/image/profileExample.png">
         </div>
         <div class="username col-4 mt-2">
-          <span>{{user.name}}</span>
+          <span>{{user.nickname}}</span>
         </div>
       
     </li>

@@ -8,7 +8,7 @@
           <img class="trophy mt-3 mb-3" src="@/assets/image/trophy.png" alt="not">
           <p>성명 : {{name}}</p>
           <p>교육 내용 : {{selecteducation.education}} 교육</p>
-          <p>교육 날짜 : {{m_pass_day(selecteducation.pass_day)}}</p>
+          <p>교육 날짜 : {{m_pass_day(selecteducation.createAt)}}</p>
           <br>
           <p>위 교육생은 상기 교육과정을 성실히 이수하였으므로
               교육 이수증을 수여합니다.</p>
@@ -24,16 +24,16 @@
 
 <script>
 import moment from "moment";
-import { mapGetters } from "vuex";
+import { mapGetters, mapState } from "vuex";
 export default {
     data(){
         return{
-          name:"jo",
           show_cert : false,
         }
     },
     computed:{
       ...mapGetters("education", ["selecteducation"]),
+      ...mapState("user", ["name"]),
     },
     methods:{
         m_pass_day(val){
@@ -44,7 +44,7 @@ export default {
         }
     },
     created(){
-      console.log(this.selecteducation)
+      
     },
     mounted(){
       this.show_cert = true
