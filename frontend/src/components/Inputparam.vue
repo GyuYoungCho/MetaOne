@@ -46,7 +46,7 @@ export default {
             this.$store.commit('user/' + joinTitle, this.dataIn);
         },
         typing:function(e){
-            this.dataIn = e.target.value;
+            this.dataIn = e.target.value;               // 한글 입력 대응
         },
     }, 
     mounted(){
