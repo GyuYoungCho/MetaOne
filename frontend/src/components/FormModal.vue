@@ -25,6 +25,8 @@
 </template>
 
 <script>
+import guestbookAPI from "@/api/guestbook.js"
+
 export default {
   data(){
     return{
@@ -44,7 +46,7 @@ export default {
     
     async registerGuestbook(){
       await guestbookAPI
-        .regist(data)
+        .regist(this.content)
         .then((res) => {
           console.log(res.data)
         })
@@ -55,7 +57,7 @@ export default {
     },
     async modifyGuestbook(){
       await guestbookAPI
-        .modify(data)
+        .modify(this.content)
         .then((res) => {
           console.log(res.data)
         })

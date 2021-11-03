@@ -32,13 +32,11 @@
 </template>
 
 <script>
-import Inputparam from '@/components/Inputparam.vue'
 import { mapState, mapGetters } from "vuex";
 import messageAPI from "@/api/message.js";
 
 export default {
   components:{
-    Inputparam,
   },
   data(){
     return{
@@ -71,7 +69,7 @@ export default {
       messageAPI
         .sendOne(message)
         .then((res) => {
-          commit("SET_MYMESSAGES", res.data);
+          this.$store.commit("message/SET_MYMESSAGES", res.data);
         })
         .catch((error) => {
           alert("못가져옴");
