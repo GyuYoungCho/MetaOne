@@ -14,28 +14,29 @@
       <div class="offcanvas-body">
         <div>
          <div class="msg_history">
-             <div class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <div class="received_msg">
-                <div class="received_withd_msg">
-                  <p>Test, which is a new approach to have</p>
-                  <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-              </div>
+          <div class="incoming_msg">
+            <div class="col incoming_info">
+              <div class="row incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+              <span class="incoming_name">아ff</span>
             </div>
-            <div class="outgoing_msg">
-              <div class="sent_msg">
-                <p>Apollo University, Delhi, India Test</p>
-                <span class="time_date"> 11:01 AM    |    Today</span> </div>
+            <div class="received_msg">
+              <div class="received_withd_msg">
+                <p>Test, which is a new approach to have</p>
+                <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
             </div>
+          </div>
             
             <div v-for="(message, index) in messages" :key="index" :message="message">
-              <div v-if="isme(message.user)" class="incoming_msg">
-              <div class="incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-                <div class="received_msg">
+              <div v-if="isme(message.nickname)" class="incoming_msg">
+                <div class="col incoming_info">
+                  <div class="row incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                  <span class="incoming_name">{{message.nickname}}</span>
+                </div>
+                  <div class="received_msg">
                     <div class="received_withd_msg">
                     <p>{{message.content}}</p>
                     <span class="time_date"> {{register_time(message.sendDate)}}</span>
-                    </div>
+                  </div>
                 </div>
               </div>
               <div v-else class="outgoing_msg">
@@ -71,25 +72,29 @@
 import { firebase } from "@/api/firebase.js"
 import "firebase/compat/database";
 import moment from 'moment';
+import { mapActions, mapState } from 'vuex'
 
 export default {
     data(){
         return{
             content:'',
-            name:Math.random().toString(36).substr(2,11),
             messages:null,
             roomid:1,
             newMessageMark:false,
         }
     },
     computed:{
+      ...mapState('user', ['nickname']),
+      ...mapState('process', ['messSize'])
     },
     methods:{
+        ...mapActions('process', ['getMessSize']),
         sendMessage(){
-            
-            let newData = firebase.database().ref('chat/'+this.roomid+'/chats').push();
+            let today = new Date()
+            let ymd = moment(today).format("yyyyMMDD")
+            let newData = firebase.database().ref(ymd + '/'+this.roomid+'/chats').push();
             newData.set({
-                user: this.name,
+                nickname: this.nickname,
                 content: this.content,
                 sendDate: Date()
             }).then(()=>{
@@ -100,23 +105,25 @@ export default {
 
         fetchMessages(){
             try {
-                firebase.database().ref('chat/'+this.roomid+'/chats').on('value', (snapshot) => {
-                    
-                    if (snapshot.exists()) {
-                        this.messages = [];
-                        snapshot.forEach((doc) => {
-                            let item = doc.val()
-                            item.key = doc.key
-                            this.messages.push(item)
-                        });
-                        
-                        setTimeout(()=>{
-                            this.scrollToBottom()
-                        },1000)
-                    } else {
-                        console.log("No data available");
-                    }
-                })
+              let today = new Date()
+              let ymd = moment(today).format("yyyyMMDD")
+              firebase.database().ref(ymd + '/'+ this.roomid+'/chats').on('value', (snapshot) => {
+                  
+                  if (snapshot.exists()) {
+                      this.messages = [];
+                      snapshot.forEach((doc) => {
+                          let item = doc.val()
+                          item.key = doc.key
+                          this.messages.push(item)
+                      });
+                      
+                      setTimeout(()=>{
+                          this.scrollToBottom()
+                      },1000)
+                  } else {
+                      console.log("No data available");
+                  }
+              })
                 
             } catch (e) {
               console.log("catch")
@@ -129,25 +136,23 @@ export default {
         },
 
         isme(name){
-            return name!=this.name 
+            return name!=this.nickname 
         },
         register_time(val){
-            return moment(val).format("hh:mm A  |  yyyy.MM.DD")
+            return moment(val).format("hh:mm A")
         },
         
     },
 
     created(){
         this.fetchMessages()
-        console.log(this.messages)
-        console.log(this.name)
     },
 
     watch:{
         messages(val){
-          console.log(val[val.length - 1].content)
-          if(val.length>0 && val[val.length - 1].user!=this.name) {
+          if(val.length>0 && this.messSize!=val.length) {
               this.newMessageMark=true
+              this.getMessSize(val.length)
           }
         }
     }

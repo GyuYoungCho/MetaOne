@@ -1,8 +1,7 @@
-import _axios from './default.js'
+import _axios from "./default.js";
 
 export default {
   sendOne(data) {
-
     return _axios({
       url: `/message/private`,
       method: "post",
@@ -24,6 +23,15 @@ export default {
     return _axios({
       url: `/message/private/${nickname}`,
       method: "get",
+    });
+  },
+  readMessage(data) {
+    return _axios({
+      url: `/message/private`,
+      method: "put",
+      params: {
+        msgId: data,
+      },
     });
   },
   sendAll(data) {

@@ -33,25 +33,23 @@ export default {
   },
   data(){
     return{
-      messagelist:[
-          {title:'안녕',isRead:false,content:'반가워~~~',sender:'KIM'},
-          {title:'오늘은',isRead:true,content:'뭐한담',sender:'KIM'},
-          {title:'집에',isRead:true,content:'가고싶다',sender:'KWON'},
-      ],
+      messagelist:[],
       sendmode:true,
     }
   },
   computed:{
     ...mapGetters("message", ["selectmessage","onlinelist","mymessages"]),
+    ...mapGetters("process", ["sendmode"]),
   },
   methods:{
     ...mapActions("message", ["getMessage","getMyMessages","getOnlineList"]),
+    ...mapActions("process", ["getSendmode"]),
   },
   created(){
     this.getOnlineList()
     this.getMyMessages()
+    this.getSendmode(true);
     this.messagelist = this.mymessages
-    console.log(this.$route.name)
     console.log(this.mymessages)
   }
 }

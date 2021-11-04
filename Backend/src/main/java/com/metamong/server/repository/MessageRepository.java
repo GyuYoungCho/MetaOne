@@ -13,4 +13,5 @@ import org.springframework.stereotype.Repository;
 public interface MessageRepository extends JpaRepository<Message, Integer> {
 	Optional<List<Message>> findByRecvUserId(User userId);
 	Optional<List<Message>> findBySentUserIdAndRecvUserId(User user1, User user2);
+	Optional<Message> getById(int msgId);
 }
