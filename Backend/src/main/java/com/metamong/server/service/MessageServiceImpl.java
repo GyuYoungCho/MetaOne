@@ -47,7 +47,7 @@ public class MessageServiceImpl implements MessageService {
 					.nickname(nickname)
 					.title(m.getTitle())
 					.content(m.getContent())
-					.createAt(new Date())
+					.createAt(m.getCreateAt())
 					.build();
 			
 			myMessageList.add(mmr);
@@ -70,11 +70,12 @@ public class MessageServiceImpl implements MessageService {
 			
 			OneMessageResponse omr = OneMessageResponse.builder()
 					.id(m.getId())
+					.isRead(m.getIsRead()==1?true:false)
 					.whose(true)
 					.nickname(nickname)
 					.title(m.getTitle())
 					.content(m.getContent())
-					.createAt(new Date())
+					.createAt(m.getCreateAt())
 					.build();
 			
 			myOneMessageList.add(omr);
@@ -85,11 +86,12 @@ public class MessageServiceImpl implements MessageService {
 			
 			OneMessageResponse omr = OneMessageResponse.builder()
 					.id(m.getId())
+					.isRead(m.getIsRead()==1?true:false)
 					.whose(false)
 					.nickname(nickname)
 					.title(m.getTitle())
 					.content(m.getContent())
-					.createAt(new Date())
+					.createAt(m.getCreateAt())
 					.build();
 			
 			myOneMessageList.add(omr);
