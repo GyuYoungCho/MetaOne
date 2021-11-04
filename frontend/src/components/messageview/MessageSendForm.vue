@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import messageAPI from "@/api/message.js";
 
 export default {
@@ -57,8 +57,8 @@ export default {
   },
 
   methods:{
-    
-    sendMessage(){
+    ...mapActions("message",["getMyMessages","getOnebyOneMessages"]),
+    async sendMessage(){
 
       if(this.valid_receiver=="" || this.title=="" || this.content==""){
         alert("입력되지 않은 정보가 있습니다.")
@@ -72,15 +72,18 @@ export default {
         firebaseToken: this.firebaseToken,
       }
 
-      messageAPI
+      await messageAPI
         .sendOne(message)
         .then((res) => {
-          this.$store.commit("message/SET_MYMESSAGES", res.data);
+          console.log(res.data)
         })
         .catch((error) => {
           alert("못가져옴");
           console.log(error);
         });
+
+      await this.getMyMessages()
+      await this.getOnebyOneMessages(this.valid_receiver)
     }
   }
 }
