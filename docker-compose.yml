@@ -1,4 +1,5 @@
 version: '3'
+
 services:
   server:
     container_name: back
@@ -6,6 +7,7 @@ services:
       context: ./Backend
     ports:
       - "8080:8080"
+
   client:
     container_name: front
     build:
@@ -13,4 +15,18 @@ services:
     depends_on:
       - server
     ports:
-      - "80:80"
+      - "8000:8000"
+
+  nginx:
+    container_name: nginx
+    build: ./frontend/.nginx
+    depends_on:
+      - server
+      - client
+    volumes:
+      - ./frontend/.nginx/conf.d:/etc/nginx/conf.d
+      - ./frontend/.nginx/zerossl:/var/www/zerossl/.well-known/pki-validation
+      - ./frontend/.nginx/cert:/cert
+    ports:
+      - 80:80
+      - 443:443
