@@ -251,19 +251,20 @@ public class UserController {
     @DeleteMapping("login")
     @ApiOperation(value="로그아웃")
     public ResponseEntity logout(
-            @RequestParam @ApiParam(value="Token") String firebaseToken, HttpServletRequest request
+            @RequestParam @ApiParam(value="Token") String firebaseToken,@RequestParam @ApiParam String userId
             ) throws IOException{
         System.out.println("firebase token: " + firebaseToken);
-
+        
         // DB 파이어베이스 토큰 삭제하기
         firebaseCloudMessageService.del(firebaseToken);
         
         // 오프라인 변경
-        int userId = (int) request.getAttribute("userId");
-        User user = userRepository.findById(userId).get();
+        User user = userRepository.findById(Integer.parseInt(userId)).get();
         user.setState(0);
         userRepository.save(user);
+        
         return ResponseEntity.status(200).build();
+        
     }
 
     /***
