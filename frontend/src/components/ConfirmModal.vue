@@ -1,3 +1,5 @@
+// 확인용 모달
+
 <template>
 <div>
   <section class="ConfirmModal">

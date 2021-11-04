@@ -1,7 +1,9 @@
+// 받은 메세지 확인용
+
 <template>
   <section class="MessageForm">
     <div class="m_title">
-        <p>내용</p>
+      <p>내용</p>
     </div>
     <div class="m-contain">
     </div>

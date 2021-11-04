@@ -1,3 +1,5 @@
+// 메세지 리스트에서 내가 받은거만 표시
+
 <template>
   <div>
     <li class="list-group-item d-flex">

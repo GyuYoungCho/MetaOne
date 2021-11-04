@@ -1,55 +1,51 @@
 <template>
   <div>
     <section class="Chatting">
+
+      <!-- 채팅 페이지 여는 버튼 -->
       <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#chatting" aria-controls="chatting"
             @click="newMessageMark=false">
         <i class="far fa-comments fa-5x"></i>
       </button>
+
+      <!-- 새 메시지용 아이콘 -->
       <i class="fas fa-exclamation-circle fa-lg" v-if="newMessageMark"></i>
+
+      <!-- 채팅 전체 영역 -->
       <div class="offcanvas offcanvas-start" tabindex="-1" id="chatting" aria-labelledby="chattingLabel">
         <div class="offcanvas-header">
           <h5 class="offcanvas-title" id="chattingLabel">채팅창</h5>
           <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
+
+      <!-- 채팅 내용 부분 -->
       <div class="offcanvas-body">
         <div>
-         <div class="msg_history">
-          <div class="incoming_msg">
-            <div class="col incoming_info">
-              <div class="row incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
-              <span class="incoming_name">아ff</span>
-            </div>
-            <div class="received_msg">
-              <div class="received_withd_msg">
-                <p>Test, which is a new approach to have</p>
-                <span class="time_date"> 11:01 AM    |    Yesterday</span></div>
-            </div>
-          </div>
-            
+          <div class="msg_history">
             <div v-for="(message, index) in messages" :key="index" :message="message">
+
+              <!-- 보내는사람 -->
               <div v-if="isme(message.nickname)" class="incoming_msg">
                 <div class="col incoming_info">
                   <div class="row incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
                   <span class="incoming_name">{{message.nickname}}</span>
                 </div>
-                  <div class="received_msg">
-                    <div class="received_withd_msg">
+                <div class="received_msg">
+                  <div class="received_withd_msg">
                     <p>{{message.content}}</p>
                     <span class="time_date"> {{register_time(message.sendDate)}}</span>
                   </div>
                 </div>
               </div>
+
+              <!-- 내가 보내는거 -->
               <div v-else class="outgoing_msg">
                 <div class="sent_msg">
                 <p>{{message.content}}</p>
                 <span class="time_date"> {{register_time(message.sendDate)}}</span> </div>
               </div>
             </div>
-
-
-            
           </div>
-          
         </div>
         <div class="offcanvas-footer">
           <div class="row message_com m_title mt-3">

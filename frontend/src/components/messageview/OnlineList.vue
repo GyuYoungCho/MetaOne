@@ -1,3 +1,5 @@
+// 온라인 사용자 목록
+
 <template>
   <section class="MessageList">
     <div class="m_title">

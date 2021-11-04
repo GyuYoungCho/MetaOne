@@ -1,3 +1,5 @@
+// 메시지 보내기용
+
 <template>
   <section class="MessageForm">
     <div class="m_title">
@@ -21,10 +23,11 @@
       </div>
       <div class="row message_com m_content mt-3">
         <label for="ContentArea" class="content-label">{{form_content[2]}}</label>
-        <textarea class="form-control" id="ContentArea" rows="10" v-model="content"></textarea>
+        <textarea class="form-control" id="ContentArea" rows="10" v-model="content"
+          placeholder="제목 내용 모두 입력해야 전송됩니다"></textarea>
       </div>
       <div class="row message_com mt-4 m_submit">
-        <button @click="sendMessage()" data-bs-toggle="modal" data-bs-target="#ConfirmModal">전송</button>
+        <button @click="sendMessage()" :disabled='!valid_send' data-bs-toggle="modal" data-bs-target="#ConfirmModal">전송</button>
       </div>
     </div>
     
@@ -53,17 +56,15 @@ export default {
       if(this.selectreceiver && typeof this.selectreceiver =="string") 
         return this.selectreceiver
       else return ''
+    },
+    valid_send(){
+      return !!this.valid_receiver && !!this.title && !!this.content
     }
   },
 
   methods:{
     ...mapActions("message",["getMyMessages","getOnebyOneMessages"]),
     async sendMessage(){
-
-      if(this.valid_receiver=="" || this.title=="" || this.content==""){
-        alert("입력되지 않은 정보가 있습니다.")
-        return
-      }
 
       const message = {
         nickname: this.valid_receiver,

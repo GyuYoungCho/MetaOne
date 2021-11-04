@@ -1,3 +1,5 @@
+// 메시지 리스트 확인
+
 <template>
   <section class="MessageList">
     <div class="m_title">
@@ -12,10 +14,13 @@
         <i class="fas fa-arrow-left"></i>
       </button>
       <transition name="fade">
+        <!-- 내 메세지 내역 -->
         <ul v-if="allmode" class="list-group mymess overflow-auto pt-3 mt-2">
           <MyMessageCard  v-for="(message, index) in mymessages" :key="index" :message="message"
           @click.native="readAndGet(message)"/>
         </ul>
+
+        <!-- 나와 상대방 1대1 -->
         <ul v-else class="list-group onesmess overflow-auto pt-3 mt-2">
           <OnesMessageCard  v-for="(message, index) in onebyonemessages" :key="index" :message="message"
           @click.native="readAndGet(message)"/>

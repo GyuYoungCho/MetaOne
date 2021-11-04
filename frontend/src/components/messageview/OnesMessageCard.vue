@@ -1,3 +1,5 @@
+// 상대방과 나의 메세지 내역
+
 <template>
   <div>
     <li class="list-group-item d-flex">
