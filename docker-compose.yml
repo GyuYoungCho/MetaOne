@@ -19,14 +19,14 @@ services:
 
   nginx:
     container_name: nginx
-    build: ./.nginx
+    build: ./frontend/.nginx
     depends_on:
       - server
       - client
     volumes:
-      - ./.nginx:/etc/nginx/conf.d
-      - ./.nginx/zerossl:/var/www/zerossl/.well-known/pki-validation
-      - ./.nginx/cert:/cert
+      - ./frontend/.nginx/conf.d:/etc/nginx/conf.d
+      - ./frontend/.nginx/zerossl:/var/www/zerossl/.well-known/pki-validation
+      - ./frontend/.nginx/cert:/cert
     ports:
       - 80:80
       - 443:443
