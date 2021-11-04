@@ -28,7 +28,7 @@ export default {
     messaging.onMessage((payload) => {
       console.log(payload)
       console.log(payload.notification)
-      this.$store.dispatch('user/onNotification', payload.notification)
+      this.$store.dispatch('user/onNotification', payload)
     })
   },
   methods:{

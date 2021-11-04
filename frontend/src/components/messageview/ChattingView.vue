@@ -85,10 +85,10 @@ export default {
     },
     computed:{
       ...mapState('user', ['nickname']),
-      ...mapState('process', ['messSize'])
+      ...mapState('message', ['messSize'])
     },
     methods:{
-        ...mapActions('process', ['getMessSize']),
+        ...mapActions('message', ['getMessSize']),
         sendMessage(){
             let today = new Date()
             let ymd = moment(today).format("yyyyMMDD")

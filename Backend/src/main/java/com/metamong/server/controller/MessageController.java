@@ -73,7 +73,7 @@ public class MessageController {
 			return ResponseEntity.noContent().build();
 		System.out.println("hi");
 		
-		Message regMessage = messageService.registerMessage(messageForm,recv_user.get(),send_user.get());
+		Message regMessage = messageService.registerMessage(messageForm,send_user.get(),recv_user.get());
 		
 		Optional<List<FirebaseToken>> user_token = firebaseTokenRepository.findByUserId(userId);
 		List<FirebaseToken> recv_token = new ArrayList<>();

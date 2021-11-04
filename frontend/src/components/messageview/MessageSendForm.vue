@@ -24,7 +24,7 @@
         <textarea class="form-control" id="ContentArea" rows="10" v-model="content"></textarea>
       </div>
       <div class="row message_com mt-4 m_submit">
-        <button @click="sendMessage()">전송</button>
+        <button @click="sendMessage()" data-bs-toggle="modal" data-bs-target="#ConfirmModal">전송</button>
       </div>
     </div>
     
@@ -59,6 +59,12 @@ export default {
   methods:{
     
     sendMessage(){
+
+      if(this.valid_receiver=="" || this.title=="" || this.content==""){
+        alert("입력되지 않은 정보가 있습니다.")
+        return
+      }
+
       const message = {
         nickname: this.valid_receiver,
         title: this.title,

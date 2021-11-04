@@ -1,7 +1,7 @@
 <template>
   <section class="MessageForm">
     <div class="m_title">
-        <p>받은 쪽지</p>
+        <p>내용</p>
     </div>
     <div class="m-contain">
     </div>
@@ -17,7 +17,7 @@
         <textarea readonly class="form-control" id="ContentArea" rows="10"
           v-model="valid_content"></textarea>
       </div>
-      <div class="row message_com mt-4 m_answer justify-content-end">
+      <div v-if="isyour"  class="row message_com mt-4 m_answer justify-content-end">
         <button @click="sendMessage()" :disabled="valid_title == ''">답장하기</button>
       </div>
     </div>
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapState } from "vuex";
 
 export default {
   
@@ -37,7 +37,8 @@ export default {
   },
   computed:{
 
-    ...mapGetters("message", ["selectmessage"]),
+    ...mapGetters("message", ["selectmessage","sendmode"]),
+    ...mapState("user", ["nickname"]),
     
     valid_title(){
       if(this.selectmessage) 
@@ -48,13 +49,16 @@ export default {
       if(this.selectmessage) 
         return this.selectmessage.content
       else return ''
+    },
+    isyour(){
+      return this.selectmessage.nickname!=this.nickname
     }
   },
   methods:{
-    ...mapActions("message", ["getReceiver"]),
+    ...mapActions("message", ["getReceiver","getSendmode"]),
     sendMessage(){
       this.getReceiver(this.selectmessage.nickname)
-      this.$router.push({ name: 'MessageSend' }) 
+      this.getSendmode(true)
     }
   }
 }
