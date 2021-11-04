@@ -5,6 +5,7 @@ import guestbook from "./modules/guestbook.js";
 import message from "./modules/message.js";
 import education from "./modules/education.js";
 import user from "./modules/user.js";
+import process from "./modules/process.js";
 
 Vue.use(Vuex);
 
@@ -15,5 +16,6 @@ export default new Vuex.Store({
     user,
     message,
     education,
+    process,
   },
 });

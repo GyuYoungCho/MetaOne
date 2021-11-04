@@ -9,6 +9,7 @@ import com.metamong.server.entity.FirebaseToken;
 import com.metamong.server.entity.Message;
 import com.metamong.server.entity.User;
 import com.metamong.server.repository.FirebaseTokenRepository;
+import com.metamong.server.repository.MessageRepository;
 import com.metamong.server.repository.UserRepository;
 import com.metamong.server.service.FirebaseCloudMessageService;
 import com.metamong.server.service.MessageService;
@@ -35,6 +36,9 @@ public class MessageController {
 	
 	@Autowired
 	private FirebaseTokenRepository firebaseTokenRepository;
+	
+	@Autowired
+	private MessageRepository messageRepository;
 	
 	
 	@Autowired
@@ -116,6 +120,21 @@ public class MessageController {
 		if(oneMessageList==null) return new ResponseEntity<>(oneMessageList,HttpStatus.NO_CONTENT);
 			
 		return new ResponseEntity<>(oneMessageList,HttpStatus.OK);
+	}
+	
+	@PutMapping("/private")
+	@ApiOperation(value = "메세지 읽기")
+	public ResponseEntity<String> readMessage(@RequestParam String msgId, HttpServletRequest request) throws IOException {
+		Optional<Message> message = messageRepository.getById(Integer.parseInt(msgId));
+		
+		if(!message.isPresent())
+			return ResponseEntity.noContent().build();
+		
+		Message m = message.get();
+		m.setIsRead(1);
+		messageRepository.save(m);
+		
+		return ResponseEntity.status(200).build();
 	}
 
 	/***

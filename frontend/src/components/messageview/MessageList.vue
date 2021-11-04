@@ -8,13 +8,14 @@
     <div class="m_card">
       <ul class="list-group overflow-auto pt-3">
         <MessageCard  v-for="(message, index) in messagelist" :key="index" :message="message"
-        @click.native="getMessage(message)"/>
+        @click.native="readAndGet(message)"/>
       </ul>
     </div>
   </section>
 </template>
 
 <script>
+import messageAPI from "@/api/message.js";
 import MessageCard from "@/components/messageview/MessageCard.vue"
 import { mapActions } from "vuex";
 export default {
@@ -31,8 +32,27 @@ export default {
     },
     methods:{
       ...mapActions('message', ['getMessage']),
-      
+      readAndGet(mm){
+        if(!mm.read){
+          this.reading(mm.msgId)
+        }
 
+        this.getMessage(mm)
+      },
+
+      async reading(msgId){
+        await messageAPI
+          .reading(msgId)
+          .then((res) => {
+          console.log(res.data)
+        })
+        .catch((error) => {
+          alert("x");
+          console.log(error);
+        });
+          
+        
+      }
     },
     created(){
 

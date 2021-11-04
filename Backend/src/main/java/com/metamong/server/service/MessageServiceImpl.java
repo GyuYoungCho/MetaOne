@@ -43,6 +43,7 @@ public class MessageServiceImpl implements MessageService {
 			String nickname = m.getSentUserId().getNickname();
 			MyMessageResponse mmr = MyMessageResponse.builder()
 					.isRead(m.getIsRead()==1?true:false)
+					.id(m.getId())
 					.nickname(nickname)
 					.title(m.getTitle())
 					.content(m.getContent())
@@ -68,6 +69,7 @@ public class MessageServiceImpl implements MessageService {
 		for(Message m : sentList.get()) {
 			
 			OneMessageResponse omr = OneMessageResponse.builder()
+					.id(m.getId())
 					.whose(true)
 					.nickname(nickname)
 					.title(m.getTitle())
@@ -82,6 +84,7 @@ public class MessageServiceImpl implements MessageService {
 		for(Message m : recvList.get()) {
 			
 			OneMessageResponse omr = OneMessageResponse.builder()
+					.id(m.getId())
 					.whose(false)
 					.nickname(nickname)
 					.title(m.getTitle())
