@@ -173,7 +173,7 @@ public class MessageController {
 	public ResponseEntity<List<OnlineDto>> userOnline( HttpServletRequest request) throws IOException {
 		int userId = (int) request.getAttribute("userId");
 		
-		Optional<List<User>> userlist = userRepository.findByIdNot(1);
+		Optional<List<User>> userlist = userRepository.findByIdNot(userId);
 		
 		if(!userlist.isPresent())
 			return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);

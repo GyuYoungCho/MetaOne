@@ -70,6 +70,7 @@ public class MessageServiceImpl implements MessageService {
 			
 			OneMessageResponse omr = OneMessageResponse.builder()
 					.id(m.getId())
+					.isRead(m.getIsRead()==1?true:false)
 					.whose(true)
 					.nickname(nickname)
 					.title(m.getTitle())
