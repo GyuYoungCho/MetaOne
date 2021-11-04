@@ -91,6 +91,7 @@ public class MessageDto {
     public static class OneMessageResponse{
     	private int id;
     	private boolean whose;
+    	private boolean isRead;
         private String nickname;
         private Date createAt;
         private String title;

@@ -1,3 +1,5 @@
+// 메세지 리스트에서 내가 받은거만 표시
+
 <template>
   <div>
     <li class="list-group-item d-flex">
@@ -5,7 +7,7 @@
           <i class="menuAddIcon fas fa-envelope" v-if="!message.read"></i>
           <i class="menuAddIcon fas fa-envelope-open-text" v-if="message.read" ></i>
       </div>
-      <div class="messagetitle col-4 mt-2 ml-2">
+      <div class="messagetitle col-10">
         <span>{{message.title}}</span>
       </div>
     </li>
@@ -13,17 +15,13 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
 
 export default {
     props: {
         message : Object,
     },
     methods:{
-      ...mapActions('message', ['getMessage']),
-      confirmMessage(mm){
-        console.log(mm)
-      }
+      
     }
 }
 </script>

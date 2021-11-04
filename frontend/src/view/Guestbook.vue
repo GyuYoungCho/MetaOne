@@ -21,7 +21,7 @@
       <div class="justify-content-center">
         <button class="mt-2" @click="openModal('register',null)" data-bs-toggle="modal" data-bs-target="#FormModal">작성</button>
       </div>
-      <FormModal :sign="sign" :content="content" @openModal="openModal"></FormModal>
+      <FormModal :sign="sign" :content="content"></FormModal>
     </section>
   </div>
 </template>

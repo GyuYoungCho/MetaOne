@@ -73,10 +73,11 @@ public class MessageController {
 			return ResponseEntity.noContent().build();
 		System.out.println("hi");
 		
-		Message regMessage = messageService.registerMessage(messageForm,recv_user.get(),send_user.get());
+		Message regMessage = messageService.registerMessage(messageForm,send_user.get(),recv_user.get());
 		
-		Optional<List<FirebaseToken>> user_token = firebaseTokenRepository.findByUserId(userId);
+//		Optional<List<FirebaseToken>> user_token = firebaseTokenRepository.findByUserId(userId);
 		List<FirebaseToken> recv_token = new ArrayList<>();
+		Optional<List<FirebaseToken>> user_token = firebaseTokenRepository.findByUserId(recv_user.get().getId());
 		recv_token.add(user_token.get().get(0));
 		firebaseCloudMessageService.sends(recv_token, Integer.toString(regMessage.getId()), regMessage.getTitle(), regMessage.getContent());
 		
@@ -173,7 +174,7 @@ public class MessageController {
 	public ResponseEntity<List<OnlineDto>> userOnline( HttpServletRequest request) throws IOException {
 		int userId = (int) request.getAttribute("userId");
 		
-		Optional<List<User>> userlist = userRepository.findByIdNot(1);
+		Optional<List<User>> userlist = userRepository.findByIdNot(userId);
 		
 		if(!userlist.isPresent())
 			return new ResponseEntity<>(null,HttpStatus.NO_CONTENT);

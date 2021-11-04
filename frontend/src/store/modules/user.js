@@ -178,7 +178,8 @@ const actions = {
     commit("SET_USER_ACCESSTOKEN", "");
     commit("SET_USER_REFRESHTOKEN", "");
   },
-  onNotification(payload) {
+  onNotification({ commit }, payload) {
+    commit;
     console.log(payload);
     console.log(payload.notification);
 

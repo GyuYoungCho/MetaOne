@@ -1,3 +1,5 @@
+// 메시지 보내기용
+
 <template>
   <section class="MessageForm">
     <div class="m_title">
@@ -21,10 +23,11 @@
       </div>
       <div class="row message_com m_content mt-3">
         <label for="ContentArea" class="content-label">{{form_content[2]}}</label>
-        <textarea class="form-control" id="ContentArea" rows="10" v-model="content"></textarea>
+        <textarea class="form-control" id="ContentArea" rows="10" v-model="content"
+          placeholder="제목 내용 모두 입력해야 전송됩니다"></textarea>
       </div>
       <div class="row message_com mt-4 m_submit">
-        <button @click="sendMessage()">전송</button>
+        <button @click="sendMessage()" :disabled='!valid_send' data-bs-toggle="modal" data-bs-target="#ConfirmModal">전송</button>
       </div>
     </div>
     
@@ -32,7 +35,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from "vuex";
+import { mapState, mapGetters, mapActions } from "vuex";
 import messageAPI from "@/api/message.js";
 
 export default {
@@ -53,12 +56,16 @@ export default {
       if(this.selectreceiver && typeof this.selectreceiver =="string") 
         return this.selectreceiver
       else return ''
+    },
+    valid_send(){
+      return !!this.valid_receiver && !!this.title && !!this.content
     }
   },
 
   methods:{
-    
-    sendMessage(){
+    ...mapActions("message",["getMyMessages","getOnebyOneMessages"]),
+    async sendMessage(){
+
       const message = {
         nickname: this.valid_receiver,
         title: this.title,
@@ -66,15 +73,18 @@ export default {
         firebaseToken: this.firebaseToken,
       }
 
-      messageAPI
+      await messageAPI
         .sendOne(message)
         .then((res) => {
-          this.$store.commit("message/SET_MYMESSAGES", res.data);
+          console.log(res.data)
         })
         .catch((error) => {
           alert("못가져옴");
           console.log(error);
         });
+
+      await this.getMyMessages()
+      await this.getOnebyOneMessages(this.valid_receiver)
     }
   }
 }
