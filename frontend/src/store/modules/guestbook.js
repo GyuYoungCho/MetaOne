@@ -27,7 +27,8 @@ export default {
       await guestbookAPI
         .select(data)
         .then((res) => {
-          commit("SET_GUESTBOOKS", res.data);
+          console.log(res.data);
+          commit("SET_GUESTBOOKS", res.data.data);
         })
         .catch((error) => {
           alert("못가져옴");

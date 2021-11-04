@@ -43,11 +43,11 @@ public class GuestBookController {
 	 */
 	@PostMapping("")
 	@ApiOperation(value = "방명록을 작성한다.")
-	public ResponseEntity<String> write(@RequestBody GuestBookDto guestBook, HttpServletRequest request) throws IOException {
-		// int userId = (int) request.getAttribute("userId");
-		int userId = 1;
+	public ResponseEntity<String> write(@RequestBody GuestBookDto.GuestBookReq guestbook, HttpServletRequest request) throws IOException {
+		int userId = (int) request.getAttribute("userId");
+		
 
-		guestBookService.registerGuestBook(guestBook.getContent(), userId);
+		guestBookService.registerGuestBook(guestbook.getContent(), userId);
 
 	  	return ResponseEntity.status(201).build();
 	}
@@ -62,8 +62,7 @@ public class GuestBookController {
 	@PutMapping("")
 	@ApiOperation(value = "방명록을 수정한다.")
 	public ResponseEntity<String> modify(@RequestBody GuestBookDto guestBook, HttpServletRequest request) throws IOException {
-		// int userId = (int) request.getAttribute("userId");
-		int userId = 1;
+		int userId = (int) request.getAttribute("userId");
 
 		guestBookService.updateGuestBook(guestBook, userId);
 

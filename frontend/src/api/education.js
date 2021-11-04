@@ -11,8 +11,8 @@ export default {
     return _axios({
       url: `/edu/attendance`,
       method: "post",
-      data: {
-        education: data.education,
+      params: {
+        education: data,
       },
     });
   },
@@ -26,8 +26,8 @@ export default {
     return _axios({
       url: `/edu/certificate`,
       method: "get",
-      data: {
-        education: data.education,
+      params: {
+        education: data,
       },
     });
   },
@@ -45,7 +45,7 @@ export default {
     return _axios({
       url: `/edu/rank`,
       method: "get",
-      data: {
+      params: {
         education: data.education,
       },
     });

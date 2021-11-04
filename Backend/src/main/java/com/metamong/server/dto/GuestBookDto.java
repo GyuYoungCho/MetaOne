@@ -1,6 +1,7 @@
 package com.metamong.server.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.*;
 import org.apache.ibatis.type.Alias;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,15 @@ public class GuestBookDto {
 
     @JsonIgnore
     private UserDto userDto;
-
+    
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    @NoArgsConstructor
+    public static class GuestBookReq{
+    	private String content;
+    }
+    
     @Setter
     @AllArgsConstructor
     @NoArgsConstructor

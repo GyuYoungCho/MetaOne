@@ -75,10 +75,12 @@ public class MessageDto {
     @NoArgsConstructor
     @Builder
     public static class MyMessageResponse{
+    	private int id;
         private boolean isRead;
         private String nickname;
         private Date createAt;
-        
+        private String title;
+        private String content;
     }
     
     @Setter
@@ -87,6 +89,7 @@ public class MessageDto {
     @NoArgsConstructor
     @Builder
     public static class OneMessageResponse{
+    	private int id;
     	private boolean whose;
         private String nickname;
         private Date createAt;
