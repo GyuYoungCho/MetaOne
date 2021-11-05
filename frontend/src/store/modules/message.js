@@ -5,6 +5,8 @@ export default {
   state: {
     sendmode: false,
     allmode: false,
+    newMessage: false,
+
     messSize: 0,
     selectmessage: Object,
     selectreceiver: String,
@@ -18,6 +20,9 @@ export default {
     },
     allmode(state) {
       return state.allmode;
+    },
+    newMessage(state) {
+      return state.newMessage;
     },
     messSize(state) {
       return state.messSize;
@@ -44,6 +49,9 @@ export default {
     },
     SET_ALLMODE(state, status) {
       state.allmode = status;
+    },
+    SET_NEWMESSAGE(state, status) {
+      state.newMessage = status;
     },
     SET_MESSSIZE(state, status) {
       state.messSize = status;
@@ -75,6 +83,9 @@ export default {
     },
     getAllmode({ commit }, item) {
       commit("SET_ALLMODE", item);
+    },
+    getNewMessage({ commit }, item) {
+      commit("SET_NEWMESSAGE", item);
     },
     getMessSize({ commit }, item) {
       commit("SET_MESSSIZE", item);

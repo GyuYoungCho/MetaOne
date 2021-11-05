@@ -49,6 +49,13 @@
     padding-top: 4px;
   }
 
+  .newMessageIcon {
+    color: red;
+    position: absolute;
+    top: 3%;
+    right: 150px;
+  }
+
   .list-group {
     opacity: 1;
     .list-group-item {
