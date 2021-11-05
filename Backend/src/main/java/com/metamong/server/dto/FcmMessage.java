@@ -34,6 +34,6 @@ public class FcmMessage {
     @Getter
     @AllArgsConstructor
     public static class Data{
-        private String msgId;
+        private String nickname;
     }
 }

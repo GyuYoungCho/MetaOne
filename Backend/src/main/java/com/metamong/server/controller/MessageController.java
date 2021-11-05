@@ -74,12 +74,10 @@ public class MessageController {
 		System.out.println("hi");
 		
 		Message regMessage = messageService.registerMessage(messageForm,send_user.get(),recv_user.get());
-		
-//		Optional<List<FirebaseToken>> user_token = firebaseTokenRepository.findByUserId(userId);
 		List<FirebaseToken> recv_token = new ArrayList<>();
 		Optional<List<FirebaseToken>> user_token = firebaseTokenRepository.findByUserId(recv_user.get().getId());
 		recv_token.add(user_token.get().get(0));
-		firebaseCloudMessageService.sends(recv_token, Integer.toString(regMessage.getId()), regMessage.getTitle(), regMessage.getContent());
+		firebaseCloudMessageService.sends(recv_token, send_user.get().getNickname(), regMessage.getTitle(), regMessage.getContent());
 		
 		return ResponseEntity.status(201).build();
 	}
