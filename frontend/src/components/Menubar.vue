@@ -2,8 +2,9 @@
   <div>
     <section class="menu">
       <div class="d-flex justify-content-end">
+        <i class="newMessageIcon fas fa-exclamation-circle" v-if="noti"></i>
         <div class="row">
-          <button class="icon-btn" @click="isShow = !isShow">
+          <button class="icon-btn" @click="isShow=!isShow">
             <img class="menuImg" src="@/assets/image/buttonImage.png" alt="">
           </button>
         </div>
@@ -16,10 +17,11 @@
                   {{selectors[0]}}
                 </li>
               </RouterLink>
-              <RouterLink :to="{name:'MessageRecv'}" @click.native="isShow=!isShow">
+              <RouterLink :to="{name:'MessageRecv'}" @click.native="newMessageNoti()">
                 <li class="list-group-item bg-transparent">
                   <i class="menuAddIcon fas fa-envelope-square"></i>
                   {{selectors[1]}}
+                  <i class="fas fa-exclamation-circle fa-lg" v-if="newMessage"></i>
                 </li>
               </RouterLink>
               <RouterLink :to="{name:'MyPage'}" @click.native="isShow=!isShow">
@@ -48,7 +50,7 @@
 
 <script>
 import HelpModal from '@/components/HelpModal.vue'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 
 export default {
   components:{
@@ -58,10 +60,15 @@ export default {
     return{
       selectors : ["기본 맵", "쪽지", "마이페이지", "도움말", "로그아웃"],
       isShow : false,
+      noti : false,
     }
+  },
+  computed:{
+    ...mapGetters('message',['newMessage'])
   },
   methods:{
     ...mapActions('user', ['logout']),
+    ...mapActions('message',['getNewMessage']),
     async logoutMethod(){
       this.isShow=!this.isShow
       this.$store.commit('user/SET_USER_ISLOGIN', false)
@@ -70,6 +77,16 @@ export default {
 
       this.$router.push({name: 'Login'}).catch(() => {})
     },
+
+    newMessageNoti(){
+      this.isShow = !this.isShow
+      if(!this.isshow) this.getNewMessage(false)
+    }
+  },
+  watch:{
+    newMessage(){
+      this.noti = this.newMessage
+    }
   }
 }
 </script>

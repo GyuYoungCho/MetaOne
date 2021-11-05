@@ -1,7 +1,7 @@
 export default {
   namespaced: true,
   state: {
-    subComplete: false,
+    subComplete: true,
   },
   getters: {
     subComplete(state) {

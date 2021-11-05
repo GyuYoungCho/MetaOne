@@ -27,7 +27,7 @@
               <!-- 보내는사람 -->
               <div v-if="isme(message.nickname)" class="incoming_msg">
                 <div class="col incoming_info">
-                  <div class="row incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"> </div>
+                  <div class="row incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt=""> </div>
                   <span class="incoming_name">{{message.nickname}}</span>
                 </div>
                 <div class="received_msg">
