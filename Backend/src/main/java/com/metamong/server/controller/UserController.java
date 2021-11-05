@@ -4,8 +4,10 @@ package com.metamong.server.controller;
 import com.metamong.server.config.RedisUtil;
 import com.metamong.server.dto.EmailDto;
 import com.metamong.server.dto.UserDto;
+import com.metamong.server.entity.FirebaseToken;
 import com.metamong.server.entity.User;
 import com.metamong.server.exception.ApplicationException;
+import com.metamong.server.repository.FirebaseTokenRepository;
 import com.metamong.server.repository.UserRepository;
 import com.metamong.server.service.EmailSenderService;
 import com.metamong.server.service.FirebaseCloudMessageService;
@@ -18,13 +20,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -45,6 +50,9 @@ public class UserController {
 
     @Autowired
     private JwtService jwtService;
+    
+    @Autowired
+    private FirebaseTokenRepository firebaseTokenRepository;
 
     @Autowired
     private FirebaseCloudMessageService firebaseCloudMessageService;
@@ -248,6 +256,7 @@ public class UserController {
      * @return
      * @throws IOException
      */
+    @Transactional
     @DeleteMapping("login")
     @ApiOperation(value="로그아웃")
     public ResponseEntity logout(
@@ -259,10 +268,13 @@ public class UserController {
         firebaseCloudMessageService.del(firebaseToken);
         
         // 오프라인 변경
-        User user = userRepository.findById(Integer.parseInt(userId)).get();
-        user.setState(0);
-        userRepository.save(user);
-        
+        Optional<List<FirebaseToken>> low_token = firebaseTokenRepository.findByUserId(Integer.parseInt(userId));
+        System.out.println(low_token.get().size());
+        if(low_token.get().size()==0) {
+	        User user = userRepository.findById(Integer.parseInt(userId)).get();
+	        user.setState(0);
+	        userRepository.save(user);
+        }
         return ResponseEntity.status(200).build();
         
     }
