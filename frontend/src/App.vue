@@ -26,14 +26,19 @@ export default {
   created(){
     this.getSubComplete(false);
     messaging.onMessage((payload) => {
-      console.log(payload)
-      console.log(payload.notification)
-      this.$store.dispatch('user/onNotification', payload)
+      this.messageUpdate(payload.data.nickname)
     })
   },
   methods:{
     ...mapActions('user', ['onNotification']),
-    ...mapActions('process', ['getSubComplete'])
+    ...mapActions('process', ['getSubComplete']),
+    ...mapActions('message', ['getMyMessages','getOnebyOneMessages','getNewMessage']),
+
+    async messageUpdate(val){
+      await this.getMyMessages()
+      await this.getOnebyOneMessages(val)
+      await this.getNewMessage(true)
+    }
   }
 }
 </script>

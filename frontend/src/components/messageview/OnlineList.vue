@@ -3,7 +3,7 @@
 <template>
   <section class="MessageList">
     <div class="m_title">
-      <p>접속자 목록</p>
+      <p>접속자</p>
     </div>
     <div class="m-contain">
     </div>
