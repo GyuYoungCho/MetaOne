@@ -15,6 +15,11 @@ const state = {
   newPassword: "",
 
   emailFormat: false,
+  passwordFormat: false,
+  passwordConfirmFormat: false,
+  nicknameFormat: false,
+  nameFormat: false,
+
   emailPass: false,
   nicknamePass: false,
   emailConfirm: false,
@@ -38,9 +43,9 @@ const actions = {
       .catch((err) => {
         console.log(err);
         alert("회원가입에 실패하였습니다.");
-        // if (err.response.status == 404) {
-        //     router.push({name: 'PageNotFound'})
-        // }
+        if (err.response.status == 404) {
+          router.push({ name: "NotFound" });
+        }
       });
   },
   async checkDuplicate({ state }, type) {
@@ -178,19 +183,6 @@ const actions = {
     commit("SET_USER_ACCESSTOKEN", "");
     commit("SET_USER_REFRESHTOKEN", "");
   },
-  onNotification({ commit }, payload) {
-    commit;
-    console.log(payload);
-    console.log(payload.notification);
-
-    const notiData = {
-      type: payload.notification.title,
-      data: payload.data,
-    };
-
-    console.log(notiData.type);
-    console.log(notiData.data);
-  },
 };
 
 const mutations = {
@@ -226,10 +218,24 @@ const mutations = {
   SET_JOIN_EMAILPASS(state, payload) {
     state.emailPass = payload;
   },
+  SET_JOIN_EMAILCONFIRM(state, payload) {
+    state.emailConfirm = payload;
+  },
+  SET_JOIN_NAMEFORMAT(state, payload) {
+    state.nameFormat = payload;
+  },
+  SET_JOIN_NICKNAMEFORMAT(state, payload) {
+    state.nicknameFormat = payload;
+  },
   SET_JOIN_EMAILFORMAT(state, payload) {
     state.emailFormat = payload;
   },
-
+  SET_JOIN_PASSWORDFORMAT(state, payload) {
+    state.passwordFormat = payload;
+  },
+  SET_JOIN_PASSWORDCONFIRMFORMAT(state, payload) {
+    state.passwordConfirmFormat = payload;
+  },
   SET_USER_ACCESSTOKEN(state, payload) {
     state.accessToken = payload;
   },
@@ -251,6 +257,15 @@ const mutations = {
 const getters = {
   getEmailFormat: (state) => {
     return state.emailFormat;
+  },
+  getPasswordFormat: (state) => {
+    return state.passwordFormat;
+  },
+  getNameFormat: (state) => {
+    return state.nameFormat;
+  },
+  getNicknameFormat: (state) => {
+    return state.nicknameFormat;
   },
 };
 
