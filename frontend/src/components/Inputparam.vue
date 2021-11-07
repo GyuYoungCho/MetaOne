@@ -1,14 +1,16 @@
 <template>
     <div>
         <div class="row sort">
-            <div class="col-md-2">{{title}}</div>
-            <div v-if="title == '비밀번호' || title == '비밀번호확인'" class="col-md-10">
+            <div class="inputLabel col-md-2">{{title}}</div>
+            <div v-if="title.includes('비밀번호')" class="col-md-10">
                 <input type="password" class="form-control" v-on:input="typing" v-model="dataIn" @keyup="saveJoinForm()" @keyup.enter="tryProcess()" :placeholder="placeholderData">
-                    <p class="invalidTxt" v-if="title == '비밀번호' && $route.name == 'Join'">
+                    <p class="invalidTxt" v-if="(title == '비밀번호' && $route.name == 'Join') || (title == '비밀번호 수정')">
                         {{passwordContent}}
                     </p>
-                    <p class="invalidTxt" v-if="title == '비밀번호확인'">
+                    <p class="invalidTxt" v-if="title == '비밀번호 확인'">
                         {{passwordConfirmContent}}
+                    </p>
+                    <p class="invalidTxt" v-if="title == '기존 비밀번호'">
                     </p>
             </div>
             <div v-else class="col-md-10">
@@ -58,12 +60,11 @@ export default {
             else if(this.title =='Email') joinTitle = "SET_JOIN_EMAIL"
             else if(this.title =='닉네임') joinTitle = "SET_JOIN_NICKNAME"
             else if(this.title =='비밀번호') joinTitle = "SET_JOIN_PASSWORD"
-            else if(this.title =='비밀번호확인') joinTitle = "SET_JOIN_PASSWORDCONFIRM"
+            else if(this.title =='비밀번호 확인') joinTitle = "SET_JOIN_PASSWORDCONFIRM"
             else if(this.title =='인증번호') joinTitle = "SET_JOIN_AUTHNUMBER"
 
             else if(this.title =='기존 비밀번호') joinTitle = "SET_USER_ORIGINPASSWORD"
             else if(this.title =='비밀번호 수정') joinTitle = "SET_USER_NEWPASSWORD"
-            else if(this.title =='비밀번호 확인') joinTitle = "SET_JOIN_PASSWORDCONFIRM"
 
 
             this.$store.commit('user/' + joinTitle, this.dataIn);
@@ -85,28 +86,28 @@ export default {
 
     },
     computed:{
-        ...mapState('user', ['name', 'email', 'nickname', 'password', 'passwordConfirm', 'authNumber']),
+        ...mapState('user', ['name', 'email', 'nickname', 'password', 'passwordConfirm', 'authNumber','newPassword']),
         nameFormValid() {
             return !this.dataIn || /^[가-힣]+$/.test(this.dataIn) || /^[a-zA-Z]+$/.test(this.dataIn)
         },
         nicknameFormValid () {
-            return !this.dataIn || (this.dataIn.length < 7 && /^[ㄱ-ㅎ가-힣a-zA-Z0-9]*$/.test(this.dataIn))
+            return !this.dataIn || /^[ㄱ-ㅎㅏ-ㅣ가-힣a-zA-Z0-9]{2,6}$/.test(this.dataIn)
         },
         emailFormValid () {
             return !this.dataIn || /^[A-Za-z0-9_]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/.test(this.dataIn)
         },
         passwordFormValid () {
-            return !this.dataIn || (this.dataIn.length > 7 && /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{8,20}$/.test(this.dataIn))
+            return !this.dataIn || /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d$@$!%*#?&]{8,20}$/.test(this.dataIn)
         },
         passwordCheckFormValid () {
             return !this.dataIn || (this.password===this.dataIn)
         },
+        newPasswordCheckFormValid () {
+            return !this.dataIn || (this.newPassword===this.dataIn)
+        },
     },
     watch:{
         dataIn(){
-            // let emailtext = /^[A-Za-z0-9_]+@[A-Za-z0-9]+\.[A-Za-z0-9]+/
-            // let passtext = /^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d$@$!%*#?&]{8,}$/
-
             if(this.title == '이름' && this.nameFormValid){
                 this.nameContent = "";
                 if(this.dataIn) this.$store.commit('user/SET_JOIN_NAMEFORMAT', true);
@@ -121,7 +122,7 @@ export default {
                 if(this.dataIn) this.$store.commit('user/SET_JOIN_NICKNAMEFORMAT', true);
             }
             else if(this.title == '닉네임'){
-                this.nicknameContent = "영문 한글 숫자 6자 이내로 해주세요"
+                this.nicknameContent = "영문 한글 숫자 2-6자 이내로 해주세요"
                 this.$store.commit('user/SET_JOIN_NICKNAMEFORMAT', false);
             }
 
@@ -135,20 +136,29 @@ export default {
                 this.$store.commit('user/SET_JOIN_EMAILFORMAT', false);
             }
 
-            if(this.title == '비밀번호' && this.passwordFormValid){
+            if((this.title == '비밀번호' || this.title == '비밀번호 수정') && this.passwordFormValid){
                 this.passwordContent = "";
                 if(this.dataIn) this.$store.commit('user/SET_JOIN_PASSWORDFORMAT', true);
             }
-            else if(this.title == '비밀번호'){
+            else if(this.title == '비밀번호' || this.title == '비밀번호 수정'){
                 this.passwordContent = "영문,숫자 포함 8-20자로 해주세요"
                 this.$store.commit('user/SET_JOIN_PASSWORDFORMAT', false);
             }
             
-            if(this.title == '비밀번호확인' && this.passwordCheckFormValid){
+            if(this.title == '비밀번호 확인'&& this.$route.name=="Join" && this.passwordCheckFormValid){
                 this.passwordConfirmContent = "";
                 if(this.dataIn) this.$store.commit('user/SET_JOIN_PASSWORDCONFIRMFORMAT', true);
             }
-            else if(this.title == '비밀번호확인'){
+            else if(this.title == '비밀번호 확인' && this.$route.name=="Join"){
+                this.passwordConfirmContent = "비밀번호와 일치하지 않습니다"
+                this.$store.commit('user/SET_JOIN_PASSWORDCONFIRMFORMAT', false);
+            }
+
+            if(this.title == '비밀번호 확인'&& this.$route.name=="MyPage" && this.newPasswordCheckFormValid){
+                this.passwordConfirmContent = "";
+                if(this.dataIn) this.$store.commit('user/SET_JOIN_PASSWORDCONFIRMFORMAT', true);
+            }
+            else if(this.title == '비밀번호 확인' && this.$route.name=="MyPage"){
                 this.passwordConfirmContent = "비밀번호와 일치하지 않습니다"
                 this.$store.commit('user/SET_JOIN_PASSWORDCONFIRMFORMAT', false);
             }

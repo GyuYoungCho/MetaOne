@@ -54,6 +54,7 @@
     position: absolute;
     top: 3%;
     right: 150px;
+    animation: bounce 0.3s ease infinite alternate;
   }
 
   .list-group {
@@ -97,5 +98,11 @@
   .slide-leave-to {
     overflow: hidden;
     max-height: 0;
+  }
+
+  @keyframes bounce {
+    100% {
+      top: 10px;
+    }
   }
 }

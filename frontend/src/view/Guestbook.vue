@@ -61,7 +61,6 @@ export default {
   created(){
     let today = moment(new Date()).format("yyyy-MM-DD")
     this.getGuestbooks(today)
-    console.log(this.guestbooks)
   }
 }
 </script>

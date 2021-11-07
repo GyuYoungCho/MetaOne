@@ -34,15 +34,38 @@
     }
   }
 
-  .btn-modify {
-    // height: 30px;
-    font-size: 1rem;
+  .join {
+    .invalidTxt {
+      color: #cf5555;
+      margin: 0;
+      font-size: small;
+      height: 10px;
+    }
+
+    li {
+      margin-left: 10%;
+      width: 87%;
+    }
+
+    .subsubmitButton {
+      width: 59%;
+    }
   }
 
-  .invalidTxt {
-    color: #cf5555;
-    margin: 0;
-    font-size: small;
-    height: 10px;
+  .mypage {
+    .invalidTxt {
+      color: #cf5555;
+      margin: 0;
+      font-size: small;
+      height: 10px;
+    }
+
+    img {
+      width: 130px;
+      height: 130px;
+      position: relative;
+      padding: 0px;
+      margin-bottom: 40px;
+    }
   }
 }
