@@ -151,7 +151,7 @@ const actions = {
       })
       .catch((err) => {
         console.log(err);
-        alert("올바르지 않은 비밀번호입니다.");
+        alert("기존 비밀번호가 틀렸습니다");
       });
   },
   async sendTempPw({ state }) {

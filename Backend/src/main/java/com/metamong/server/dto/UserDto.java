@@ -88,9 +88,10 @@ public class UserDto {
         @NotNull
         @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d$@$!%*#?&]{8,}$")
         private String originPassword;
-
+        
+        @NotNull
+        @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d$@$!%*#?&]{8,}$")
         private String newPassword;
-        private String newPasswordCheck;
     }
 
     @Getter
