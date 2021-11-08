@@ -29,6 +29,7 @@ export default {
 
 <style lang="scss" scoped>
 .loader{
+  z-index: 10;
   &__wrap{
     position: fixed;
     z-index: 2000;

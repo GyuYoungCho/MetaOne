@@ -109,13 +109,12 @@ const actions = {
         commit("SET_USER_FIREBASETOKEN", token);
       });
 
-    dispatch("process/getSubComplete", true, { root: true });
-
     await userApi
       .login(state)
       .then((res) => {
         if (res.status == 200) {
           console.log(res);
+          dispatch("process/getSubComplete", true, { root: true });
           commit("SET_JOIN_USERID", res.data.id);
           commit("SET_JOIN_NAME", res.data.name);
           commit("SET_JOIN_EMAIL", res.data.email);
@@ -131,13 +130,13 @@ const actions = {
       .catch((err) => {
         console.log(err);
         state.password = "";
-        alert("로그인 실패");
+        alert("로그인 실패!");
         return;
       });
 
     setTimeout(() => {
       dispatch("process/getSubComplete", false, { root: true });
-    }, 1000);
+    }, 2000);
   },
   async getMyInfo({ state, commit }) {
     await userApi

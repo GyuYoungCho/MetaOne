@@ -4,9 +4,9 @@
       <p class="edu_title">교육 내역</p>
       <div class="m-contain">
       </div>
-      <div class="row">
-        <ul class="list-group mt-2">
-          <li class="list-group-item bg-transparent" style="border-bottom : 3px solid">
+      <div class="row edulist">
+        <ul class="list-group">
+          <li class="list-group-item bg-transparent list-header">
             <div class="row">
               <div class="col">구분</div>
               <div class="col">현황</div>
