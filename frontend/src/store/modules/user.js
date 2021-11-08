@@ -1,6 +1,7 @@
 import userApi from "@/api/user.js";
 import router from "@/router";
 import { messaging } from "@/api/firebase.js";
+import { Modal } from "bootstrap";
 
 const state = {
   userId: "",
@@ -70,9 +71,17 @@ const actions = {
         else state.emailPass = false;
       });
   },
-  async checkEmail({ state }) {
+  async checkEmail({ state, dispatch }) {
+    dispatch("process/getSubComplete", true, { root: true });
+    dispatch("process/getContentBody", "인증번호를 보냈습니다! 메일을 확인하세요.", { root: true });
+
     await userApi.checkEmail(state).then((res) => {
       console.log(res);
+      setTimeout(() => {
+        dispatch("process/getSubComplete", false, { root: true });
+        let myModal = new Modal(document.getElementById("ConfirmModal"), {});
+        myModal.show();
+      }, 2000);
     });
   },
   async authenticateNumber({ state }) {
@@ -91,14 +100,16 @@ const actions = {
         state.emailConfirm = false;
       });
   },
-  async login({ state, commit }) {
+  async login({ state, commit, dispatch }) {
+    // dispatch("process/getSubComplete", true, { root: true });
     await messaging
       .getToken({ vapidKey: "BHNLrFDYFvHeFVnKkYMskZfNTjOu8z5_G_QQJcIdRZdZ2lq3Sl5iMXRdtDdr_M2fboN1EKU_o-DTsxOBwljmXSY" })
       .then((token) => {
         console.log(token);
-
         commit("SET_USER_FIREBASETOKEN", token);
       });
+
+    dispatch("process/getSubComplete", true, { root: true });
 
     await userApi
       .login(state)
@@ -121,7 +132,12 @@ const actions = {
         console.log(err);
         state.password = "";
         alert("로그인 실패");
+        return;
       });
+
+    setTimeout(() => {
+      dispatch("process/getSubComplete", false, { root: true });
+    }, 1000);
   },
   async getMyInfo({ state, commit }) {
     await userApi
@@ -162,6 +178,7 @@ const actions = {
       })
       .catch((err) => {
         console.log(err);
+        alert("이름이나 이메일이 틀렸습니다");
       });
   },
   async logout({ state, commit }) {

@@ -16,7 +16,7 @@
             <div v-else class="col-md-10">
                 <input type="text" class="form-control" v-on:input="typing" v-model="dataIn" @keyup="saveJoinForm()" @keyup.enter="tryProcess()" 
                                  :placeholder="placeholderData">
-                    <p class="invalidTxt" v-if="title == '이름'">
+                    <p class="invalidTxt" v-if="title == '이름' && $route.name == 'Join'">
                         {{nameContent}}
                     </p>
                     <p class="invalidTxt" v-else-if="$route.name == 'Join' && title == 'Email'">

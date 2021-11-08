@@ -69,7 +69,7 @@ export default {
     },
     methods:{
         ...mapActions('user', ['registerUser', 'checkEmail', 'authenticateNumber', 'checkDuplicate']),
-        ...mapActions('process',['getSubComplete']),
+        ...mapActions('process',['getSubComplete','getContentBody']),
         async join(){
 
             if(this.name == "" || this.email == "" || this.nickname == "" || this.password == "" || this.passwordConfirm == ""){
@@ -82,7 +82,7 @@ export default {
         },
         async emailAuthenticate(){
             await this.checkEmail()
-
+            
             this.isSendNumber= true
             const target = document.querySelector('.input-label:nth-child(6) .form-control')
             target.disabled=false;
@@ -103,7 +103,7 @@ export default {
             let data = ""
             if(type == "email") data = this.email
             else if(type == "nickname") data = this.nickname
-            this.getSubComplete(false);
+            
             await userApi.checkDuplicate(data, type)
             .then((res) => {
                 console.log(res)
@@ -128,8 +128,9 @@ export default {
             else{
                 alert("중복되는 정보가 있습니다.")
             }
-            this.getSubComplete(true);
+            
         },
+        
         cancel(){
             this.$router.push({name: 'Login'})
         },
@@ -138,6 +139,7 @@ export default {
             const target = document.querySelector(`.input-label:nth-child(${num}) .form-control`)
             target.disabled=false;
             this.$store.commit('user/SET_JOIN_'+val.toUpperCase() + 'PASS', false);
+            
         }
     },  
     mounted(){
