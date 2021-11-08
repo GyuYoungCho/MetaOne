@@ -20,7 +20,6 @@
         </div>
       </div>
     </section>
-    <ConfirmModal :contentBody ="completeMess"></ConfirmModal>
   </div>
 </template>
 
@@ -29,17 +28,16 @@ import OnlineList from "@/components/messageview/OnlineList.vue"
 import MessageList from "@/components/messageview/MessageList.vue"
 import MessageSendForm from "@/components/messageview/MessageSendForm.vue"
 import MessageConfirm from "@/components/messageview/MessageConfirm.vue"
-import ConfirmModal from "@/components/ConfirmModal.vue"
 import { mapGetters, mapActions } from "vuex";
 
 
 export default {
   components:{
-    OnlineList, MessageList,MessageConfirm,MessageSendForm,ConfirmModal
+    OnlineList, MessageList,MessageConfirm,MessageSendForm
   },
   data(){
     return{
-      completeMess:"전송되었습니다",
+      
     }
   },
   computed:{
@@ -47,9 +45,10 @@ export default {
   },
   methods:{
     ...mapActions("message", ["getMessage","getAllmode","getSendmode","getReceiver"]),
-  
+    ...mapActions("process", ["getContentBody"])
   },
   created(){
+    this.getContentBody("전송되었습니다")
     this.getSendmode(true)
     this.getAllmode(true)
     this.getMessage(Object)

@@ -10,7 +10,7 @@
                 <div class="col-md-3">
                 </div>
                 <div class="col-md-5">
-                    <inputparam :title="e" :placeholderData="placeholderDatas[i]"></inputparam>
+                    <inputparam :title="e" :placeholderData="placeholderDatas[i]" @tryLogin="tryLogin"></inputparam>
                 </div>
                 <div class="col-md-2">
                     <div style="float: left;" v-if="i == 0">

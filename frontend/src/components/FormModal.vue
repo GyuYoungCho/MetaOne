@@ -27,6 +27,8 @@
 <script>
 import { mapGetters,mapActions } from "vuex";
 import guestbookAPI from "@/api/guestbook.js";
+import moment from 'moment';
+
 export default {
   data(){
     return{
@@ -54,6 +56,8 @@ export default {
           alert("못가져옴");
           console.log(error);
         });
+      let today = moment(new Date()).format("yyyy-MM-DD")
+      await this.getGuestbooks(today)
     },
     async modifyGuestbook(val){
       await guestbookAPI

@@ -38,6 +38,7 @@
     width: 50%;
     top: 35%;
     left: 26%;
+    overflow-y: auto;
     li {
       margin: 0px;
       border: none;
@@ -74,5 +75,15 @@
   }
   .txl {
     text-align: left;
+  }
+
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    height: 17%;
+    background-color: #333861;
+    border-radius: 10px;
   }
 }
