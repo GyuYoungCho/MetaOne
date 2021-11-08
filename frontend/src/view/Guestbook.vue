@@ -5,7 +5,7 @@
         <img src="@/assets/image/sketch.png" alt="">
         <p class="guest_title">방명록</p>
       </div>
-      <ul class="list-group mt-2">
+      <ul class="list-group overflow-auto mt-2">
         <li class="list-group-item bg-transparent" v-for="(guestitem, index) in guestbooks" :key="index" :guestitem="guestitem">
           <div class="row">
             <div class="pt-2 col-2 txl">{{guestitem.nickname}}</div>
