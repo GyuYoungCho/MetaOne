@@ -2,12 +2,12 @@
   display: flex;
   flex-direction: column;
   text-align: center;
+  height: 600px;
   .sketch {
     z-index: -1;
     position: relative;
     img {
-      width: 52%;
-      height: 38%;
+      width: 700px;
     }
     p {
       position: absolute;
@@ -35,10 +35,13 @@
 
   ul {
     position: absolute;
-    width: 50%;
-    top: 35%;
-    left: 26%;
+    width: 650px;
+    top: 250px;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    height: 300px;
     overflow-y: auto;
+
     li {
       margin: 0px;
       border: none;
@@ -85,5 +88,24 @@
     height: 17%;
     background-color: #333861;
     border-radius: 10px;
+  }
+
+  @media only screen and (max-width: 700px) {
+    ul {
+      width: 100%;
+    }
+    .row {
+      display: block;
+    }
+    .txr {
+      float: none;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .txl {
+      float: none;
+      margin: 0 auto;
+      text-align: center;
+    }
   }
 }
