@@ -2,11 +2,10 @@
     <div class="page user">
         <main-title :title="'마이페이지'"></main-title>
 
-        <div class="row">
-            <div class="col-md-3">
+        <div class="row mypage">
+            <div class="col-md-2">
                 <div>
-                    <img src="" ref="">
-                    캐릭터 이미지 자리
+                    <img src="@/assets/image/profileExample.png" ref="">
                 </div>
                 <div>
                     <button class="btn yellow-btn" style="float: center;" @click="toEducateList()">교육내역 확인하기</button>
@@ -26,16 +25,17 @@
                         </div>
                         <div class="col-md-3">
                             <div style="float: left;" v-if="i == 2">
-                                <button class="btn yellow-btn" @click="checkDuplication()">중복확인</button>
+                                <button class="btn yellow-btn" v-if="!nicknamePass" @click="checkDuplication()" :disabled="!nicknameFormat">중복확인</button>
+                                <button class="btn yellow-btn" v-else @click="reset()">재설정</button>
                             </div>
                         </div>
                     </div>
                 </li>
 
-                <div class=" row col-md-9">
-                    <div class="col-md-3"> </div>
-                    <div class="row col-md-9" style="text-align:left;">
-                        <button class="btn col-md-5" @click="confirm()" :disabled="!this.nicknamePass">수정하기</button>
+                <div class=" row col-md-10">
+                    <div class="col-md-2"> </div>
+                    <div class="row col-md-10" style="text-align:left;">
+                        <button class="btn col-md-5" @click="confirm()" :disabled="!this.nicknamePass || !this.passwordConfirmFormat">수정하기</button>
                         <div class="col-md-1"></div>
                         <button class="btn yellow-btn col-md-5" @click="cancel()">취소</button>
                     </div>
@@ -76,38 +76,49 @@ export default {
             this.$store.commit('user/SET_USER_NEWPASSWORD', "")
             this.$store.commit('user/SET_JOIN_PASSWORDCONFIRM', "")
             // this.$store.commit('user/SET_JOIN_NICKNAME', "")
-            this.$store.commit('user/SET_JOIN_NICKNAMEPASS', false)
-
+            this.$store.commit('user/SET_JOIN_NICKNAMEPASS', false);
+            this.$store.commit('user/SET_JOIN_NICKNAMEFORMAT', true);
+            this.$store.commit('user/SET_JOIN_PASSWORDFORMAT', false);
+            this.$store.commit('user/SET_JOIN_PASSWORDCONFIRMFORMAT', false);
+            
             this.originNickname = this.nickname
+
+            const target = document.querySelector('.input-label:nth-child(3) .form-control')
+            target.value = this.nickname
         },
         async checkDuplication(){
-            if(this.nickname == ""){
-                alert("닉네임을 입력해주세요.")
-                return
-            }
 
             if(this.originNickname == this.nickname){
                 this.$store.commit('user/SET_JOIN_NICKNAMEPASS', true)
                 alert("기존 닉네임과 동일한 사용 가능한 닉네임입니다.")
+                const target = document.querySelector('.input-label:nth-child(3) .form-control')
+                target.disabled = true
                 return
             }
 
             await this.checkDuplicate('nickname')
+
+            if(this.nicknamePass){
+                const target = document.querySelector('.input-label:nth-child(3) .form-control')
+                target.disabled = true
+            }
         },
         async confirm(){
             if(this.originPassword == "") {
                 alert("비밀번호를 입력해주세요.")
                 return
             }
-            if(this.newPassword != this.passwordConfirm){
+            if(!this.passwordConfirm){
                 alert("비밀번호가 다릅니다.")
                 return
             }
-            if(!this.nicknamePass) {                        // 이중 체크
+            if(!this.nicknamePass) {
                 alert("닉네임 중복 확인이 필요합니다.")
                 return
             }
-
+            console.log(this.originPassword)
+            console.log(this.newPassword)
+            console.log(this.nickname)
             await this.updateInfo()
         },
         cancel(){
@@ -115,19 +126,24 @@ export default {
         },
         toEducateList(){
             this.$router.push({name: 'EducateList'}).catch(() => {})
+        },
+        reset(){
+            const target = document.querySelector('.input-label:nth-child(3) .form-control')
+            target.disabled = false
+            this.$store.commit('user/SET_JOIN_NICKNAMEPASS', false);
         }
     }, 
     async mounted(){
         this.init()
     },
-    async created(){
+    created(){
         this.getMyInfo()
         this.placeholderDatas[0] = this.name
         this.placeholderDatas[1] = this.email
-        this.placeholderDatas[2] = this.nickname
     },
     computed:{
-        ...mapState('user', ['name', 'nickname', 'email', 'nicknamePass', 'originPassword', 'newPassword', 'passwordConfirm'])
+        ...mapState('user', ['name', 'nickname', 'email', 'nicknamePass', 'originPassword', 'newPassword', 'passwordConfirm',
+                            'nicknameFormat','passwordFormat','passwordConfirmFormat'])
     },
     watch:{
 

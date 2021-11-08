@@ -50,7 +50,7 @@ export default {
   },
   updateInfo(data) {
     return _axios({
-      url: `/users`,
+      url: `/users/my-info`,
       method: "put",
       data: {
         nickname: data.nickname,

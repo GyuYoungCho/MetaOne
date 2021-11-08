@@ -96,11 +96,13 @@ public class UserController {
      * @return
      * @throws IOException
      */
-    @PutMapping("")
+    @PutMapping("/my-info")
     @ApiOperation(value="회원정보 수정", notes = "사용자가 자신의 정보를 수정한다.")
     public ResponseEntity update(
             @RequestBody @ApiParam(value="회원수정 정보", required = true) UserDto.UpdateRequest updateInfo, HttpServletRequest request
         ) throws IOException{
+    	System.out.println(request);
+    	
         if(updateInfo.getOriginPassword() == null || updateInfo.getOriginPassword().equals("")) return ResponseEntity.status(401).build();
         userService.checkPassword(updateInfo, request);
 
