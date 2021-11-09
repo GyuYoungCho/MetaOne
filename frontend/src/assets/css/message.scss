@@ -77,8 +77,8 @@
       z-index: -999;
     }
 
-    &Selected {
-      background-color: $offwhite;
+    .listSelected {
+      background-color: rgba(0, 0, 0, 0.1);
       border-radius: 10px;
     }
 
