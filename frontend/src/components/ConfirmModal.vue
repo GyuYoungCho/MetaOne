@@ -1,3 +1,5 @@
+// 확인용 모달
+
 <template>
 <div>
   <section class="ConfirmModal">
@@ -5,9 +7,9 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-body">
-            <form>
-              <textarea class="form-content" v-model="contentBody"></textarea>
-            </form>
+            <div class="confirm-content">
+                {{contentBody}}
+            </div>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">확인</button>

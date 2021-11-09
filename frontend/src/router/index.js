@@ -11,7 +11,6 @@ import SettingRoom from "@/view/SettingRoom.vue";
 import EducateList from "@/view/EducateList.vue";
 import Certificate from "@/view/Certificate.vue";
 import Guestbook from "@/view/Guestbook.vue";
-import MessageSend from "@/view/MessageSend.vue";
 import MessageRecv from "@/view/MessageRecv.vue";
 import UnityMap from "@/view/UnityMap.vue";
 import NotFound from "@/view/errorpages/404.vue";
@@ -82,12 +81,6 @@ const routes = [
     path: "/guestbook",
     name: "Guestbook",
     component: Guestbook,
-    meta: { requireAuth: true },
-  },
-  {
-    path: "/message-send",
-    name: "MessageSend",
-    component: MessageSend,
     meta: { requireAuth: true },
   },
   {

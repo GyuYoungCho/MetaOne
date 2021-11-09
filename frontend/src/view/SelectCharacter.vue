@@ -3,7 +3,7 @@
         <main-title :title="'캐릭터 선택'"></main-title>
 
         <div class="row" style="height: 400px;">
-            캐릭터 선택 창
+            
         </div>
 
         <div class="row">

@@ -1,3 +1,5 @@
+// 온라인 목록 보여줄 카드
+
 <template>
   <div>
     <li class="list-group-item d-flex">

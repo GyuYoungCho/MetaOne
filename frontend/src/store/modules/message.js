@@ -3,6 +3,11 @@ import messageAPI from "@/api/message.js";
 export default {
   namespaced: true,
   state: {
+    sendmode: false,
+    allmode: false,
+    newMessage: false,
+
+    messSize: 0,
     selectmessage: Object,
     selectreceiver: String,
     mymessages: [],
@@ -10,6 +15,18 @@ export default {
     onlinelist: [],
   },
   getters: {
+    sendmode(state) {
+      return state.sendmode;
+    },
+    allmode(state) {
+      return state.allmode;
+    },
+    newMessage(state) {
+      return state.newMessage;
+    },
+    messSize(state) {
+      return state.messSize;
+    },
     selectmessage(state) {
       return state.selectmessage;
     },
@@ -27,6 +44,18 @@ export default {
     },
   },
   mutations: {
+    SET_SENDMODE(state, status) {
+      state.sendmode = status;
+    },
+    SET_ALLMODE(state, status) {
+      state.allmode = status;
+    },
+    SET_NEWMESSAGE(state, status) {
+      state.newMessage = status;
+    },
+    SET_MESSSIZE(state, status) {
+      state.messSize = status;
+    },
     SELECT_MESSAGE(state, message) {
       state.selectmessage = message;
     },
@@ -41,12 +70,26 @@ export default {
     },
     SET_ONLINELIST(state, onlinelist) {
       state.onlinelist = [];
-      onlinelist.forEach((item) => {
-        if (item.online) state.onlinelist.push(item);
-      });
+      if (onlinelist) {
+        onlinelist.forEach((item) => {
+          if (item.online) state.onlinelist.push(item);
+        });
+      }
     },
   },
   actions: {
+    getSendmode({ commit }, item) {
+      commit("SET_SENDMODE", item);
+    },
+    getAllmode({ commit }, item) {
+      commit("SET_ALLMODE", item);
+    },
+    getNewMessage({ commit }, item) {
+      commit("SET_NEWMESSAGE", item);
+    },
+    getMessSize({ commit }, item) {
+      commit("SET_MESSSIZE", item);
+    },
     getMessage({ commit }, item) {
       commit("SELECT_MESSAGE", item);
     },

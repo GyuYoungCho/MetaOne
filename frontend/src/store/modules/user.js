@@ -1,6 +1,7 @@
 import userApi from "@/api/user.js";
 import router from "@/router";
 import { messaging } from "@/api/firebase.js";
+import { Modal } from "bootstrap";
 
 const state = {
   userId: "",
@@ -15,6 +16,11 @@ const state = {
   newPassword: "",
 
   emailFormat: false,
+  passwordFormat: false,
+  passwordConfirmFormat: false,
+  nicknameFormat: false,
+  nameFormat: false,
+
   emailPass: false,
   nicknamePass: false,
   emailConfirm: false,
@@ -38,9 +44,9 @@ const actions = {
       .catch((err) => {
         console.log(err);
         alert("회원가입에 실패하였습니다.");
-        // if (err.response.status == 404) {
-        //     router.push({name: 'PageNotFound'})
-        // }
+        if (err.response.status == 404) {
+          router.push({ name: "NotFound" });
+        }
       });
   },
   async checkDuplicate({ state }, type) {
@@ -65,9 +71,17 @@ const actions = {
         else state.emailPass = false;
       });
   },
-  async checkEmail({ state }) {
+  async checkEmail({ state, dispatch }) {
+    dispatch("process/getSubComplete", true, { root: true });
+    dispatch("process/getContentBody", "인증번호를 보냈습니다! 메일을 확인하세요.", { root: true });
+
     await userApi.checkEmail(state).then((res) => {
       console.log(res);
+      setTimeout(() => {
+        dispatch("process/getSubComplete", false, { root: true });
+        let myModal = new Modal(document.getElementById("ConfirmModal"), {});
+        myModal.show();
+      }, 2000);
     });
   },
   async authenticateNumber({ state }) {
@@ -86,12 +100,12 @@ const actions = {
         state.emailConfirm = false;
       });
   },
-  async login({ state, commit }) {
+  async login({ state, commit, dispatch }) {
+    // dispatch("process/getSubComplete", true, { root: true });
     await messaging
       .getToken({ vapidKey: "BHNLrFDYFvHeFVnKkYMskZfNTjOu8z5_G_QQJcIdRZdZ2lq3Sl5iMXRdtDdr_M2fboN1EKU_o-DTsxOBwljmXSY" })
       .then((token) => {
         console.log(token);
-
         commit("SET_USER_FIREBASETOKEN", token);
       });
 
@@ -100,6 +114,7 @@ const actions = {
       .then((res) => {
         if (res.status == 200) {
           console.log(res);
+          dispatch("process/getSubComplete", true, { root: true });
           commit("SET_JOIN_USERID", res.data.id);
           commit("SET_JOIN_NAME", res.data.name);
           commit("SET_JOIN_EMAIL", res.data.email);
@@ -115,8 +130,13 @@ const actions = {
       .catch((err) => {
         console.log(err);
         state.password = "";
-        alert("로그인 실패");
+        alert("로그인 실패!");
+        return;
       });
+
+    setTimeout(() => {
+      dispatch("process/getSubComplete", false, { root: true });
+    }, 2000);
   },
   async getMyInfo({ state, commit }) {
     await userApi
@@ -146,7 +166,7 @@ const actions = {
       })
       .catch((err) => {
         console.log(err);
-        alert("올바르지 않은 비밀번호입니다.");
+        alert("기존 비밀번호가 틀렸습니다");
       });
   },
   async sendTempPw({ state }) {
@@ -157,6 +177,7 @@ const actions = {
       })
       .catch((err) => {
         console.log(err);
+        alert("이름이나 이메일이 틀렸습니다");
       });
   },
   async logout({ state, commit }) {
@@ -177,18 +198,6 @@ const actions = {
     commit("SET_USER_ISLOGIN", false);
     commit("SET_USER_ACCESSTOKEN", "");
     commit("SET_USER_REFRESHTOKEN", "");
-  },
-  onNotification(payload) {
-    console.log(payload);
-    console.log(payload.notification);
-
-    const notiData = {
-      type: payload.notification.title,
-      data: payload.data,
-    };
-
-    console.log(notiData.type);
-    console.log(notiData.data);
   },
 };
 
@@ -225,10 +234,24 @@ const mutations = {
   SET_JOIN_EMAILPASS(state, payload) {
     state.emailPass = payload;
   },
+  SET_JOIN_EMAILCONFIRM(state, payload) {
+    state.emailConfirm = payload;
+  },
+  SET_JOIN_NAMEFORMAT(state, payload) {
+    state.nameFormat = payload;
+  },
+  SET_JOIN_NICKNAMEFORMAT(state, payload) {
+    state.nicknameFormat = payload;
+  },
   SET_JOIN_EMAILFORMAT(state, payload) {
     state.emailFormat = payload;
   },
-
+  SET_JOIN_PASSWORDFORMAT(state, payload) {
+    state.passwordFormat = payload;
+  },
+  SET_JOIN_PASSWORDCONFIRMFORMAT(state, payload) {
+    state.passwordConfirmFormat = payload;
+  },
   SET_USER_ACCESSTOKEN(state, payload) {
     state.accessToken = payload;
   },
@@ -250,6 +273,15 @@ const mutations = {
 const getters = {
   getEmailFormat: (state) => {
     return state.emailFormat;
+  },
+  getPasswordFormat: (state) => {
+    return state.passwordFormat;
+  },
+  getNameFormat: (state) => {
+    return state.nameFormat;
+  },
+  getNicknameFormat: (state) => {
+    return state.nicknameFormat;
   },
 };
 

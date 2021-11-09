@@ -1,41 +1,31 @@
 export default {
   namespaced: true,
   state: {
-    subComplete: false,
-    sendmode: false,
-    messSize: 0,
+    subComplete: true,
+    contentBody: "",
   },
   getters: {
     subComplete(state) {
       return state.subComplete;
     },
-    sendmode(state) {
-      return state.sendmode;
-    },
-    messSize(state) {
-      return state.messSize;
+    contentBody(state) {
+      return state.contentBody;
     },
   },
   mutations: {
     SET_SUBCOMPLETE(state, status) {
       state.subComplete = status;
     },
-    SET_SENDMODE(state, status) {
-      state.sendmode = status;
-    },
-    SET_MESSSIZE(state, status) {
-      state.messSize = status;
+    SET_SUBCONTENTBODY(state, status) {
+      state.contentBody = status;
     },
   },
   actions: {
     getSubComplete({ commit }, item) {
       commit("SET_SUBCOMPLETE", item);
     },
-    getSendmode({ commit }, item) {
-      commit("SET_SENDMODE", item);
-    },
-    getMessSize({ commit }, item) {
-      commit("SET_MESSSIZE", item);
+    getContentBody({ commit }, item) {
+      commit("SET_SUBCONTENTBODY", item);
     },
   },
 };

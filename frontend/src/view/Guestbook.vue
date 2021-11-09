@@ -5,7 +5,7 @@
         <img src="@/assets/image/sketch.png" alt="">
         <p class="guest_title">방명록</p>
       </div>
-      <ul class="list-group mt-2">
+      <ul class="list-group overflow-auto mt-2">
         <li class="list-group-item bg-transparent" v-for="(guestitem, index) in guestbooks" :key="index" :guestitem="guestitem">
           <div class="row">
             <div class="pt-2 col-2 txl">{{guestitem.nickname}}</div>
@@ -21,7 +21,7 @@
       <div class="justify-content-center">
         <button class="mt-2" @click="openModal('register',null)" data-bs-toggle="modal" data-bs-target="#FormModal">작성</button>
       </div>
-      <FormModal :sign="sign" :content="content" @openModal="openModal"></FormModal>
+      <FormModal :sign="sign" :content="content"></FormModal>
     </section>
   </div>
 </template>
@@ -61,7 +61,6 @@ export default {
   created(){
     let today = moment(new Date()).format("yyyy-MM-DD")
     this.getGuestbooks(today)
-    console.log(this.guestbooks)
   }
 }
 </script>

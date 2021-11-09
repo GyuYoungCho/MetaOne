@@ -1,6 +1,6 @@
 <template>
     <div class="user">
-        <main-title :title="'위기탈출 메타원'"></main-title>
+        <main-title :title="'위기탈출 메타원'" class="logo-text"></main-title>
         <div class="img_main">
             <img src="" ref="캐릭터 공간" />
         </div>
@@ -10,7 +10,7 @@
                 <div class="col-md-3">
                 </div>
                 <div class="col-md-5">
-                    <inputparam :title="e" :placeholderData="placeholderDatas[i]"></inputparam>
+                    <inputparam :title="e" :placeholderData="placeholderDatas[i]" @tryLogin="tryLogin"></inputparam>
                 </div>
                 <div class="col-md-2">
                     <div style="float: left;" v-if="i == 0">

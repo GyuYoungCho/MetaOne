@@ -4,8 +4,10 @@ package com.metamong.server.controller;
 import com.metamong.server.config.RedisUtil;
 import com.metamong.server.dto.EmailDto;
 import com.metamong.server.dto.UserDto;
+import com.metamong.server.entity.FirebaseToken;
 import com.metamong.server.entity.User;
 import com.metamong.server.exception.ApplicationException;
+import com.metamong.server.repository.FirebaseTokenRepository;
 import com.metamong.server.repository.UserRepository;
 import com.metamong.server.service.EmailSenderService;
 import com.metamong.server.service.FirebaseCloudMessageService;
@@ -18,13 +20,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -45,6 +50,9 @@ public class UserController {
 
     @Autowired
     private JwtService jwtService;
+    
+    @Autowired
+    private FirebaseTokenRepository firebaseTokenRepository;
 
     @Autowired
     private FirebaseCloudMessageService firebaseCloudMessageService;
@@ -88,11 +96,13 @@ public class UserController {
      * @return
      * @throws IOException
      */
-    @PutMapping("")
+    @PutMapping("/my-info")
     @ApiOperation(value="회원정보 수정", notes = "사용자가 자신의 정보를 수정한다.")
     public ResponseEntity update(
             @RequestBody @ApiParam(value="회원수정 정보", required = true) UserDto.UpdateRequest updateInfo, HttpServletRequest request
         ) throws IOException{
+    	System.out.println(request);
+    	
         if(updateInfo.getOriginPassword() == null || updateInfo.getOriginPassword().equals("")) return ResponseEntity.status(401).build();
         userService.checkPassword(updateInfo, request);
 
@@ -248,22 +258,27 @@ public class UserController {
      * @return
      * @throws IOException
      */
+    @Transactional
     @DeleteMapping("login")
     @ApiOperation(value="로그아웃")
     public ResponseEntity logout(
-            @RequestParam @ApiParam(value="Token") String firebaseToken, HttpServletRequest request
+            @RequestParam @ApiParam(value="Token") String firebaseToken,@RequestParam @ApiParam String userId
             ) throws IOException{
         System.out.println("firebase token: " + firebaseToken);
-
+        
         // DB 파이어베이스 토큰 삭제하기
         firebaseCloudMessageService.del(firebaseToken);
         
         // 오프라인 변경
-        int userId = (int) request.getAttribute("userId");
-        User user = userRepository.findById(userId).get();
-        user.setState(0);
-        userRepository.save(user);
+        Optional<List<FirebaseToken>> low_token = firebaseTokenRepository.findByUserId(Integer.parseInt(userId));
+        System.out.println(low_token.get().size());
+        if(low_token.get().size()==0) {
+	        User user = userRepository.findById(Integer.parseInt(userId)).get();
+	        user.setState(0);
+	        userRepository.save(user);
+        }
         return ResponseEntity.status(200).build();
+        
     }
 
     /***

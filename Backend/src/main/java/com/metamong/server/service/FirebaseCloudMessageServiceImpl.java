@@ -1,7 +1,5 @@
 package com.metamong.server.service;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.messaging.*;
 import com.metamong.server.dto.FcmMessage;
@@ -10,11 +8,6 @@ import com.metamong.server.entity.FirebaseToken;
 import com.metamong.server.entity.User;
 import com.metamong.server.repository.FirebaseTokenRepository;
 import lombok.RequiredArgsConstructor;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
-import org.apache.http.HttpHeaders;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -30,36 +23,12 @@ import java.util.*;
 @Component
 @RequiredArgsConstructor
 public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageService{
-
-    private final String API_URL = "https://fcm.googleapis.com/v1/projects/favorable-bolt-113915/messages:send";
-    private final ObjectMapper objectMapper;
-    
     
     @Autowired
 	private FirebaseTokenRepository firebaseTokenRepository;
-
-    public void sendMessageTo(String targetToken, String messageKey, String title, String body) throws IOException {
-        String message = makeMessage(targetToken, messageKey, title, body);
-
-        OkHttpClient client = new OkHttpClient();
-        okhttp3.RequestBody requestBody
-                = okhttp3.RequestBody.create(message, MediaType.get("application/json; charset=utf-8"));
-
-        Request request = new Request.Builder()
-                .url(API_URL)
-                .post(requestBody)
-                .addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken())
-                .addHeader(HttpHeaders.CONTENT_TYPE, "application/json;")
-                .build();
-        Response response = client.newCall(request)
-                .execute();
-
-        System.out.println(response.body().string());
-
-    }
     
     @Override
-    public void sends(List<FirebaseToken> tokens, String messageKey, String title, String body) throws InterruptedException, IOException, FirebaseMessagingException {
+    public void sends(List<FirebaseToken> tokens, String nickname, String title, String body) throws InterruptedException, IOException, FirebaseMessagingException {
         if(tokens.size() == 0) return;
         
         FcmMessage fcmMessage = FcmMessage.builder()
@@ -71,7 +40,7 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
                                 .image(null)
                                 .build())
                         .data(FcmMessage.Data.builder()
-                            .msgId(messageKey)
+                            .nickname(nickname)
                             .build())
                         .build()
                 )
@@ -102,30 +71,9 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
         
         return MulticastMessage.builder()
                 .setNotification(new Notification(fcm.getMessage().getNotification().getTitle(), fcm.getMessage().getNotification().getBody()))
+                .putData("nickname", String.valueOf(fcm.getMessage().getData().getNickname() ))
                 .addAllTokens(tokenList)
                 .build();
-    }
-
-    private String makeMessage(String targetToken, String messageKey, String title, String body)
-            throws JsonProcessingException {
-
-        FcmMessage fcmMessage = FcmMessage.builder()
-                .message(FcmMessage.Message.builder()
-                        .token(targetToken)
-                        .notification(FcmMessage.Notification.builder()
-                                .title(title)
-                                .body(body)
-                                .image(null)
-                                .build())
-                        .data(FcmMessage.Data.builder()
-                            .msgId(messageKey)
-                            .build())
-                        .build()
-                )
-                .validate_only(false)
-                .build();
-
-        return objectMapper.writeValueAsString(fcmMessage);
     }
 
     /**
