@@ -88,7 +88,7 @@ export default {
         sendMessage(){
             let today = new Date()
             let ymd = moment(today).format("yyyyMMDD")
-            let newData = firebase.database().ref(ymd + '/'+this.roomid+'/chats').push();
+            let newData = firebase.database().ref('chats/' + ymd + '/'+this.roomid).push();
             newData.set({
                 nickname: this.nickname,
                 content: this.content,
@@ -103,7 +103,7 @@ export default {
             try {
               let today = new Date()
               let ymd = moment(today).format("yyyyMMDD")
-              firebase.database().ref(ymd + '/'+ this.roomid+'/chats').on('value', (snapshot) => {
+              firebase.database().ref('chats/' + ymd + '/'+this.roomid).on('value', (snapshot) => {
                   
                   if (snapshot.exists()) {
                       this.messages = [];

@@ -5,6 +5,7 @@
     <Menubar v-if="isLogin"/>
     <div v-else style="width: 50px;height: 105px"></div>
     <router-view/>
+    <UnityProperty v-if="isLogin && showUnity"/>
   </div>
 </template>
 
@@ -13,18 +14,28 @@ import "./assets/css/index.scss"
 import Menubar from "@/components/Menubar"
 import Loader from '@/components/Loader';
 import ConfirmModal from "@/components/ConfirmModal.vue"
+import UnityProperty from "@/components/unity/UnityProperty.vue"
 import { messaging } from '@/api/firebase.js'
 import { mapActions, mapState } from 'vuex'
 
 
 export default {
   name: 'App',
+  data(){
+    return{
+      unityPage : ["SelectCharacter","UnityMap"]
+    }
+  },
   components:{
-    Menubar, Loader, ConfirmModal
+    Menubar, Loader, ConfirmModal, UnityProperty
   },
   computed: {
     ...mapState('user', ['isLogin',]),
-    ...mapState('process',['subComplete','contentBody'])
+    ...mapState('process',['subComplete','contentBody']),
+    showUnity(){
+      if(this.unityPage.includes(this.$route.name)) return true;
+      else return false;
+    }
   },
   created(){
     this.getSubComplete(false);
