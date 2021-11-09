@@ -42,11 +42,13 @@ export default {
     });
   },
   getRank(data) {
+    console.log("data: ", data)
+
     return _axios({
       url: `/edu/rank`,
       method: "get",
       params: {
-        education: data.education,
+        education: data,
       },
     });
   },
