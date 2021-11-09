@@ -13,15 +13,16 @@
       <button v-if="!allmode" class="back-btn" @click="getAllmode(true)">
         <i class="fas fa-arrow-left"></i>
       </button>
-      <transition name="fade">
+      <transition v-if="allmode" name="slide-fade1" mode="out-in">
         <!-- 내 메세지 내역 -->
-        <ul v-if="allmode" class="list-group mymess overflow-auto pt-3 mt-2">
+        <ul key=1 class="list-group mymess overflow-auto pt-3 mt-2">
           <MyMessageCard  v-for="(message, index) in mymessages" :key="index" :message="message"
           @click.native="readAndGet(message)"/>
         </ul>
-
+      </transition>
+      <transition v-else name="slide-fade2" mode="out-in">
         <!-- 나와 상대방 1대1 -->
-        <ul v-else class="list-group onesmess overflow-auto pt-3 mt-2">
+        <ul key=2 class="list-group onesmess overflow-auto pt-3 mt-2">
           <OnesMessageCard  v-for="(message, index) in onebyonemessages" :key="index" :message="message"
           @click.native="readAndGet(message)"/>
         </ul>
