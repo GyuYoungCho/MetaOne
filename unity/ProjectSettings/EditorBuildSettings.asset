@@ -6,24 +6,21 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Main.unity
-    guid: 74343e1f20233d64a9f2bd87329e5d6a
-  - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 99eb793666f5be941b6c127f0bc9b757
-  - enabled: 1
-    path: Assets/Scenes/Earthquake.unity
-    guid: 7d2e9c3138fe4a24b997863f9ee1d3c2
+    path: Assets/Scenes/Intro.unity
+    guid: 1e3751c1e88311d45afcf989f1acf5fa
   - enabled: 1
     path: Assets/Scenes/ChooseCharacter.unity
-    guid: e6336585b7fb2fd44a9e3bba497d964c
+    guid: 03c07b4aa702b824fbd6b404a68714ce
   - enabled: 1
     path: Assets/Scenes/ChooseRoom.unity
-    guid: 0843caef1f1785c4b8a8634e393cae29
+    guid: 8a1e470a87c24264487aaa49e0f18807
+  - enabled: 1
+    path: Assets/Scenes/Main.unity
+    guid: 5213fa62baf6c7b40af88d8d3e96e39e
+  - enabled: 1
+    path: Assets/Scenes/Earthquake.unity
+    guid: dcd5879dfd56ed44185ef993418ce5ba
   - enabled: 1
     path: Assets/Scenes/Fire.unity
-    guid: d32d686c4ccc3ab4298fd28d261f0c19
-  - enabled: 1
-    path: Assets/Scenes/Intro.unity
-    guid: 518cee3f4df894f489fa6ec5ce95c7a2
+    guid: 9027ece5b8e6bee43827cada0d9e90f3
   m_configObjects: {}

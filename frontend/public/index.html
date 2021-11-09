@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
-    <link rel="shortcut icon" href="pavicon.png">
+    <link rel="shortcut icon" href="pavicon.png" />
     <title><%= htmlWebpackPlugin.options.title %></title>
     <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 
@@ -16,10 +16,10 @@
       crossorigin="anonymous"
     />
 
-    <link 
-      rel="stylesheet" 
-      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" 
-      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" 
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+      integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm"
       crossorigin="anonymous"
     />
     <link
@@ -27,9 +27,38 @@
       rel="stylesheet"
     />
     <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap-avatar@latest/dist/avatar.min.css" 
+      href="https://cdn.jsdelivr.net/npm/bootstrap-avatar@latest/dist/avatar.min.css"
       rel="stylesheet"
     />
+
+    <script>
+      // 캐릭터 파일 명
+      function _characterHook(character) {
+        document.getElementById("unity-character").value = character;
+      }
+      // 방 정보
+      function _roomHook(room) {
+        document.getElementById("unity-room").value = room;
+      }
+      // 방 인원 정보
+      function _roomPopulationHook(roomPopulation) {
+        document.getElementById("unity-room-population").value = roomPopulation;
+      }
+      // 교육 명
+      function _educationNameHook(educationName) {
+        document.getElementById("unity-education-name").value = educatinName;
+      }
+      // 교육 passTime
+      function _educationTimeHook(educationTime) {
+        document.getElementById("unity-education-time").value = educationTime;
+      }
+      // 교육 이수 유무
+      function _educationAuthHook(educationAuth) {
+        document.getElementById("unity-education-auth").value = educationAuth;
+      }
+
+      // _educationNameHook("fire");
+    </script>
   </head>
   <body>
     <noscript>

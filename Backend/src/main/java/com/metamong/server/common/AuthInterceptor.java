@@ -1,5 +1,7 @@
 package com.metamong.server.common;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.metamong.server.service.JwtService;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +11,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
 
 @Component
 @Api("Interceptor")
@@ -37,19 +40,38 @@ public class AuthInterceptor implements HandlerInterceptor {                    
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object Handler) throws Exception{
         System.out.println("(" + request.getMethod() + ")PreHandler / Request Url : " + request.getRequestURI());
 
+        Gson gson = new Gson();
+        JsonObject jsonObject = new JsonObject();
+
         // JWT 사용자 인증 로직
-//        System.out.println(refreshToken);
-//        System.out.println(accessToken);
         String acToken = request.getHeader(accessToken);
+        String rfToken = request.getHeader(refreshToken);
+
         String result = jwtService.decodeToken(acToken, secretkey);
-        if (result.equals("expire")){
-            //재발급
-        }else if(result.equals("invalid")){
-            return false;
-        }else{
-            //정상
-            request.setAttribute("userId",Integer.parseInt(result));
+        if(rfToken != null && (result.equals("expire") || result.equals("invalid"))){      // Refresh Token 이 넘어왔을 때
+            String retRefresh = jwtService.decodeToken(rfToken, secretkey);
+            if(!retRefresh.equals("expire") && !retRefresh.equals("invalid")){          // Access Token 재발행 & API 수행
+                Map<String, Object> map = jwtService.createToken(Integer.parseInt(retRefresh));
+                response.setHeader(refreshToken, rfToken);
+                response.setHeader(accessToken, (String) map.get(accessToken));
+                result = retRefresh;
+            }
+            else{                                                       // Refresh Token 만료
+                response.setStatus(409);
+                jsonObject.addProperty("msg", "refreshTokenExpired");
+                response.getWriter().write(gson.toJson(jsonObject));
+                return false;
+            }
         }
+        else if (result.equals("expire") || result.equals("invalid")){
+            // 재발급 신호 반환
+            response.setStatus(400);
+            jsonObject.addProperty("msg", "needRefreshToken");
+            response.getWriter().write(gson.toJson(jsonObject));
+            return false;
+        }
+
+        request.setAttribute("userId", Integer.parseInt(result));
         return true;
     }
 }
