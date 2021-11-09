@@ -1,7 +1,13 @@
 <template>
   <div class="unityScreen">
-    <div id="unity-container" class=" unity-desktop" style="margin:100px 0 0 0">
-      <canvas id="unity-canvas"  ></canvas>
+    <div id="unity-container" class="unity-desktop" :class="{'unity-mini':!allMap}">
+      
+      <div class="back-map" v-if="!allMap" @click="goUnityMap()"> 
+        <i class="fas fa-long-arrow-alt-left"></i>
+        <p class="back-map-text">Back</p>
+      </div>
+
+      <canvas id="unity-canvas" ></canvas>
       <div id="unity-loading-bar">
         <div id="unity-logo"></div>
         <div id="unity-progress-bar-empty">
@@ -15,6 +21,26 @@
 <script>
 
 export default {
+
+  computed:{
+    allMap(){
+        if(this.$route.name == 'UnityMap' || this.$route.name ==  'SelectCharacter') return true;
+        else return false;
+        
+    }
+  },
+  watch:{
+    allMap(val){
+      var canvas = document.querySelector("#unity-canvas");
+      if(val){
+        canvas.style.width = "1000px";
+        canvas.style.height = "550px";
+      }else{
+        canvas.style.width = "150px";
+        canvas.style.height = "100px";
+      }
+    }
+  },
   
   mounted(){
     this.runWebGL()
@@ -47,9 +73,8 @@ export default {
           mobileWarning.style.display = "none";
         }, 5000);
       } else {
-        canvas.style.width = "800px";
-        canvas.style.height = "500px";
-        console.log("?")
+        canvas.style.width = "1100px";
+        canvas.style.height = "550px";
       }
       loadingBar.style.display = "block";
       var script = document.createElement("script");
@@ -66,16 +91,21 @@ export default {
         });
       };
       document.body.appendChild(script);
-      
-      // if (this.$route.name !== "Town") {
-      //   canvas.style.width = "300px";
-      //   canvas.style.height = "300px";
-      // }
-      // else {
-      //   canvas.style.width = "1120px";
-      //   canvas.style.height = "630px";
-      // }
-    }
+
+      if(this.allMap){
+        canvas.style.width = "1100px";
+        canvas.style.height = "550px";
+      }else{
+        canvas.style.width = "150px";
+        canvas.style.height = "100px";
+      }
+    },
+
+    goUnityMap(){
+        if(!this.allMap){
+            this.$router.push({name : "UnityMap"});
+        }
+    },
   }
 }
 </script>
