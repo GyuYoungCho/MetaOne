@@ -6,6 +6,8 @@ export default {
     selecteducation: Object,
     educations: [],
     certificate: Object,
+    rank: [
+    ],
   },
   getters: {
     selecteducation(state) {
@@ -31,6 +33,10 @@ export default {
     SET_CERTIFICATE(state, certificate) {
       state.certificate = certificate;
     },
+    
+    SET_RANK(state, payload) {
+      state.rank = payload;
+    },
   },
   actions: {
     getEducation({ commit }, item) {
@@ -51,5 +57,22 @@ export default {
     getCertificate({ commit }, item) {
       commit("SET_CERTIFICATE", item);
     },
+    async getRank({commit}, kind) {
+      await educationAPI
+        .getRank(kind)
+        .then((res) => {
+          console.log(res)
+          
+          let rank = []
+          for (let i = 0; i < res.data.data.length; i++){
+            rank[i] = res.data.data[i];
+          }
+          commit("SET_RANK", rank)
+        })
+        .catch((err) => {
+          console.log(err)
+      })
+    },
   },
+
 };

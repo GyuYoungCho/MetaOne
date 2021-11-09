@@ -1,25 +1,18 @@
 package com.metamong.server.service;
 
-import com.metamong.server.dto.CertificateDto;
 import com.metamong.server.dto.EducationDto;
-import com.metamong.server.dto.MissionDto;
 import com.metamong.server.dto.RankDto;
 import com.metamong.server.entity.Certificate;
 import com.metamong.server.entity.Education;
-import com.metamong.server.entity.User;
 import com.metamong.server.exception.ApplicationException;
 import com.metamong.server.repository.CertificateRepository;
 import com.metamong.server.repository.EducationRepository;
 import com.metamong.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class CertificateServiceImpl implements CertificateService{
@@ -66,13 +59,29 @@ public class CertificateServiceImpl implements CertificateService{
     }
 
     public RankDto.ResponseList getRank(String education){
+        String educationName = null;
+        switch (education) {
+            case "fire":
+                educationName = "화재";
+                break;
+            case "earthquake":
+                educationName = "지진";
+                break;
+            case "typhoon":
+                educationName = "태풍";
+                break;
+            case "corona":
+                educationName = "코로나";
+                break;
+        }
 
-        Optional<Education> edu = educationRepository.findByEducation(education);
+        Optional<Education> edu = educationRepository.findByEducation(educationName);
 
         List<Certificate> certificateList = certificateRepository.findAllByEducation(edu.get());
 
         List<RankDto> rankDtoList = new ArrayList<>();
         for (Certificate certificate : certificateList) {
+            if(certificate.getPassTime() == null) continue;         // 교육만 들은 상태는 배제
             RankDto rankDto = RankDto.builder()
                     .nickname(certificate.getUser().getNickname())
                     .passTime(certificate.getPassTime())
@@ -81,7 +90,10 @@ public class CertificateServiceImpl implements CertificateService{
 
             rankDtoList.add(rankDto);
         }
-
+        Collections.sort(rankDtoList, (o1, o2) -> {
+            return o1.getPassTime() - o2.getPassTime();
+        });
+        rankDtoList = rankDtoList.subList(0, Math.min(5, rankDtoList.size()));
         RankDto.ResponseList responseList = new RankDto.ResponseList();
         responseList.setData(rankDtoList);
 

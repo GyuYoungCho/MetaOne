@@ -13,6 +13,7 @@ import Certificate from "@/view/Certificate.vue";
 import Guestbook from "@/view/Guestbook.vue";
 import MessageRecv from "@/view/MessageRecv.vue";
 import UnityMap from "@/view/UnityMap.vue";
+import Rank from "@/view/Rank.vue";
 import NotFound from "@/view/errorpages/404.vue";
 
 import store from "@/store/";
@@ -99,6 +100,11 @@ const routes = [
     path: "/404",
     name: "NotFound",
     component: NotFound,
+  },
+  {
+    path: "/rank",
+    name: "Rank",
+    component: Rank,
   },
   {
     path: "*",
