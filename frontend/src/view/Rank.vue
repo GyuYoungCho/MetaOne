@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <li class="input-label" v-for="e, i in rank" :key="i" >
+        <li class="input-label rank-list" v-for="e, i in rank" :key="i" >
             {{i+1}}위 <span style="padding-left: 30px;">{{e.nickname}}</span> <span style="padding-left: 50px; color: red;">{{(e.passTime - (e.passTime % 60)) / 60}}분 {{e.passTime % 60}}초</span>
         </li>
         

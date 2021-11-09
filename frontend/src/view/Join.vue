@@ -36,7 +36,7 @@
                     nicknamePass: false,
                     emailConfirm: false, -->
                     <div class="col-md-1"></div>
-                    <button class="btn yellow-btn col-md-5" @click="cancel()">취소</button>
+                    <button class="btn yellow-btn col-md-5" @click="cancel()" >취소</button>
                 </div>
             </div>
         </div>
