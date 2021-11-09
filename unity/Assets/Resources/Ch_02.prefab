@@ -12,8 +12,7 @@ GameObject:
   - component: {fileID: 7095553615635764193}
   - component: {fileID: -6385818014711126086}
   - component: {fileID: 488799161633806347}
-  - component: {fileID: -9061882967461701058}
-  - component: {fileID: 8284628405213905504}
+  - component: {fileID: 3554446668051064652}
   m_Layer: 0
   m_Name: Ch_02
   m_TagString: Untagged
@@ -55,7 +54,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 0
   ObservedComponents:
-  - {fileID: -9061882967461701058}
+  - {fileID: 3554446668051064652}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -91,7 +90,7 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters: []
   m_SynchronizeLayers: []
---- !u!114 &-9061882967461701058
+--- !u!114 &3554446668051064652
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,21 +99,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1481911021682527131}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 565c48e978619fd46994facf114e0573, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSpeed: 7
-  rotSpeed: 60
---- !u!114 &8284628405213905504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1481911021682527131}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 565c48e978619fd46994facf114e0573, type: 3}
+  m_Script: {fileID: 11500000, guid: fae03e18616fa304bb70edc52052db69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   moveSpeed: 7
