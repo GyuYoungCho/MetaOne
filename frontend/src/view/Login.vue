@@ -1,6 +1,6 @@
 <template>
     <div class="user">
-        <main-title :title="'위기탈출 메타원'"></main-title>
+        <main-title :title="'위기탈출 메타원'" class="logo-text"></main-title>
         <div class="img_main">
             <img src="" ref="캐릭터 공간" />
         </div>

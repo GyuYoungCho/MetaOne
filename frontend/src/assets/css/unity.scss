@@ -1,0 +1,22 @@
+.unityScreen {
+  #unity-container {
+    position: absolute;
+    width: 800px;
+    height: 500px;
+    left: 50%;
+    top: 45%;
+    transform: translate(-50%, -50%);
+
+    #unity-canvas {
+      background: #231f20;
+      width: 500px;
+    }
+  }
+  #unity-loading-bar {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: none;
+  }
+}

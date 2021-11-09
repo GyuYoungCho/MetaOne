@@ -267,6 +267,25 @@
       }
     }
   }
+
+  .slide-fade1-enter-active,
+  .slide-fade2-enter-active {
+    transition: all 0.3s ease;
+  }
+  .slide-fade1-leave-active,
+  .slide-fade2-leave-active {
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+  }
+  .slide-fade1-enter,
+  .slide-fade2-leave-to {
+    transform: translateX(-10px);
+    opacity: 0;
+  }
+  .slide-fade1-leave-to,
+  .slide-fade2-enter {
+    transform: translateX(10px);
+    opacity: 0;
+  }
 }
 
 .Chatting {
