@@ -429,7 +429,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 601006399}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e53201fa030a2a14083621e7653aa1de, type: 3}
+  m_Script: {fileID: 11500000, guid: bec3d20a2e848a849a96c7b222c4ca65, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   text_Timer: {fileID: 0}
@@ -1246,7 +1246,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1980549435}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ae5ff60acd6170b4ca12111a36085d55, type: 3}
+  m_Script: {fileID: 11500000, guid: ad7c7fd86a5ce2c4ba7f3eeca0df8e99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1988943028 stripped
@@ -1361,6 +1361,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 2081191984}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9bdf049e394e2754cb460ada1c1669d7, type: 3}
+  m_Script: {fileID: 11500000, guid: 31027d14366b59b47800dc47ddebab14, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
