@@ -10,8 +10,8 @@
     <div class="a_card">
         <ul class="list-group mt-3"> 
             <AvatarCard  v-for="(user, index) in onlinelist" :key="index" :user="user"
-              @click.native="getOneMessage(user, index)" 
-              :class="{'MessageListSelected':onlineLen[0]}"/>
+              @click.native="getOneMessage(user)"
+              :class="{'listSelected': selectUser(user)}" />
         </ul>
     </div>
     
@@ -27,33 +27,57 @@ export default {
     },
     data(){
         return{
-          onlineLen : []
+          
+          OnlinePolling : null,
         }
     },
     computed:{
-      ...mapGetters('message',["allmode","onlinelist"])
+      ...mapGetters('message',["allmode","onlinelist","selectreceiver"]),
+      onlineName(){
+        if(this.onlinelist){
+          return this.onlinelist.map(value => value.nickname)
+        }else return []
+      }
     },
     methods:{
-      ...mapActions('message', ['getReceiver','getOnebyOneMessages','getSendmode','getAllmode','getOnlineList']),
-      getOneMessage(user, idx){
+      ...mapActions('message', ['getReceiver', 'getMessage', 'getOnebyOneMessages','getSendmode','getAllmode','getOnlineList']),
+      
+      pollOnlineList(){
+        this.OnlinePolling = setInterval(()=>{
+          this.getOnlineList()
+        },5000)
+      },
+      
+      getOneMessage(user){
         this.getOnebyOneMessages(user.nickname)
-        this.getReceiver(user.nickname)
+        
+        if(user.nickname != this.selectreceiver){
+          this.getMessage(Object)
+          this.getReceiver(user.nickname)
+        }
         this.getSendmode(true)
         this.getAllmode(false)
+      },
 
-        for (let i = 0; i < idx; i++) {
-          this.onlineLen[i] = false
-        }
-        this.onlineLen[idx] = true
-        
-        for (let i = idx+1; i < this.onlineLen.length; i++) {
-          this.onlineLen[i] = false
-        }
+      selectUser(val){
+        if (val.nickname==this.selectreceiver) return true
+        else false
       }
     },
     created(){
       this.getOnlineList()
-      this.onlineLen = Array.from({length: this.onlinelist.length}, () => false);
+      this.pollOnlineList()
+    },
+    beforeDestroy(){
+      clearInterval(this.OnlinePolling)
+    },
+    watch:{
+      onlineName(val){
+        if(!val.includes(this.selectreceiver)){
+          this.getReceiver("")
+          this.getAllmode(true)
+        }
+      }
     }
 }
 </script>
