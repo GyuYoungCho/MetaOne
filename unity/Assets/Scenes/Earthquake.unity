@@ -444,9 +444,9 @@ GameObject:
   - component: {fileID: 472379678}
   - component: {fileID: 472379677}
   - component: {fileID: 472379676}
-  - component: {fileID: 472379679}
   - component: {fileID: 472379680}
   - component: {fileID: 472379681}
+  - component: {fileID: 472379679}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -528,11 +528,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 472379675}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab80d86acbadb1045af4ded0914f686a, type: 3}
+  m_Script: {fileID: 11500000, guid: 63b3ff375141f2c4d96be530a43eee07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  turnSpeed: 4
-  moveSpeed: 4
+  turnSpeed: 2
+  moveSpeed: 2
   pos: {x: 0, y: 0, z: 0}
 --- !u!65 &472379680
 BoxCollider:
