@@ -1,61 +1,38 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MovingCharacter : MonoBehaviour
 {
-    public GameObject btn1;
-    public Vector3 pos;
+    public float moveSpeed = 7f;
+    // 캐릭터 콘트롤러 변수 추가
+    CharacterController cc;
 
     // Start is called before the first frame update
     void Start()
     {
-
+        cc = GetComponent<CharacterController>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        float moveZ = 0f;
-        float moveX = 0f;
+        float h = Input.GetAxis("Horizontal");
+        float v = Input.GetAxis("Vertical");
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            moveZ += 1f;
-        }
+        // 이동 방향 설정
+        Vector3 dir = new Vector3(h, 0, v);
+        dir = dir.normalized;
 
-        if (Input.GetKey(KeyCode.S))
-        {
-            moveZ -= 1f;
-        }
+        // 메인 카메라를 기준으로 방향을 변환
+        dir = Camera.main.transform.TransformDirection(dir);
+        //GameObject camera = GameObject.Find("myCam");
+        //dir = camera.transform.TransformDirection(dir);
 
-        if (Input.GetKey(KeyCode.A))
-        {
-            moveX -= 1f;
-        }
-
-        if (Input.GetKey(KeyCode.D))
-        {
-            moveX += 1f;
-        }
-
-        transform.Translate(new Vector3(moveX, 0f, moveZ) * 0.1f);
-
-        pos = transform.position;
-
-        if (pos.x >= -18.96 && pos.x <= -10.85 && pos.z <= -7.24 && pos.z >= -19.65)
-        {
-            btn1.SetActive(true);
-            Debug.Log("보여");
-
-            // 영상봤는지 체크
-            // 영상 봤으면 버튼 활성화
-        }
-        else
-        {
-            btn1.SetActive(false);
-            Debug.Log("안보여");
-        }
+        transform.position += dir * moveSpeed * Time.deltaTime;
+        
+        cc.Move(dir * moveSpeed * Time.deltaTime);
     }
+
 }
