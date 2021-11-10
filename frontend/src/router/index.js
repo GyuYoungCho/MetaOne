@@ -5,9 +5,7 @@ import Login from "@/view/Login.vue";
 import Join from "@/view/Join.vue";
 import FindPw from "@/view/FindPw.vue";
 import MyPage from "@/view/MyPage.vue";
-import SelectCharacter from "@/view/SelectCharacter.vue";
-import SelectRoom from "@/view/SelectRoom.vue";
-import SettingRoom from "@/view/SettingRoom.vue";
+import StartMap from "@/view/StartMap.vue";
 import EducateList from "@/view/EducateList.vue";
 import Certificate from "@/view/Certificate.vue";
 import Guestbook from "@/view/Guestbook.vue";
@@ -61,21 +59,9 @@ const routes = [
     meta: { requireAuth: true },
   },
   {
-    path: "/select-room",
-    name: "SelectRoom",
-    component: SelectRoom,
-    meta: { requireAuth: true },
-  },
-  {
-    path: "/select-character",
-    name: "SelectCharacter",
-    component: SelectCharacter,
-    meta: { requireAuth: true },
-  },
-  {
-    path: "/setting-room",
-    name: "SettingRoom",
-    component: SettingRoom,
+    path: "/start-map",
+    name: "StartMap",
+    component: StartMap,
     meta: { requireAuth: true },
   },
   {
@@ -132,7 +118,7 @@ router.beforeEach(function (to, from, next) {
   } else {
     if (to.name === "Login") {
       if (store.state.user.isLogin) {
-        next("/select-character");
+        next("/start-map");
       } else {
         next();
       }
