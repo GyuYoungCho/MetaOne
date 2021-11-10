@@ -165,7 +165,7 @@ public class UserServiceImpl implements UserService{
         UserDto.characterResponse res = new UserDto.characterResponse();
 
         if(characters!=null) {
-            res.setFileUrl(characters.getFileUrl());
+//            res.setFileUrl(characters.getFileUrl());
             res.setName(characters.getName());
         }
 

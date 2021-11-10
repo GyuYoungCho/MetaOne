@@ -14,6 +14,7 @@ import Guestbook from "@/view/Guestbook.vue";
 import MessageRecv from "@/view/MessageRecv.vue";
 import UnityMap from "@/view/UnityMap.vue";
 import Rank from "@/view/Rank.vue";
+import UnityData from "@/components/unity/UnityData.vue";
 import NotFound from "@/view/errorpages/404.vue";
 
 import store from "@/store/";
@@ -105,6 +106,11 @@ const routes = [
     path: "/rank",
     name: "Rank",
     component: Rank,
+  },
+  {
+    path: "/unity-data",
+    name: "UnityData",
+    component: UnityData,
   },
   {
     path: "*",
