@@ -122,7 +122,7 @@ const actions = {
           commit("SET_USER_REFRESHTOKEN", res.headers.refreshtoken);
           commit("SET_USER_ISLOGIN", true);
 
-          router.push({ name: "SelectCharacter" });
+          router.push({ name: "StartMap" });
         }
       })
       .catch((err) => {
@@ -131,10 +131,6 @@ const actions = {
         alert("로그인 실패!");
         return;
       });
-
-    setTimeout(() => {
-      dispatch("process/getSubComplete", false, { root: true });
-    }, 2000);
   },
   async getMyInfo({ state, commit }) {
     await userApi
