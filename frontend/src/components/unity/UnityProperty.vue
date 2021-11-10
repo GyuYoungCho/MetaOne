@@ -71,10 +71,9 @@ export default {
         setTimeout(() => {
           mobileWarning.style.display = "none";
         }, 5000);
-        console.log("?")
       } else {
-        canvas.style.width = "960px";
-        canvas.style.height = "600px";
+        canvas.style.width = "1280px";
+        canvas.style.height = "800px";
       }
       loadingBar.style.display = "block";
       var script = document.createElement("script");
@@ -84,8 +83,7 @@ export default {
         window.createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
-          console.log("로딩좀")
-          this.$store.commit("process/SET_UNITY_INSTANCE",unityInstance);
+          this.$store.commit("process/SET_UNITY",unityInstance);
           loadingBar.style.display = "none";
         }).catch((message) => {
           alert(message);
