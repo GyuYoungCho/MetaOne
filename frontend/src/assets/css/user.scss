@@ -74,4 +74,20 @@
       margin-bottom: 40px;
     }
   }
+
+  .start {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2001;
+    width: 60%;
+    height: 20%;
+
+    .yellow-btn {
+      border-radius: 20px;
+      width: 30%;
+      font-size: 2rem;
+    }
+  }
 }
