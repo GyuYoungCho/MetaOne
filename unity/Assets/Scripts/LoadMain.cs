@@ -57,6 +57,8 @@ public class LoadMain : MonoBehaviourPunCallbacks
         cc.center = new Vector3(0, 2.2f, 0);
         cc.height = 4;
 
+        // 내 캐릭터 찾아야할 때를 위해 ME 태그 추가
+        me.tag = "ME";
     }
 
     void CheckPlayerCount()

@@ -1,7 +1,6 @@
 import userApi from "@/api/user.js";
 import router from "@/router";
 import { messaging } from "@/api/firebase.js";
-import { Modal } from "bootstrap";
 
 const state = {
   userId: "",
@@ -78,9 +77,8 @@ const actions = {
     await userApi.checkEmail(state).then((res) => {
       console.log(res);
       setTimeout(() => {
+        alert("인증 번호가 전송되었습니다.");
         dispatch("process/getSubComplete", false, { root: true });
-        let myModal = new Modal(document.getElementById("ConfirmModal"), {});
-        myModal.show();
       }, 2000);
     });
   },

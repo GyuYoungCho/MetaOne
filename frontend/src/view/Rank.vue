@@ -11,7 +11,7 @@
             </div>
         </div>
 
-        <li class="input-label" v-for="e, i in rank" :key="i" >
+        <li class="input-label rank-list" v-for="e, i in rank" :key="i" >
             {{i+1}}위 <span style="padding-left: 30px;">{{e.nickname}}</span> <span style="padding-left: 50px; color: red;">{{(e.passTime - (e.passTime % 60)) / 60}}분 {{e.passTime % 60}}초</span>
         </li>
         
@@ -36,7 +36,7 @@ export default {
     data(){
         return{
             edu: "",
-            kind: "fire",                                       // 교육 분류 (Unity에서 넘겨주어야 한다)
+            kind: "",                                       // 교육 분류 (Unity에서 넘겨주어야 한다)
             // 교육 종목 : 화재, 지진, 코로나, 태풍
             // fire, earthquake, corona, typhoon
         }
@@ -47,12 +47,18 @@ export default {
             console.log("만들어야함")
         },
     }, 
-    mounted(){
-        this.getRank(this.kind)
+    async mounted(){
+        // document.getElementById('unity-education-name').innerHTML = "fire";             // ???
+        // this.kind = document.getElementById('unity-education-name').innerHTML;
+        this.kind = "fire";
+
+        await this.getRank(this.kind)
         if(this.kind == "fire") this.edu = "화재"
         else if(this.kind == "earthquake") this.edu = "지진"
         else if(this.kind == "corona") this.edu = "코로나"
         else if(this.kind == "typhoon") this.edu = "태풍"
+
+
     },
     async created(){
     },

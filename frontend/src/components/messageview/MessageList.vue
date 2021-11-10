@@ -17,14 +17,14 @@
         <!-- 내 메세지 내역 -->
         <ul key=1 class="list-group mymess overflow-auto pt-3 mt-2">
           <MyMessageCard  v-for="(message, index) in mymessages" :key="index" :message="message"
-          @click.native="readAndGet(message)"/>
+          @click.native="readAndGet(message)" :class="{'listSelected': selectMess(message)}"/>
         </ul>
       </transition>
       <transition v-else name="slide-fade2" mode="out-in">
         <!-- 나와 상대방 1대1 -->
         <ul key=2 class="list-group onesmess overflow-auto pt-3 mt-2">
           <OnesMessageCard  v-for="(message, index) in onebyonemessages" :key="index" :message="message"
-          @click.native="readAndGet(message)"/>
+          @click.native="readAndGet(message)" :class="{'listSelected': selectMess(message)}"/>
         </ul>
       </transition>
     </div>
@@ -46,7 +46,7 @@ export default {
         }
     },
     computed:{
-      ...mapGetters("message",["mymessages","onebyonemessages","allmode"]),
+      ...mapGetters("message",["mymessages","onebyonemessages","allmode","selectmessage"]),
       ...mapState("user",["nickname"])
     },
     methods:{
@@ -73,6 +73,11 @@ export default {
           console.log(error);
         });
         
+      },
+
+      selectMess(val){
+        if (val.id==this.selectmessage.id) return true
+        else false
       }
     },
     created(){

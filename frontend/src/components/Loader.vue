@@ -29,9 +29,9 @@ export default {
 
 <style lang="scss" scoped>
 .loader{
-  z-index: 10;
   &__wrap{
-    position: fixed;
+    position: absolute;
+    top : 0%;
     z-index: 2000;
     background-color: rgba(92, 92, 92, 0.726);
     display: flex;
