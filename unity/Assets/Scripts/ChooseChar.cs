@@ -22,6 +22,9 @@ public class ChooseChar : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        // Default 캐릭터 설정
+        characterData = "Low-poly characters pack/Prefabs/Ch_01";
+        characterName = "Ch_01";
     }
 
     // Update is called once per frame
