@@ -24,12 +24,16 @@ export default {
             // unityEducationTime: document.getElementById("unity-education-time").innerHTML,
             // unityEducationAuth: document.getElementById("unity-education-auth").innerHTML,
 
+            unityObject: document.getElementById("unity-object").innerHTML,
+
+
             unityCharacter: "",       // innerHTML 이 안먹음.. 왜지???
             unityRoom: "",
             unityRoomPopulation: "",
             unityEducationName: "",
             unityEducationTime: "",
             unityEducationAuth: "",
+            
         }
     },
     async mounted(){                                // 테스트를 위해 페이지 로딩 시 axois 수행해보기
@@ -72,6 +76,9 @@ export default {
         ...mapState('user', ['nickname', 'email'])
     },
     watch:{
+        unityObject(){
+            // 
+        },
         unityCharacter(){               // 캐릭터 파일 ID
             this.setCharacterMethod()
         },

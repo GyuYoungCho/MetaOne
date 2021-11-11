@@ -47,6 +47,7 @@ public class EduController {
     public ResponseEntity setRoom(@RequestBody Map<String, String> unityRoom, HttpServletRequest request){
         int userId = (int) request.getAttribute("userId");
 
+        unityService.setRoom(userId, unityRoom.get("unityRoom"));            // 유저 ID, 방이름
         return ResponseEntity.ok().build();
     }
 
@@ -55,21 +56,26 @@ public class EduController {
     public ResponseEntity setRoomPopulation(@RequestBody Map<String, String> unityRoomPopulation, HttpServletRequest request){
         int userId = (int) request.getAttribute("userId");
 
+        unityService.setRoomPopulation(userId, Integer.parseInt(unityRoomPopulation.get("unityRoomPopulation")));
         return ResponseEntity.ok().build();
     }
 
     // 미션 클리어 시간 저장
     @PostMapping("/time")
-    public ResponseEntity setMissionClearTime(@RequestBody Map<String, String> unityTime, HttpServletRequest request){
+    public ResponseEntity setMissionClearTime(@RequestBody Map<String, String> unity, HttpServletRequest request){
         int userId = (int) request.getAttribute("userId");
+
+        certificateService.setMissionClearTime(userId, Integer.parseInt(unity.get("unityEducationTime")), unity.get("unityEducation"));
 
         return ResponseEntity.ok().build();
     }
 
     // 교육 수강 인증 0 -> 1
     @PostMapping("/auth")
-    public ResponseEntity setEducationAuth(@RequestBody Map<String, String> unityEducationAuth, HttpServletRequest request){
+    public ResponseEntity setEducationAuth(@RequestBody Map<String, String> unity, HttpServletRequest request){
         int userId = (int) request.getAttribute("userId");
+
+        certificateService.setEducationAuth(userId, Integer.parseInt(unity.get("unityEducationAuth")), unity.get("unityEducation"));
 
         return ResponseEntity.ok().build();
     }

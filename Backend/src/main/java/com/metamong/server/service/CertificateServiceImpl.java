@@ -59,21 +59,7 @@ public class CertificateServiceImpl implements CertificateService{
     }
 
     public RankDto.ResponseList getRank(String education){
-        String educationName = null;
-        switch (education) {
-            case "fire":
-                educationName = "화재";
-                break;
-            case "earthquake":
-                educationName = "지진";
-                break;
-            case "typhoon":
-                educationName = "태풍";
-                break;
-            case "corona":
-                educationName = "코로나";
-                break;
-        }
+        String educationName = convertEducationName(education);
 
         Optional<Education> edu = educationRepository.findByEducation(educationName);
 
@@ -100,4 +86,52 @@ public class CertificateServiceImpl implements CertificateService{
         return responseList;
     }
 
+    @Override
+    public void setMissionClearTime(int userId, int unityTime, String education) {
+
+        String educationName = convertEducationName(education);
+        Optional<Education> edu = educationRepository.findByEducation(educationName);
+
+        Optional<Certificate> certificate = certificateRepository.findByEducationAndUserId(edu.get(), userId);
+
+        certificate.ifPresent(select -> {
+            select.setPassTime(unityTime);
+
+            certificateRepository.save(select);
+        });
+    }
+
+    @Override
+    public void setEducationAuth(int userId, int auth, String education) {
+        String educationName = convertEducationName(education);
+        Optional<Education> edu = educationRepository.findByEducation(educationName);
+
+        Optional<Certificate> certificate = certificateRepository.findByEducationAndUserId(edu.get(), userId);
+
+        certificate.ifPresent(select -> {
+            select.setAuthenticated(auth == 1);
+
+            certificateRepository.save(select);
+        });
+    }
+
+    private String convertEducationName(String education){
+        String educationName = null;
+        switch (education) {
+            case "fire":
+                educationName = "화재";
+                break;
+            case "earthquake":
+                educationName = "지진";
+                break;
+            case "typhoon":
+                educationName = "태풍";
+                break;
+            case "corona":
+                educationName = "코로나";
+                break;
+        }
+
+        return educationName;
+    }
 }
