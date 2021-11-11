@@ -11,6 +11,8 @@ public interface FirebaseCloudMessageService {
 	
 	void save(UserDto.LoginRes loginRes, String token);
 	
+	void save(UserDto.Response loginRes, String token);
+	
 	void del(String token);
 	
 	void deleteLastDay();

@@ -32,6 +32,11 @@
     />
 
     <script>
+      // 오브젝트 이름
+      function _objectHook(object) {
+        document.getElementById("unity-object").innetHTML = object;
+      }
+
       // 캐릭터 파일 명
       function _characterHook(character) {
         document.getElementById("unity-character").innerHTML = character;

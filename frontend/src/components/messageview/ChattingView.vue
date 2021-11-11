@@ -3,6 +3,7 @@
     <section class="Chatting">
 
       <!-- 채팅 페이지 여는 버튼 -->
+      <!-- v-if="unityRoom!=''" 추가하기 -->
       <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#chatting" aria-controls="chatting"
             @click="newMessageMark=false">
         <i class="far fa-comments fa-5x"></i>
@@ -81,10 +82,14 @@ export default {
     },
     computed:{
       ...mapState('user', ['nickname']),
-      ...mapState('message', ['messSize'])
+      ...mapState('message', ['messSize']),
+      ...mapState('unity',['unityRoom'])
     },
     methods:{
         ...mapActions('message', ['getMessSize']),
+
+        //roomid -> unityRoom 으로 쓸 예정
+
         sendMessage(){
             let today = new Date()
             let ymd = moment(today).format("yyyyMMDD")

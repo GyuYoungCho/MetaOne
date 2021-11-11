@@ -1,6 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Auth from "@/components/Auth.vue";
+import Auth from "@/view/Auth.vue";
 import Login from "@/view/Login.vue";
 import Join from "@/view/Join.vue";
 import FindPw from "@/view/FindPw.vue";

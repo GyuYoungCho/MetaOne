@@ -1,10 +1,7 @@
 package com.metamong.server.service;
 
-import com.metamong.server.dto.CertificateDto;
 import com.metamong.server.dto.EducationDto;
-import com.metamong.server.dto.MissionDto;
 import com.metamong.server.dto.RankDto;
-import org.springframework.http.ResponseEntity;
 
 public interface CertificateService {
 
@@ -13,4 +10,8 @@ public interface CertificateService {
     public void updateCertificate(EducationDto.EduRequest eduReq, int userId);
 
     public RankDto.ResponseList getRank(String education);
+
+    void setMissionClearTime(int userId, int unityTime, String unityEducation);
+
+    void setEducationAuth(int userId, int auth, String unityEducation);
 }

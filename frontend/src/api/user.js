@@ -78,4 +78,15 @@ export default {
       },
     });
   },
+  kakaoLogin(data) {
+    return _axios({
+      url: `/users/login-kakao`,
+      method: "post",
+      data: {
+        email: data.email,
+        name: data.name,
+        firebaseToken: data.firebaseToken,
+      },
+    });
+  },
 };
