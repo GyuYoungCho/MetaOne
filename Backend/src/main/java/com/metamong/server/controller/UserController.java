@@ -151,7 +151,6 @@ public class UserController {
         UserDto.LoginRes loginRes = userService.login(loginInfo);
         Map<String, Object> map = jwtService.createToken(loginRes.getId());
         System.out.println("map : "+ map.get(accessToken));
-        System.out.println("firebase 토큰 오나? : " + loginInfo.getFirebaseToken());
 
         firebaseCloudMessageService.save(loginRes, loginInfo.getFirebaseToken());
         System.out.println("파베토큰 저장 완료");
@@ -295,7 +294,9 @@ public class UserController {
 
         String email = payload.get("email");
         String name = payload.get("name");
-
+        
+        
+        User user = new User();
         if(!userService.isExistEmail(email)) {
             // 이메일 없으면 최초 로그인이므로 회원 정보 DB에 등록
             userService.kakaoRegister(email, name);
@@ -303,6 +304,14 @@ public class UserController {
 
         // 이메일 이미있으면 가입된 유저이므로 유저 정보 가져와서 넘겨줌
         UserDto.Response res = userService.login(email);
+        
+        firebaseCloudMessageService.save(res, payload.get("firebaseToken"));
+        System.out.println("파베토큰 저장 완료");
+        
+        // 온라인
+        User ouser = userRepository.findByEmail(email).get();
+        ouser.setState(1);
+        userRepository.save(ouser);
 
         Map<String, Object> map = jwtService.createToken(res.getId());
         System.out.println("map : "+ map.get(accessToken));

@@ -1,7 +1,6 @@
 package com.metamong.server.service;
 
 import com.metamong.server.dto.UserDto;
-import com.metamong.server.entity.Characters;
 import com.metamong.server.entity.User;
 
 import javax.servlet.http.HttpServletRequest;

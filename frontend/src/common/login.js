@@ -40,12 +40,4 @@ const getKakaoUserInfo = async () => {
   return data;
 };
 
-const setKakaoUserInfo = (data) => {
-  const result = axios.post("/api/users/login-kakao", {
-    email: data.email,
-    name: data.name,
-  });
-  return result;
-};
-
-export { getKakaoToken, getKakaoUserInfo, setKakaoUserInfo };
+export { getKakaoToken, getKakaoUserInfo };
