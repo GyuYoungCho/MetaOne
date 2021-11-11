@@ -3,7 +3,7 @@ export default {
   state: {
     subComplete: true,
     contentBody: "",
-    unityInstance: null,
+    getInstance: false,
   },
   getters: {
     subComplete(state) {
@@ -12,8 +12,8 @@ export default {
     contentBody(state) {
       return state.contentBody;
     },
-    unityInstance(state) {
-      return state.unityInstance;
+    getInstance(state) {
+      return state.getInstance;
     },
   },
   mutations: {
@@ -24,7 +24,7 @@ export default {
       state.contentBody = status;
     },
     SET_UNITY_INSTANCE(state, status) {
-      state.unityInstance = status;
+      state.getInstance = status;
     },
   },
   actions: {
