@@ -4,6 +4,7 @@ import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.messaging.*;
 import com.metamong.server.dto.FcmMessage;
 import com.metamong.server.dto.UserDto;
+import com.metamong.server.dto.UserDto.Response;
 import com.metamong.server.entity.FirebaseToken;
 import com.metamong.server.entity.User;
 import com.metamong.server.repository.FirebaseTokenRepository;
@@ -97,6 +98,25 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
 
         firebaseTokenRepository.save(firebaseToken);
     }
+    
+    
+    @Override
+    @Transactional
+	public void save(Response loginRes, String token) {
+    	Optional<List<FirebaseToken>> firebaseTokens = firebaseTokenRepository.findByUserIdAndToken(loginRes.getId(), token);
+        if(firebaseTokens.isPresent() && firebaseTokens.get().size() >= 1) return;
+
+        User user = new User();
+        user.setId(loginRes.getId());
+        FirebaseToken firebaseToken = FirebaseToken.builder()
+                .user(user)
+                .token(token)
+                .createAt(Date.from(LocalDateTime.now().atZone(ZoneId.of("+9")).toInstant()))
+                .build();
+
+        firebaseTokenRepository.save(firebaseToken);
+		
+	}
 
     
     /**

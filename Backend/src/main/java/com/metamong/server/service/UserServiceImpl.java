@@ -88,6 +88,7 @@ public class UserServiceImpl implements UserService{
 
         if(user!=null) {
             res.setId(user.getId());
+            res.setName(user.getName());
             res.setEmail(user.getEmail());
             res.setNickname(user.getNickname());
         }
