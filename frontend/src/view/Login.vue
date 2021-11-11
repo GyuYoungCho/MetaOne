@@ -69,7 +69,7 @@ export default {
             window.Kakao.Auth.authorize({
                 redirectUri: 'http://localhost:8000/auth'
             })
-        },
+        },  
         toJoin(){
             this.$router.push({name: 'Join'}).catch(() => {})
         },

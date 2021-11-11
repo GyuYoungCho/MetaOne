@@ -51,6 +51,7 @@ public class UserDto {
     public static class Response{
 //        private UserDto data;
         private Integer id;
+        private String name;
         private String email;
         private String nickname;
     }

@@ -193,6 +193,39 @@ const actions = {
     commit("SET_USER_ACCESSTOKEN", "");
     commit("SET_USER_REFRESHTOKEN", "");
   },
+
+  async kakaoLogin({ state, commit, dispatch }) {
+    await messaging
+      .getToken({ vapidKey: "BHNLrFDYFvHeFVnKkYMskZfNTjOu8z5_G_QQJcIdRZdZ2lq3Sl5iMXRdtDdr_M2fboN1EKU_o-DTsxOBwljmXSY" })
+      .then((token) => {
+        commit("SET_USER_FIREBASETOKEN", token);
+      });
+
+    await userApi
+      .kakaoLogin(state)
+      .then((res) => {
+        if (res.status == 200) {
+          console.log(res);
+          dispatch("process/getSubComplete", true, { root: true });
+          commit("SET_JOIN_USERID", res.data.id);
+          commit("SET_JOIN_NAME", res.data.name);
+          commit("SET_JOIN_EMAIL", res.data.email);
+          commit("SET_JOIN_NICKNAME", res.data.nickname);
+
+          commit("SET_USER_ACCESSTOKEN", res.headers.accesstoken);
+          commit("SET_USER_REFRESHTOKEN", res.headers.refreshtoken);
+          commit("SET_USER_ISLOGIN", true);
+
+          router.push({ name: "UnityMap" });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        state.password = "";
+        alert("로그인 실패!");
+        return;
+      });
+  },
 };
 
 const mutations = {
