@@ -1,8 +1,9 @@
 import axios from "axios";
 import store from "@/store/index.js"
 
+// https://k5a305.p.ssafy.io
 const _axios = axios.create({
-  baseURL: "https://k5a305.p.ssafy.io/api",
+  baseURL: "http://localhost:8080/api",
   timeout: 100000,
 });
 
