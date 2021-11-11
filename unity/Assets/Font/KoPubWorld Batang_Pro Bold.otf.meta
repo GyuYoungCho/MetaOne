@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: e109f9db9bc68b64a928d837d47f0813
+guid: 1419896e852c711409dfbe75b34fe456
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -11,7 +11,7 @@ TrueTypeFontImporter:
   fontNames:
   - KoPubWorldBatang_Pro
   fallbackFontReferences:
-  - {fileID: 12800000, guid: 500faacdac44bdf43b78cb9e987d44cc, type: 3}
+  - {fileID: 12800000, guid: e005b24660170fa40a7e87fb2cdd49dc, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

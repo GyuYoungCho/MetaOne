@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: dcd7e6604b2be064983d9ff3a47f9f62
+guid: 2246afafc2aa0504db7f7da06a3ad681
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -11,8 +11,7 @@ TrueTypeFontImporter:
   fontNames:
   - KoPubWorldDotum_Pro
   fallbackFontReferences:
-  - {fileID: 12800000, guid: 499f42d55322b104b970989cb7db7b37, type: 3}
-  - {fileID: 12800000, guid: 37f9e95550bce034481cd9a2cba83500, type: 3}
+  - {fileID: 12800000, guid: d0fc4e3b816bf4645a7f2de64f96ff85, type: 3}
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1
