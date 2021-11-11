@@ -6,6 +6,7 @@ import message from "./modules/message.js";
 import education from "./modules/education.js";
 import user from "./modules/user.js";
 import process from "./modules/process.js";
+import unity from "./modules/unity.js";
 
 Vue.use(Vuex);
 
@@ -17,5 +18,6 @@ export default new Vuex.Store({
     message,
     education,
     process,
+    unity,
   },
 });

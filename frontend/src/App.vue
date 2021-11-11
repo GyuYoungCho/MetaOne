@@ -33,7 +33,8 @@ export default {
     ...mapState('user', ['isLogin',]),
     ...mapState('process',['subComplete','contentBody']),
     showUnity(){
-       return true;
+       if(this.$route.name!='NotFound') return true;
+       else return  false
     }
   },
   created(){

@@ -1,5 +1,6 @@
 <template>
   <div class="unityScreen">
+    <UnityData :instance="instance" />
     <div id="unity-container" class="unity-desktop" :class="{'unity-mini':!allMap}">
       
       <div class="back-map" v-if="!allMap" @click="goUnityMap()"> 
@@ -15,38 +16,56 @@
         </div>
       </div>
     </div>
+    <div class="row start" v-if="!getInstance">
+        <button class="btn yellow-btn" @click="startUnityMap()">시작하기</button>
+    </div>
   </div>
 </template>
 
 <script>
-
+import { mapActions, mapGetters } from 'vuex';
+import UnityData from "./UnityData.vue";
 export default {
-
+  components:{
+    UnityData
+  },
+  data(){
+    return{
+      instance : null,
+      unityInterval : '',
+    }
+  },
   computed:{
+    ...mapGetters('process',['getInstance','subComplete']),
     allMap(){
-        if(this.$route.name == 'UnityMap' || this.$route.name ==  'SelectCharacter') return true;
+        if(this.$route.name == 'UnityMap') return true;
         else return false;
-        
     }
   },
   watch:{
     allMap(val){
       var canvas = document.querySelector("#unity-canvas");
       if(val){
-        canvas.style.width = "1000px";
-        canvas.style.height = "550px";
+        canvas.style.width = "1280px";
+        canvas.style.height = "800px";
       }else{
         canvas.style.width = "150px";
         canvas.style.height = "100px";
       }
     }
   },
-  
+  created(){
+    this.$store.commit("process/SET_UNITY_INSTANCE",false);
+    if(!this.getInstance){
+      this.getSubComplete(true)
+    }
+  },
   mounted(){
     this.runWebGL()
   },
 
   methods:{
+    ...mapActions('process',['getSubComplete']),
     runWebGL(){
       var buildUrl = "unity/Build";
       var loaderUrl = buildUrl + "/unity.loader.js";
@@ -73,8 +92,8 @@ export default {
           mobileWarning.style.display = "none";
         }, 5000);
       } else {
-        canvas.style.width = "1100px";
-        canvas.style.height = "550px";
+        canvas.style.width = "1280px";
+        canvas.style.height = "800px";
       }
       loadingBar.style.display = "block";
       var script = document.createElement("script");
@@ -84,7 +103,7 @@ export default {
         window.createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
-          this.$store.commit("getUnityIn",unityInstance);
+          this.instance = unityInstance
           loadingBar.style.display = "none";
         }).catch((message) => {
           alert(message);
@@ -93,18 +112,23 @@ export default {
       document.body.appendChild(script);
 
       if(this.allMap){
-        canvas.style.width = "1100px";
-        canvas.style.height = "550px";
+        canvas.style.width = "1280px";
+        canvas.style.height = "800px";
       }else{
         canvas.style.width = "150px";
         canvas.style.height = "100px";
       }
     },
-
+    startUnityMap(){
+        if(this.instance !== undefined) this.instance.SendMessage('GameManager','initNickname',this.nickname);
+        this.$store.commit("process/SET_UNITY_INSTANCE",true);
+        this.getSubComplete(true)
+        setTimeout(() => {
+          this.getSubComplete(false)
+        }, 2000);
+    },
     goUnityMap(){
-        if(!this.allMap){
-            this.$router.push({name : "UnityMap"});
-        }
+        this.$router.push({name: 'UnityMap'})
     },
   }
 }
