@@ -36,7 +36,7 @@ public class LoadMain : MonoBehaviourPunCallbacks
 
         me.AddComponent<MovingCharacter>();
         CharacterController cc = me.AddComponent<CharacterController>();
-        me.transform.position = new Vector3(-0.7f, 0, -5.06f);
+        me.transform.position = new Vector3(28f, 0, -15f);
         me.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
         // 하위에 카메라 추가
@@ -45,9 +45,9 @@ public class LoadMain : MonoBehaviourPunCallbacks
         mc.transform.SetParent(me.transform);
 
         // 카메라 설정
-        Camera camera = mc.AddComponent<Camera>();
-        camera.transform.position = new Vector3(-3.34f, 3f, 5.94f);
-        camera.transform.rotation = Quaternion.Euler(new Vector3(0.589f, -227.802f, -0.628f));
+        mc.AddComponent<Camera>();
+        mc.transform.position = new Vector3(24.5f, 2f, -11.75f);
+        mc.transform.rotation = Quaternion.Euler(new Vector3(0.6f, 130f, -0.6f));
 
         // rigidbody 추가 및 설정
         Rigidbody rb = me.AddComponent<Rigidbody>();
