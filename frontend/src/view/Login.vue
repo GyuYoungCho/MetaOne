@@ -17,7 +17,7 @@
                         <button class="btn yellow-btn" @click="tryLogin()">&nbsp;&nbsp;&nbsp;&nbsp;시작하기&nbsp;&nbsp;&nbsp;&nbsp;</button>
                     </div>
                     <div style="float: left;" v-if="i == 1">
-                        <button class="btn yellow-btn">카카오 로그인</button>
+                        <button class="btn yellow-btn" @click="kakaoLogin()">카카오 로그인</button>
                     </div>
                 </div>
                 <div class="col-md-2">
@@ -64,6 +64,11 @@ export default {
             }
 
             this.login()
+        },
+        kakaoLogin(){
+            window.Kakao.Auth.authorize({
+                redirectUri: 'http://localhost:8000/auth'
+            })
         },
         toJoin(){
             this.$router.push({name: 'Join'}).catch(() => {})
