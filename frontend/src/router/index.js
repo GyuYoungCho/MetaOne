@@ -5,14 +5,12 @@ import Login from "@/view/Login.vue";
 import Join from "@/view/Join.vue";
 import FindPw from "@/view/FindPw.vue";
 import MyPage from "@/view/MyPage.vue";
-import StartMap from "@/view/StartMap.vue";
 import EducateList from "@/view/EducateList.vue";
 import Certificate from "@/view/Certificate.vue";
 import Guestbook from "@/view/Guestbook.vue";
 import MessageRecv from "@/view/MessageRecv.vue";
 import UnityMap from "@/view/UnityMap.vue";
 import Rank from "@/view/Rank.vue";
-import UnityData from "@/components/unity/UnityData.vue";
 import NotFound from "@/view/errorpages/404.vue";
 
 import store from "@/store/";
@@ -60,12 +58,6 @@ const routes = [
     meta: { requireAuth: true },
   },
   {
-    path: "/start-map",
-    name: "StartMap",
-    component: StartMap,
-    meta: { requireAuth: true },
-  },
-  {
     path: "/guestbook",
     name: "Guestbook",
     component: Guestbook,
@@ -94,11 +86,6 @@ const routes = [
     component: Rank,
   },
   {
-    path: "/unity-data",
-    name: "UnityData",
-    component: UnityData,
-  },
-  {
     path: "*",
     redirect: "/404",
   },
@@ -124,7 +111,7 @@ router.beforeEach(function (to, from, next) {
   } else {
     if (to.name === "Login") {
       if (store.state.user.isLogin) {
-        next("/start-map");
+        next("/unity-map");
       } else {
         next();
       }
