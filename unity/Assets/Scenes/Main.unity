@@ -234,6 +234,34 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8268045616302543190, guid: 1d9af0b5ab9dd064089901e309e79df5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.0950937
+      objectReference: {fileID: 0}
+    - target: {fileID: 8268045616302543190, guid: 1d9af0b5ab9dd064089901e309e79df5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 4.928
+      objectReference: {fileID: 0}
+    - target: {fileID: 8268045616302543190, guid: 1d9af0b5ab9dd064089901e309e79df5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8268045616302543190, guid: 1d9af0b5ab9dd064089901e309e79df5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8268045616302543190, guid: 1d9af0b5ab9dd064089901e309e79df5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8268045616302543190, guid: 1d9af0b5ab9dd064089901e309e79df5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8268045616302543190, guid: 1d9af0b5ab9dd064089901e309e79df5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8546314178914602439, guid: 1d9af0b5ab9dd064089901e309e79df5, type: 3}
       propertyPath: m_Enabled
       value: 0
@@ -6280,7 +6308,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &807050126
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6584,7 +6612,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: ef20dcf6ef746c1428357be0172dbefd, type: 3}
     m_FontSize: 40
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 4
     m_MaxSize: 50
@@ -6812,7 +6840,7 @@ MonoBehaviour:
   m_FontData:
     m_Font: {fileID: 12800000, guid: ef20dcf6ef746c1428357be0172dbefd, type: 3}
     m_FontSize: 40
-    m_FontStyle: 1
+    m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 50
