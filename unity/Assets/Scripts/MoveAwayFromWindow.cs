@@ -5,17 +5,20 @@ using UnityEngine.UI;
 
 public class MoveAwayFromWindow : MonoBehaviour
 {
+    public GameObject mc;
     public Vector3 pos;
+
     // Start is called before the first frame update
     void Start()
     {
         Destroy(GetComponent<ClickBackpack>());
+        mc = GameObject.Find("MainCamera");
     }
 
     // Update is called once per frame
     void Update()
     {
-        pos = transform.position;
+        pos = mc.transform.position;
 
         GameObject clikckedToggle = GameObject.Find("ThirdToggle");
         Toggle t = clikckedToggle.GetComponent(typeof(Toggle)) as Toggle;
@@ -35,10 +38,8 @@ public class MoveAwayFromWindow : MonoBehaviour
 
             // 3초 후 Guide 숨기기
             Invoke("hideGuide", 3);
-
-            // 4번째 미션 추가
-            //GameObject.Find("asset_int_extinguisher_017").AddComponent<ClickExtinguisher>();
         }
+
     }
 
     public void hideGuide()
