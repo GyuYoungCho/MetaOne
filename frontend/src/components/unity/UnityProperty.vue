@@ -112,7 +112,7 @@ export default {
         }).then((unityInstance) => {
           this.instance = unityInstance
           loadingBar.style.display = "none";
-          if(this.instance !== undefined) this.instance.SendMessage('GameManager','initNickname',this.nickname);
+          if(this.instance !== undefined) this.instance.SendMessage('LobbyManager','initPlayerName',this.nickname);
         }).catch((message) => {
           alert(message);
         });
@@ -128,8 +128,6 @@ export default {
       }
     },
     startUnityMap(){
-      
-        if(this.instance !== undefined) this.instance.SendMessage('GameManager','initNickname',this.nickname);
         this.$store.commit("process/SET_UNITY_INSTANCE",true);
         this.getSubComplete(true)
         setTimeout(() => {
