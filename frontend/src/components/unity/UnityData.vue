@@ -24,8 +24,8 @@ export default {
             // unityEducationTime: document.getElementById("unity-education-time").innerHTML,
             // unityEducationAuth: document.getElementById("unity-education-auth").innerHTML,
 
-            unityObject: document.getElementById("unity-object").innerHTML,
-
+            // unityObject: document.getElementById("unity-object").innerHTML,
+            unityObject: "",
 
             unityCharacter: "",       // innerHTML 이 안먹음.. 왜지???
             unityRoom: "",
@@ -37,10 +37,10 @@ export default {
         }
     },
     async mounted(){                                // 테스트를 위해 페이지 로딩 시 axois 수행해보기
-        this.unityCharacter = document.getElementById("unity-character").innerHTML = "fire"
-        this.unityRoom = document.getElementById("unity-room").innerHTML = "방이름"
+        this.unityCharacter = document.getElementById("unity-character").innerHTML = "test_character_file"
+        this.unityRoom = document.getElementById("unity-room").innerHTML = "방이름테스트"
         this.unityRoomPopulation = document.getElementById("unity-room-population").innerHTML = "4"
-        this.unityEducationName = document.getElementById("unity-education-name").innerHTML = "교육명"
+        this.unityEducationName = document.getElementById("unity-education-name").innerHTML = "fire"
         this.unityEducationTime = document.getElementById("unity-education-time").innerHTML = "160"
         this.unityEducationAuth = document.getElementById("unity-education-auth").innerHTML = "1"
 
