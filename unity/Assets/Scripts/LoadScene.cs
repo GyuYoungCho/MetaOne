@@ -67,7 +67,6 @@ public class LoadScene : MonoBehaviour
 
         // 메인카메라에 movingCharacter 스크립트 추가
         GameObject mission = GameObject.Find("MainCamera");
-        mission.AddComponent<MovingCharacter>();
 
         // 타이머 시작
         GameObject.Find("Canvas").transform.Find("Timer").gameObject.SetActive(true);

@@ -8,7 +8,7 @@ public class ClickBackpack : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Destroy(GetComponent<GetUnderTheTable>());
     }
 
     // Update is called once per frame
@@ -45,8 +45,11 @@ public class ClickBackpack : MonoBehaviour
         Invoke("hideGuide", 3);
 
         // 3번째 미션 추가
-        GameObject mission = GameObject.Find("Main Camera");
+        GameObject mission = GameObject.Find("MainCamera");
         mission.AddComponent<MoveAwayFromWindow>();
+
+        // 4번째 미션 추가
+        GameObject.Find("asset_int_extinguisher_017").AddComponent<ClickExtinguisher>();
     }
 
     public void hideGuide()
