@@ -46,7 +46,7 @@ public class EduController {
     @PostMapping("/room")
     public ResponseEntity setRoom(@RequestBody Map<String, String> unityRoom, HttpServletRequest request){
         int userId = (int) request.getAttribute("userId");
-
+        System.out.println("방이름 : " + unityRoom.get("unityRoom"));
         unityService.setRoom(userId, unityRoom.get("unityRoom"));            // 유저 ID, 방이름
         return ResponseEntity.ok().build();
     }
@@ -65,6 +65,8 @@ public class EduController {
     public ResponseEntity setMissionClearTime(@RequestBody Map<String, String> unity, HttpServletRequest request){
         int userId = (int) request.getAttribute("userId");
 
+        System.out.println(unity.get("unityEducationTime"));
+        System.out.println(unity.get("unityEducation"));
         certificateService.setMissionClearTime(userId, Integer.parseInt(unity.get("unityEducationTime")), unity.get("unityEducation"));
 
         return ResponseEntity.ok().build();

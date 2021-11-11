@@ -37,17 +37,18 @@ export default {
         }
     },
     async mounted(){                                // 테스트를 위해 페이지 로딩 시 axois 수행해보기
-        this.unityCharacter = document.getElementById("unity-character").innerHTML = "test_character_file"
-        this.unityRoom = document.getElementById("unity-room").innerHTML = "방이름테스트"
-        this.unityRoomPopulation = document.getElementById("unity-room-population").innerHTML = "4"
-        this.unityEducationName = document.getElementById("unity-education-name").innerHTML = "fire"
-        this.unityEducationTime = document.getElementById("unity-education-time").innerHTML = "160"
-        this.unityEducationAuth = document.getElementById("unity-education-auth").innerHTML = "1"
+        
+        // this.unityCharacter = document.getElementById("unity-character").innerHTML = "test_character_file"
+        // this.unityRoom = document.getElementById("unity-room").innerHTML = "방이름"
+        // this.unityRoomPopulation = document.getElementById("unity-room-population").innerHTML = "4"
+        // this.unityEducationName = document.getElementById("unity-education-name").innerHTML = "fire"      // fire, earthquake, corona, typhoon
+        // this.unityEducationTime = document.getElementById("unity-education-time").innerHTML = "162"
+        // this.unityEducationAuth = document.getElementById("unity-education-auth").innerHTML = "1"
 
 
         console.log("unity-data")
-        this.unityCharacter = "test_character_file";
-        await this.setCharacterMethod();
+        // this.unityCharacter = "test_character_file";
+        // await this.setCharacterMethod();
     },
     methods:{
         ...mapActions('unity', ['setCharacter', 'setRoom', 'setRoomPopulation', 'setEducationTime', 'setEducationAuth']),
@@ -56,7 +57,7 @@ export default {
             await this.setCharacter()
         },
         async setRoomMethod(){
-            await this.$store.commit('unity/SET_UNITY_CHARACTER', this.unityCharacter) 
+            await this.$store.commit('unity/SET_UNITY_ROOM', this.unityRoom) 
             await this.setRoom()
         },
         async setRoomPopulationMethod(){

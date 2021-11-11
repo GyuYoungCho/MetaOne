@@ -95,7 +95,7 @@ public class CertificateServiceImpl implements CertificateService{
         Optional<Certificate> certificate = certificateRepository.findByEducationAndUserId(edu.get(), userId);
 
         certificate.ifPresent(select -> {
-            select.setPassTime(unityTime);
+            select.setPassTime(Math.min(select.getPassTime(), unityTime));
 
             certificateRepository.save(select);
         });

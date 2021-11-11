@@ -35,7 +35,8 @@ export default {
             url: `/edu/time`,
             method: "post",
             data: {
-                unityEducationTime : data.unityEducationTime
+                unityEducationTime: data.unityEducationTime,
+                unityEducation: data.unityEducationName,
             }
         })
     },
@@ -44,7 +45,8 @@ export default {
             url: `/edu/auth`,
             method: "post",
             data: {
-                unityEducationAuth : data.unityEducationAuth
+                unityEducationAuth: data.unityEducationAuth,
+                unityEducation: data.unityEducationName,
             }
         })
     },
