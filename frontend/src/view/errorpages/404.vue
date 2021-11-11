@@ -23,6 +23,9 @@ export default {
     onBackBtnClick () {
       this.$router.back()
     }
+  },
+  created(){
+    this.$store.commit("process/SET_UNITY_INSTANCE",false);
   }
 }
 </script>

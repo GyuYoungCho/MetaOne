@@ -55,12 +55,19 @@ export default {
     }
   },
   created(){
-    this.$store.commit("process/SET_UNITY_INSTANCE",false);
     if(!this.getInstance){
       this.getSubComplete(true)
     }
   },
   mounted(){
+    if(!this.getInstance){
+      let loader = document.querySelector(".loader__wrap");
+      loader.style.zIndex = 2004;
+      setTimeout(()=>{
+        loader.style.zIndex = 2000;
+        
+      },5000)
+    }
     this.runWebGL()
   },
 
@@ -99,12 +106,13 @@ export default {
       var script = document.createElement("script");
       script.src = loaderUrl;
       
-      script.onload = () => {
-        window.createUnityInstance(canvas, config, (progress) => {
+      script.onload = async () => {
+        await window.createUnityInstance(canvas, config, (progress) => {
           progressBarFull.style.width = 100 * progress + "%";
         }).then((unityInstance) => {
           this.instance = unityInstance
           loadingBar.style.display = "none";
+          if(this.instance !== undefined) this.instance.SendMessage('GameManager','initNickname',this.nickname);
         }).catch((message) => {
           alert(message);
         });
@@ -120,12 +128,13 @@ export default {
       }
     },
     startUnityMap(){
+      
         if(this.instance !== undefined) this.instance.SendMessage('GameManager','initNickname',this.nickname);
         this.$store.commit("process/SET_UNITY_INSTANCE",true);
         this.getSubComplete(true)
         setTimeout(() => {
           this.getSubComplete(false)
-        }, 2000);
+        }, 1000);
     },
     goUnityMap(){
         this.$router.push({name: 'UnityMap'})
