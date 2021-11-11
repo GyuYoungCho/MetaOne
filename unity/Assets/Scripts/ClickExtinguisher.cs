@@ -44,7 +44,7 @@ public class ClickExtinguisher : MonoBehaviour
         Invoke("hideGuide", 3);
 
         // 5번째 미션 추가
-        GameObject mission = GameObject.Find("Main Camera");
+        GameObject mission = GameObject.Find("MainCamera");
         mission.AddComponent<GoPlayground>();
     }
 

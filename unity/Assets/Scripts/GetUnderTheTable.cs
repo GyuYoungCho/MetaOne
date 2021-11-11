@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MoveAwayFromWindow : MonoBehaviour
+public class GetUnderTheTable : MonoBehaviour
 {
     public GameObject mc;
     public Vector3 pos;
@@ -11,7 +11,6 @@ public class MoveAwayFromWindow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Destroy(GetComponent<ClickBackpack>());
         mc = GameObject.Find("MainCamera");
     }
 
@@ -20,24 +19,27 @@ public class MoveAwayFromWindow : MonoBehaviour
     {
         pos = mc.transform.position;
 
-        GameObject clikckedToggle = GameObject.Find("ThirdToggle");
-        Toggle t = clikckedToggle.GetComponent(typeof(Toggle)) as Toggle;
-        t.isOn = true;
-
-        if (63 <= pos.x && pos.x <= 75 && 1 < pos.z && pos.z < 1.75)
+        if (73.5 <= pos.x && pos.x <= 74.2 && -4.2 < pos.z && pos.z < -3)
         {
-            Debug.Log("창문과 근접함");
-            t.isOn = false;
+            Debug.Log("범위 안에 들어왔다!");
+            GameObject clikckedToggle = GameObject.Find("FirstToggle");
+            Toggle t = clikckedToggle.GetComponent(typeof(Toggle)) as Toggle;
+            t.isOn = true;
 
             // 팝업창 추가
+            GameObject canvas = GameObject.Find("Canvas");
+
             GameObject.Find("Canvas").transform.Find("Guide").gameObject.SetActive(true);
             GameObject guideText = GameObject.Find("Guide").transform.Find("Text").gameObject;
             Text pt = guideText.GetComponent(typeof(Text)) as Text;
 
-            pt.text = "이동할 때는 창문과 떨어져서 이동해야 해!";
+            pt.text = "지진이 발생했다!\n교탁 아래로 들어가 몸을 보호해야해";
 
             // 3초 후 Guide 숨기기
             Invoke("hideGuide", 3);
+
+            // 2번째 미션 추가
+            GameObject.Find("asset_int_backpack_orange_057").AddComponent<ClickBackpack>();
         }
 
     }
