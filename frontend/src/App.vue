@@ -23,7 +23,7 @@ export default {
   name: 'App',
   data(){
     return{
-      unityPage : ["SelectCharacter","UnityMap"]
+      // unityPage : ["SelectCharacter","UnityMap","MessageRecv"]
     }
   },
   components:{
@@ -33,8 +33,8 @@ export default {
     ...mapState('user', ['isLogin',]),
     ...mapState('process',['subComplete','contentBody']),
     showUnity(){
-      if(this.unityPage.includes(this.$route.name)) return true;
-      else return false;
+       if(this.$route.name!='NotFound') return true;
+       else return  false
     }
   },
   created(){

@@ -77,8 +77,8 @@
       z-index: -999;
     }
 
-    &Selected {
-      background-color: $offwhite;
+    .listSelected {
+      background-color: rgba(0, 0, 0, 0.1);
       border-radius: 10px;
     }
 
@@ -109,10 +109,9 @@
         position: relative;
         padding: 0px;
       }
-
       span {
         color: black;
-        font-size: 1.6rem;
+        font-size: 1.5rem;
         margin: 0px;
       }
 
@@ -298,6 +297,7 @@
     position: absolute;
     top: 83%;
     left: 15px;
+    z-index: 3;
     i {
       padding-top: 5%;
       width: 120px;

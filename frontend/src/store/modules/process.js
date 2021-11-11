@@ -3,6 +3,7 @@ export default {
   state: {
     subComplete: true,
     contentBody: "",
+    getInstance: false,
   },
   getters: {
     subComplete(state) {
@@ -10,6 +11,9 @@ export default {
     },
     contentBody(state) {
       return state.contentBody;
+    },
+    getInstance(state) {
+      return state.getInstance;
     },
   },
   mutations: {
@@ -19,6 +23,9 @@ export default {
     SET_SUBCONTENTBODY(state, status) {
       state.contentBody = status;
     },
+    SET_UNITY_INSTANCE(state, status) {
+      state.getInstance = status;
+    },
   },
   actions: {
     getSubComplete({ commit }, item) {
@@ -26,6 +33,9 @@ export default {
     },
     getContentBody({ commit }, item) {
       commit("SET_SUBCONTENTBODY", item);
+    },
+    getUnityInstance({ commit }, item) {
+      commit("SET_UNITY_INSTANCE", item);
     },
   },
 };

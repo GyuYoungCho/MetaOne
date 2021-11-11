@@ -8,8 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.crypto.spec.SecretKeySpec;
 import javax.xml.bind.DatatypeConverter;
 import java.security.Key;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +39,7 @@ public class JwtServiceImpl implements JwtService{
     @Override
     public synchronized Map<String, Object> createToken(int userId) {
         String accessToken = createToken(userId, ACCESS_TOKEN_EXP_TIME, SECRET_KEY);
-        String refreshToken = createToken(userId, REFRESH_TOKEN_EXP_TIME, accessToken);
+        String refreshToken = createToken(userId, REFRESH_TOKEN_EXP_TIME, SECRET_KEY);
 
         Map<String ,Object> map = new HashMap<>();
 

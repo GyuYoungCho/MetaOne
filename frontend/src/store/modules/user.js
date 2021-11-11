@@ -1,7 +1,6 @@
 import userApi from "@/api/user.js";
 import router from "@/router";
 import { messaging } from "@/api/firebase.js";
-import { Modal } from "bootstrap";
 
 const state = {
   userId: "",
@@ -78,9 +77,8 @@ const actions = {
     await userApi.checkEmail(state).then((res) => {
       console.log(res);
       setTimeout(() => {
+        alert("인증 번호가 전송되었습니다.");
         dispatch("process/getSubComplete", false, { root: true });
-        let myModal = new Modal(document.getElementById("ConfirmModal"), {});
-        myModal.show();
       }, 2000);
     });
   },
@@ -124,7 +122,7 @@ const actions = {
           commit("SET_USER_REFRESHTOKEN", res.headers.refreshtoken);
           commit("SET_USER_ISLOGIN", true);
 
-          router.push({ name: "SelectCharacter" });
+          router.push({ name: "UnityMap" });
         }
       })
       .catch((err) => {
@@ -133,10 +131,6 @@ const actions = {
         alert("로그인 실패!");
         return;
       });
-
-    setTimeout(() => {
-      dispatch("process/getSubComplete", false, { root: true });
-    }, 2000);
   },
   async getMyInfo({ state, commit }) {
     await userApi
@@ -180,7 +174,7 @@ const actions = {
         alert("이름이나 이메일이 틀렸습니다");
       });
   },
-  async logout({ state, commit }) {
+  async logout({ state, commit, dispatch }) {
     await userApi
       .logout(state)
       .then((res) => {
@@ -189,7 +183,7 @@ const actions = {
       .catch((err) => {
         console.log(err);
       });
-
+    dispatch("process/getUnityInstance", false, { root: true });
     commit("SET_JOIN_USERID", "");
     commit("SET_JOIN_NAME", "");
     commit("SET_JOIN_EMAIL", "");
