@@ -34,7 +34,7 @@ public class LoadMain : MonoBehaviourPunCallbacks
         Debug.Log(characterName);
         GameObject me = PhotonNetwork.Instantiate(characterName, new Vector3(-0.7f, 0, -5.06f), Quaternion.identity);
 
-        me.AddComponent<MovingCharacter>();
+        //me.AddComponent<MovingCharacter>();
         CharacterController cc = me.AddComponent<CharacterController>();
         me.transform.position = new Vector3(28f, 0, -15f);
         me.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
@@ -46,15 +46,15 @@ public class LoadMain : MonoBehaviourPunCallbacks
 
         // 카메라 설정
         mc.AddComponent<Camera>();
-        mc.transform.position = new Vector3(24.5f, 2f, -11.75f);
-        mc.transform.rotation = Quaternion.Euler(new Vector3(0.6f, 130f, -0.6f));
+        mc.transform.position = new Vector3(28f, 3.62f, -10.12f);
+        mc.transform.rotation = Quaternion.Euler(new Vector3(26.251f, 180f, -0.6f));
 
         // rigidbody 추가 및 설정
-        Rigidbody rb = me.AddComponent<Rigidbody>();
-        rb.constraints = RigidbodyConstraints.FreezeRotation;
+        //Rigidbody rb = me.AddComponent<Rigidbody>();
+        //rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         // character controller 추가 및 설정
-        cc.center = new Vector3(0, 2.2f, 0);
+        cc.center = new Vector3(0, 2.1f, 0);
         cc.height = 4;
 
         // 내 캐릭터 찾아야할 때를 위해 ME 태그 추가

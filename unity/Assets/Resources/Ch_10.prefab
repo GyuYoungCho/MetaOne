@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6893560147234267460}
-  - component: {fileID: 2667555955262913432}
   - component: {fileID: -7154918393119370321}
   - component: {fileID: 4445222480081785431}
   - component: {fileID: -7869685721850307462}
@@ -36,25 +35,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &2667555955262913432
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6893560147234267463}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 8fe791e2808082c42bd670700b2a4124, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &-7154918393119370321
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -124,7 +104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae03e18616fa304bb70edc52052db69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveSpeed: 20
   rotSpeed: 60
 --- !u!1001 &6893560148384257975
 PrefabInstance:
@@ -136,7 +116,7 @@ PrefabInstance:
     - target: {fileID: -6057140222963153312, guid: 239e2a172eb013d45bb7de6d0c04c331, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: c65a8a3f35e1ace4dbf3c5ecbd45a387, type: 2}
+      objectReference: {fileID: 9100000, guid: f637172cd04a00643b45e6a71655a8b2, type: 2}
     - target: {fileID: -4216859302048453862, guid: 239e2a172eb013d45bb7de6d0c04c331, type: 3}
       propertyPath: m_RootOrder
       value: 0
