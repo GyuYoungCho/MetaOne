@@ -17,17 +17,8 @@ export default {
     name: "UnityData",
     data(){
         return{
-            // unityCharacter: document.getElementById("unity-character").innerHTML,       // innerHTML 이 안먹음.. 왜지???
-            // unityRoom: document.getElementById("unity-room").innerHTML,
-            // unityRoomPopulation: document.getElementById("unity-room-population").innerHTML,
-            // unityEducationName: document.getElementById("unity-education-name").innerHTML,
-            // unityEducationTime: document.getElementById("unity-education-time").innerHTML,
-            // unityEducationAuth: document.getElementById("unity-education-auth").innerHTML,
-
-            // unityObject: document.getElementById("unity-object").innerHTML,
             unityObject: "",
-
-            unityCharacter: "",       // innerHTML 이 안먹음.. 왜지???
+            unityCharacter: "",
             unityRoom: "",
             unityRoomPopulation: "",
             unityEducationName: "",
@@ -38,12 +29,12 @@ export default {
     },
     async mounted(){                                // 테스트를 위해 페이지 로딩 시 axois 수행해보기
         
-        // this.unityCharacter = document.getElementById("unity-character").innerHTML = "test_character_file"
-        // this.unityRoom = document.getElementById("unity-room").innerHTML = "방이름"
-        // this.unityRoomPopulation = document.getElementById("unity-room-population").innerHTML = "4"
-        // this.unityEducationName = document.getElementById("unity-education-name").innerHTML = "fire"      // fire, earthquake, corona, typhoon
-        // this.unityEducationTime = document.getElementById("unity-education-time").innerHTML = "162"
-        // this.unityEducationAuth = document.getElementById("unity-education-auth").innerHTML = "1"
+        this.unityCharacter = document.getElementById("unity-character").innerHTML
+        this.unityRoom = document.getElementById("unity-room").innerHTML
+        this.unityRoomPopulation = document.getElementById("unity-room-population")
+        this.unityEducationName = document.getElementById("unity-education-name")     // fire, earthquake, corona, typhoon
+        this.unityEducationTime = document.getElementById("unity-education-time")
+        this.unityEducationAuth = document.getElementById("unity-education-auth")
 
 
         console.log("unity-data")
@@ -77,8 +68,21 @@ export default {
         ...mapState('user', ['nickname', 'email'])
     },
     watch:{
-        unityObject(){
-            // 
+        unityObject(val){
+            switch (val) {
+                case "guestbook":
+                    this.$router.push({name : 'GuestBook'});
+                    break;
+                case "award":
+                    this.$router.push({name : 'Rank'});
+                    break;
+                case "myedu": 
+                    this.$router.push({name : 'EducationList'});
+                    break;
+                
+                default:
+                    break;
+            }
         },
         unityCharacter(){               // 캐릭터 파일 ID
             this.setCharacterMethod()

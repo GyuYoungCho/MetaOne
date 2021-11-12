@@ -4,7 +4,7 @@ export default {
     subComplete: true,
     contentBody: "",
     getInstance: false,
-    allMap: false,
+    allMap: true,
     chattingOpen: false,
   },
   getters: {

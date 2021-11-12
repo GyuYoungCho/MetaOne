@@ -113,6 +113,7 @@ const actions = {
         if (res.status == 200) {
           console.log(res);
           dispatch("process/getSubComplete", true, { root: true });
+          dispatch("process/getAllMap", true, { root: true });
           commit("SET_JOIN_USERID", res.data.id);
           commit("SET_JOIN_NAME", res.data.name);
           commit("SET_JOIN_EMAIL", res.data.email);
@@ -184,6 +185,7 @@ const actions = {
         console.log(err);
       });
     dispatch("process/getUnityInstance", false, { root: true });
+    dispatch("process/getAllMap", true, { root: true });
     commit("SET_JOIN_USERID", "");
     commit("SET_JOIN_NAME", "");
     commit("SET_JOIN_EMAIL", "");
@@ -207,6 +209,7 @@ const actions = {
         if (res.status == 200) {
           console.log(res);
           dispatch("process/getSubComplete", true, { root: true });
+          dispatch("process/getAllMap", true, { root: true });
           commit("SET_JOIN_USERID", res.data.id);
           commit("SET_JOIN_NAME", res.data.name);
           commit("SET_JOIN_EMAIL", res.data.email);

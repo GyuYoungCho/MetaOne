@@ -89,7 +89,7 @@ export default {
     },
     methods:{
         ...mapActions('message', ['getMessSize']),
-        ...mapActions('process', ['getAllMap','getChattingOpen']),
+        ...mapActions('process', ['getChattingOpen']),
 
         //roomid -> unityRoom 으로 쓸 예정
 
@@ -150,6 +150,7 @@ export default {
           this.getChattingOpen(true)
         },
         chatClose(){
+          this.newMessageMark=false
           this.getChattingOpen(false)
         }
         
