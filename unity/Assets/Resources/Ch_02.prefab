@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae03e18616fa304bb70edc52052db69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
+  moveSpeed: 20
   rotSpeed: 60
 --- !u!1001 &8762421443692309803
 PrefabInstance:
@@ -114,7 +114,7 @@ PrefabInstance:
     - target: {fileID: -6057140222963153312, guid: 60e5cfe33a6b31044bedf3e318fff953, type: 3}
       propertyPath: m_Controller
       value: 
-      objectReference: {fileID: 9100000, guid: c65a8a3f35e1ace4dbf3c5ecbd45a387, type: 2}
+      objectReference: {fileID: 9100000, guid: f637172cd04a00643b45e6a71655a8b2, type: 2}
     - target: {fileID: -4216859302048453862, guid: 60e5cfe33a6b31044bedf3e318fff953, type: 3}
       propertyPath: m_RootOrder
       value: 0
