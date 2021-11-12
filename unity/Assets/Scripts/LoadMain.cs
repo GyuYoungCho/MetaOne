@@ -23,7 +23,7 @@ public class LoadMain : MonoBehaviourPunCallbacks
 
         // photonNetwork의 데이터 통신을 다시 연결시켜준다. 
         PhotonNetwork.IsMessageQueueRunning = true;
-        PhotonNetwork.AutomaticallySyncScene = true;
+        //PhotonNetwork.AutomaticallySyncScene = true;
         Invoke("CheckPlayerCount", 0.5f);
     }
 

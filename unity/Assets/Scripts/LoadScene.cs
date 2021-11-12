@@ -16,6 +16,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
     private int min, sec;
 
     string roomName;
+    bool isRejoin=false;
 
     private void Start()
     {
@@ -104,16 +105,20 @@ public class LoadScene : MonoBehaviourPunCallbacks
     {
         // 연결이 성공적으로 끊어지면 재접속 (같은방으로 접속 됨)
         Debug.Log("연결끊기");
+        isRejoin = true;
         Debug.Log(PhotonNetwork.ReconnectAndRejoin());
     }
 
     public override void OnJoinedRoom()
     {
-        // 방에 접속되면 Main Scene 다시 로드
-        Debug.Log("Joined Room !!!");
-        // photonNetwork의 데이터 통신을 잠깐 정지 시켜준다. 
-        // gamemanager에서 creatTank하고 나면 다시 연결시킨다
-        PhotonNetwork.IsMessageQueueRunning = false;
-        SceneManager.LoadScene("Main");
+        if(isRejoin)
+        {
+            // 방에 접속되면 Main Scene 다시 로드
+            Debug.Log("ReJoined Room !!!");
+            // photonNetwork의 데이터 통신을 잠깐 정지 시켜준다. 
+            // gamemanager에서 creatTank하고 나면 다시 연결시킨다
+            PhotonNetwork.IsMessageQueueRunning = false;
+            SceneManager.LoadScene("Main");
+        }
     }
 }
