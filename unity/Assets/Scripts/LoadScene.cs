@@ -95,10 +95,10 @@ public class LoadScene : MonoBehaviourPunCallbacks
     public void clearMission()
     {
         // 결과 서버에 전송
-//        아이디 & text_Timer.text
+        //        아이디 & text_Timer.text
 
         // 메인 맵으로 이동
-        SceneManager.LoadScene("Main");
+        quitMission();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
