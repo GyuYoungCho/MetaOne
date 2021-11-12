@@ -21,11 +21,6 @@ import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'App',
-  data(){
-    return{
-      // unityPage : ["SelectCharacter","UnityMap","MessageRecv"]
-    }
-  },
   components:{
     Menubar, Loader, ConfirmModal, UnityProperty
   },
@@ -34,7 +29,8 @@ export default {
     ...mapState('process',['subComplete','contentBody']),
     showUnity(){
        if(this.$route.name!='NotFound') return true;
-       else return  false
+       else return false
+       //return false
     }
   },
   created(){
