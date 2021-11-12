@@ -109,22 +109,22 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
 
     public void Movement()
     {
-        if(Input.GetKey(KeyCode.W))
+        if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
         {
             cc.Move(Vector3.back * moveSpeed * Time.deltaTime);
             anim.SetBool("IsWalking", true);
         }
-        if (Input.GetKey(KeyCode.A))
+        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
         {
             cc.Move(Vector3.right * moveSpeed * Time.deltaTime);
             anim.SetBool("IsWalking", true);
         }
-        if (Input.GetKey(KeyCode.S))
+        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
         {
             cc.Move(Vector3.forward * moveSpeed * Time.deltaTime);
             anim.SetBool("IsWalking", true);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
             //playerPosition -= Vector3.left * moveSpeed * Time.deltaTime;
             //rigidBody.MovePosition(playerPosition);
@@ -132,7 +132,8 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
             anim.SetBool("IsWalking", true);
         }
 
-        if(!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A))
+        if(!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)
+            && !Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.RightArrow))
             anim.SetBool("IsWalking", false);
     }
 
