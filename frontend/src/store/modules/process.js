@@ -4,6 +4,8 @@ export default {
     subComplete: true,
     contentBody: "",
     getInstance: false,
+    allMap: false,
+    chattingOpen: false,
   },
   getters: {
     subComplete(state) {
@@ -14,6 +16,12 @@ export default {
     },
     getInstance(state) {
       return state.getInstance;
+    },
+    allMap(state) {
+      return state.allMap;
+    },
+    chattingOpen(state) {
+      return state.chattingOpen;
     },
   },
   mutations: {
@@ -26,6 +34,12 @@ export default {
     SET_UNITY_INSTANCE(state, status) {
       state.getInstance = status;
     },
+    SET_ALLMAP(state, status) {
+      state.allMap = status;
+    },
+    SET_CHATTING_OPEN(state, status) {
+      state.chattingOpen = status;
+    },
   },
   actions: {
     getSubComplete({ commit }, item) {
@@ -36,6 +50,12 @@ export default {
     },
     getUnityInstance({ commit }, item) {
       commit("SET_UNITY_INSTANCE", item);
+    },
+    getAllMap({ commit }, item) {
+      commit("SET_ALLMAP", item);
+    },
+    getChattingOpen({ commit }, item) {
+      commit("SET_CHATTING_OPEN", item);
     },
   },
 };
