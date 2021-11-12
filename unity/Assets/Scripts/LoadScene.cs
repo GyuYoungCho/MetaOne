@@ -4,7 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
-public class LoadScene : MonoBehaviour
+using Photon.Pun;
+using Photon.Realtime;
+
+public class LoadScene : MonoBehaviourPunCallbacks
 {
 //    private Text[] timeText = { "05", "00" };
     private float LimitTime = 300;
@@ -12,8 +15,17 @@ public class LoadScene : MonoBehaviour
     private bool startTimer = false;
     private int min, sec;
 
+    string roomName;
+
+    private void Start()
+    {
+        roomName = PlayerPrefs.GetString("roomTitle");
+    }
+
     void Update()
     {
+        //Debug.Log(PhotonNetwork.IsMessageQueueRunning);
+
         // 미션 클리어 패널이 null 아닐 때 타이머 멈추기
         if (GameObject.Find("MissionClear") != null) startTimer = false;
 
@@ -48,13 +60,29 @@ public class LoadScene : MonoBehaviour
 
     public void ChangeFire()
     {
-        SceneManager.LoadScene("Fire");
+        // 연결된 모든 유저들에게서 내 캐릭터 삭제
+        PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
+
+        // 화면 동기화 끊어주고 LoadLevel로 이동해야만 같이 이동 XX
+        PhotonNetwork.AutomaticallySyncScene = false;
+        PhotonNetwork.IsMessageQueueRunning = false;
+        PhotonNetwork.LoadLevel("Fire");
+        //PhotonNetwork.LeaveRoom();
+        //SceneManager.LoadScene("Fire", LoadSceneMode.Single);
+        //SceneManager.LoadScene("Fire", LoadSceneMode.Additive);
+        //SceneManager.SetActiveScene(SceneManager.GetSceneByName("Fire"));
+        //SceneManager.MoveGameObjectToScene(GameObject.FindWithTag("ME"), SceneManager.GetSceneByName("Fire"));
     }
 
     public void quitMission()
     {
-        SceneManager.LoadScene("Main");
+        // 방에서 나가기 위해 연결 끊어줌
+        PhotonNetwork.Disconnect();
+        //PhotonNetwork.ReconnectAndRejoin();
+        //SceneManager.UnloadScene("Fire");
+        //SceneManager.LoadScene("Main");
     }
+    
 
     public void startMission()
     {
@@ -81,4 +109,33 @@ public class LoadScene : MonoBehaviour
         // 메인 맵으로 이동
         SceneManager.LoadScene("Main");
     }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        // 연결이 성공적으로 끊어지면 재접속 (같은방으로 접속 됨)
+        Debug.Log("연결끊기");
+        Debug.Log(PhotonNetwork.ReconnectAndRejoin());
+    }
+
+    public override void OnJoinedRoom()
+    {
+        // 방에 접속되면 Main Scene 다시 로드
+        Debug.Log("Joined Room !!!");
+        // photonNetwork의 데이터 통신을 잠깐 정지 시켜준다. 
+        // gamemanager에서 creatTank하고 나면 다시 연결시킨다
+        PhotonNetwork.IsMessageQueueRunning = false;
+        SceneManager.LoadScene("Main");
+    }
+
+    //public override void OnLeftRoom()
+    //{
+    //    PhotonNetwork.UnAllocateViewID(thisId);
+    //    //base.OnLeftRoom();
+    //}
+
+    //public override void OnConnectedToMaster()
+    //{
+    //    Debug.Log("이거됨?");
+    //    PhotonNetwork.ReconnectAndRejoin();
+    //}
 }
