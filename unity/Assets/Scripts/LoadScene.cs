@@ -24,8 +24,6 @@ public class LoadScene : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        //Debug.Log(PhotonNetwork.IsMessageQueueRunning);
-
         // 미션 클리어 패널이 null 아닐 때 타이머 멈추기
         if (GameObject.Find("MissionClear") != null) startTimer = false;
 
@@ -67,20 +65,12 @@ public class LoadScene : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.IsMessageQueueRunning = false;
         PhotonNetwork.LoadLevel("Fire");
-        //PhotonNetwork.LeaveRoom();
-        //SceneManager.LoadScene("Fire", LoadSceneMode.Single);
-        //SceneManager.LoadScene("Fire", LoadSceneMode.Additive);
-        //SceneManager.SetActiveScene(SceneManager.GetSceneByName("Fire"));
-        //SceneManager.MoveGameObjectToScene(GameObject.FindWithTag("ME"), SceneManager.GetSceneByName("Fire"));
     }
 
     public void quitMission()
     {
         // 방에서 나가기 위해 연결 끊어줌
         PhotonNetwork.Disconnect();
-        //PhotonNetwork.ReconnectAndRejoin();
-        //SceneManager.UnloadScene("Fire");
-        //SceneManager.LoadScene("Main");
     }
     
 
@@ -126,16 +116,4 @@ public class LoadScene : MonoBehaviourPunCallbacks
         PhotonNetwork.IsMessageQueueRunning = false;
         SceneManager.LoadScene("Main");
     }
-
-    //public override void OnLeftRoom()
-    //{
-    //    PhotonNetwork.UnAllocateViewID(thisId);
-    //    //base.OnLeftRoom();
-    //}
-
-    //public override void OnConnectedToMaster()
-    //{
-    //    Debug.Log("이거됨?");
-    //    PhotonNetwork.ReconnectAndRejoin();
-    //}
 }
