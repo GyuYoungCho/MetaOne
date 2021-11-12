@@ -36,21 +36,34 @@ export default {
     }
   },
   computed:{
-    ...mapGetters('process',['getInstance','subComplete']),
-    allMap(){
+    ...mapGetters('process',['getInstance','subComplete','allMap','chattingOpen']),
+    unityfocus(){
         if(this.$route.name == 'UnityMap') return true;
         else return false;
     }
   },
   watch:{
-    allMap(val){
+    unityfocus(val){
       var canvas = document.querySelector("#unity-canvas");
       if(val){
+        this.getAllMap(true)
         canvas.style.width = "1280px";
         canvas.style.height = "800px";
-      }else{
+        this.instance.SendMessage("GameManager","FocusCanvas","0");
+      }
+      else{
+        this.getAllMap(false)
         canvas.style.width = "150px";
         canvas.style.height = "100px";
+        this.instance.SendMessage("GameManager","FocusCanvas","1");
+      }
+    },
+    chattingOpen(val){
+      if(val){
+        this.instance.SendMessage("GameManager","FocusCanvas","1");
+      }
+      else{
+        this.instance.SendMessage("GameManager","FocusCanvas","0");
       }
     }
   },
@@ -72,7 +85,7 @@ export default {
   },
 
   methods:{
-    ...mapActions('process',['getSubComplete']),
+    ...mapActions('process',['getSubComplete','getAllMap']),
     runWebGL(){
       var buildUrl = "unity/Build";
       var loaderUrl = buildUrl + "/unity.loader.js";
