@@ -1,4 +1,5 @@
 import axios from "axios";
+import BASE from "@/api/client.js";
 
 const kakaoHeader = {
   Authorization: "ca7c90d1ca4f709843860d53ddf7cbb7",
@@ -11,7 +12,7 @@ const getKakaoToken = async (code) => {
     const data = {
       grant_type: "authorization_code",
       client_id: "d38241883415ac9ef343f853cde053ff",
-      redirect_uri: "http://localhost:8000/auth",
+      redirect_uri: BASE.url + "/auth",
       code: code,
     };
     const queryString = Object.keys(data)
