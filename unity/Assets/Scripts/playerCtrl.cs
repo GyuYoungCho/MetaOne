@@ -8,10 +8,12 @@ using Photon.Realtime;
 
 public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
 {
+    // RigidBody와 CharacterController는 같이 사용하지 XX
+
     private float h, v, r;
     private Transform tr;
+    private Transform[] trs;
     private Animator anim;
-    // private Rigidbody rigidBody;
     public float moveSpeed = 20.0f;
     public float rotSpeed = 30.0f;
     CharacterController cc;
@@ -21,10 +23,17 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
     // Start is called before the first frame update
     void Start()
     {
-        tr = GameObject.Find("Character").GetComponent<Transform>();
-        anim = GameObject.Find("Character").GetComponent<Animator>();
-        //rigidBody = GetComponent<Rigidbody>();
-        cc = GetComponent<CharacterController>();
+        // child의 transform을 받아와야 함
+        // GetComponentInChildren는 가장 첫 부모 포함 가장 처음 발견되는 component return
+        // 즉, (CH_**)의 컴포넌트 return 따라서 GetComponentsInChildren 사용
+        // [0]은 현재 gameobject (CH_**)의 transform
+        // [1]이 Character의 transform
+        trs = GetComponentsInChildren<Transform>();
+        tr = trs[1];
+
+        // Animator와 CharacterController는 child(Character)에만 있어서 GetComponentInChildren으로 받아올 수 있음
+        anim = GetComponentInChildren<Animator>();
+        cc = GetComponentInChildren<CharacterController>();
         
     }
 
@@ -40,13 +49,7 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
             Vector3 dir = new Vector3(h, 0, v);
             dir = dir.normalized;
 
-            // 메인 카메라를 기준으로 방향을 변환
-            //dir = Camera.main.transform.TransformDirection(dir);
-            //transform.position += dir * moveSpeed * Time.deltaTime;
-
-            //cc.Move(dir * moveSpeed * Time.deltaTime);
-
-            // 각도 조절
+            // 이동 방향에 따른 캐릭터 회전
             Debug.Log("dir >> " + dir + " vector3  >>  " + Vector3.zero);
             if (dir != Vector3.zero)
             {
@@ -54,40 +57,32 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
                 if (Mathf.Abs(angle) == 90) angle *= -1f;
                 else angle += 180f; 
 
-                // 즉시 회전
-                //tr.rotation = Quaternion.Euler(0, angle, 0);
-
                 // 부드러운 회전
                 tr.rotation = Quaternion.Slerp(tr.rotation, Quaternion.Euler(0, angle, 0), rotSpeed * Time.fixedDeltaTime);
-
             }
-
-            // character controller에는 중력 자동으로 붙어있지 X
-            // 따로 코드로 적용시켜줘야함
-            dir.y -= gravity * Time.deltaTime;
-
-            //dir = dir * moveSpeed * Time.deltaTime;
-            //cc.Move(dir * moveSpeed * Time.deltaTime);
-
-            //tr.Translate(Vector3.forward * v * moveSpeed * Time.deltaTime);
-            //tr.Rotate(Vector3.up * h * rotSpeed * Time.deltaTime);
-            Debug.Log("h >> " + h + " , v >>  " + v);
-            //Anim(h, v);
 
             // 움직임
             Movement();
 
             // 중력 적용
+            // character controller에는 중력 자동으로 붙어있지 X
+            // 따로 코드로 적용시켜줘야함
             h = Input.GetAxis("Horizontal");    // 좌우값
             v = Input.GetAxis("Vertical");      // 상하값
+
             dir = new Vector3(h, 0, v);
             dir = dir.normalized;
-            dir.y -= gravity * Time.deltaTime;
+            dir.y -= gravity * Time.deltaTime;  // 중력
+
             dir = dir * moveSpeed * Time.deltaTime;
             cc.Move(dir * moveSpeed * Time.deltaTime);
         }
         else
         {
+            // anim 적용
+            if (tr.position != currPos) anim.SetBool("IsWalking", true);
+            else anim.SetBool("IsWalking", false);
+
             tr.position = Vector3.Lerp(tr.position, currPos, Time.deltaTime * 7f);
             tr.rotation = Quaternion.Slerp(tr.rotation, currRot, Time.deltaTime * 7f);
         }
@@ -114,8 +109,6 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
 
     public void Movement()
     {
-        playerPosition = this.transform.position;
-
         if(Input.GetKey(KeyCode.W))
         {
             cc.Move(Vector3.back * moveSpeed * Time.deltaTime);
