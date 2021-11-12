@@ -4,8 +4,7 @@
 
       <!-- 채팅 페이지 여는 버튼 -->
       <!-- v-if="unityRoom!=''" 추가하기 -->
-      <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#chatting" aria-controls="chatting"
-            @click="newMessageMark=false">
+      <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#chatting" aria-controls="chatting">
         <i class="far fa-comments fa-5x"></i>
       </button>
 
@@ -83,10 +82,14 @@ export default {
     computed:{
       ...mapState('user', ['nickname']),
       ...mapState('message', ['messSize']),
-      ...mapState('unity',['unityRoom'])
+      ...mapState('unity',['unityRoom']),
+      ...mapState('process',['allMap','chattingOpen']),
+
+      
     },
     methods:{
         ...mapActions('message', ['getMessSize']),
+        ...mapActions('process', ['getAllMap','getChattingOpen']),
 
         //roomid -> unityRoom 으로 쓸 예정
 
@@ -142,11 +145,24 @@ export default {
         register_time(val){
             return moment(val).format("hh:mm A")
         },
+        chatOpen(){
+          this.newMessageMark=false 
+          this.getChattingOpen(true)
+        },
+        chatClose(){
+          this.getChattingOpen(false)
+        }
         
     },
 
     created(){
         this.fetchMessages()
+        this.getChattingOpen(false)
+    },
+    mounted(){
+      let offcanvas = document.getElementById('chatting')
+      offcanvas.addEventListener('show.bs.offcanvas',this.chatOpen )
+      offcanvas.addEventListener('hide.bs.offcanvas', this.chatClose)
     },
 
     watch:{
