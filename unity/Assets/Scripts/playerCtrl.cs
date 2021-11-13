@@ -50,7 +50,7 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
             dir = dir.normalized;
 
             // 이동 방향에 따른 캐릭터 회전
-            Debug.Log("dir >> " + dir + " vector3  >>  " + Vector3.zero);
+            // Debug.Log("dir >> " + dir + " vector3  >>  " + Vector3.zero);
             if (dir != Vector3.zero)
             {
                 float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;

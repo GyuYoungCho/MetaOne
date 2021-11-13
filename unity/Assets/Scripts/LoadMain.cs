@@ -9,17 +9,21 @@ public class LoadMain : MonoBehaviourPunCallbacks
 {
     string characterName;
     string characterData;
-
+    string roomTitle;
+   
     // Start is called before the first frame update
     void Start()
     {
         // 전달받은 데이터 불러오기
         characterName = PlayerPrefs.GetString("characterN");
         characterData = PlayerPrefs.GetString("character");
+        roomTitle = PlayerPrefs.GetString("roomTitle");
 
         CreateCharacter();
+
         // photonNetwork의 데이터 통신을 다시 연결시켜준다. 
         PhotonNetwork.IsMessageQueueRunning = true;
+        //PhotonNetwork.AutomaticallySyncScene = true;
         Invoke("CheckPlayerCount", 0.5f);
     }
 
@@ -32,6 +36,7 @@ public class LoadMain : MonoBehaviourPunCallbacks
     void CreateCharacter()
     {
         Debug.Log(characterName);
+        
         GameObject me = PhotonNetwork.Instantiate(characterName, new Vector3(-0.7f, 0, -5.06f), Quaternion.identity);
 
         //me.AddComponent<MovingCharacter>();
@@ -65,6 +70,8 @@ public class LoadMain : MonoBehaviourPunCallbacks
     {
         int currPlayer = PhotonNetwork.PlayerList.Length;
         int maxPlayer = PhotonNetwork.CurrentRoom.MaxPlayers;
-//        playerCount.text = string.Format("[{0}/{1}]", currPlayer, maxPlayer);
+        //        playerCount.text = string.Format("[{0}/{1}]", currPlayer, maxPlayer);
+
+        Debug.Log("현재 몇명? " + currPlayer);
     }
 }
