@@ -33,6 +33,8 @@ export default {
     return{
       instance : null,
       unityInterval : '',
+      mapHeight : 0,
+      mapWidth : 0,
     }
   },
   computed:{
@@ -47,14 +49,16 @@ export default {
       var canvas = document.querySelector("#unity-canvas");
       if(val){
         this.getAllMap(true)
-        canvas.style.width = "1280px";
-        canvas.style.height = "800px";
+        const target = document.querySelector('#unity-container').getBoundingClientRect();
+        canvas.style.width = target.width
+        canvas.style.height = window.innerHeight-302;
+        console.log(canvas.style.height)
+        // canvas.style.width = "1280px";
+        // canvas.style.height = "800px";
         this.instance.SendMessage("GameManager","FocusCanvas","0");
       }
       else{
         this.getAllMap(false)
-        canvas.style.width = "150px";
-        canvas.style.height = "100px";
         this.instance.SendMessage("GameManager","FocusCanvas","1");
       }
     },
@@ -82,6 +86,10 @@ export default {
       },5000)
     }
     this.runWebGL()
+  },
+
+  updated(){
+    
   },
 
   methods:{
@@ -112,8 +120,11 @@ export default {
           mobileWarning.style.display = "none";
         }, 5000);
       } else {
-        canvas.style.width = "1280px";
-        canvas.style.height = "800px";
+        const target = document.querySelector('#unity-container').getBoundingClientRect();
+        canvas.style.width = target.width;
+        canvas.style.height = window.innerHeight-102;
+        // canvas.style.width = "1280px";
+        // canvas.style.height = "800px";
       }
       loadingBar.style.display = "block";
       var script = document.createElement("script");
@@ -133,11 +144,14 @@ export default {
       document.body.appendChild(script);
 
       if(this.allMap){
-        canvas.style.width = "1280px";
-        canvas.style.height = "800px";
+        const target = container.getBoundingClientRect();
+        canvas.style.width = target.width;
+        canvas.style.height = window.innerHeight-102;
+        // canvas.style.width = "1280px";
+        // canvas.style.height = "800px";
       }else{
-        canvas.style.width = "150px";
-        canvas.style.height = "100px";
+        canvas.style.width = "150";
+        canvas.style.height = "100";
       }
     },
     startUnityMap(){
