@@ -123,7 +123,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
         GameObject.Find("Canvas").transform.Find("Panel").gameObject.SetActive(true);
 
         // 방 생성
-        PhotonNetwork.CreateRoom(title, new RoomOptions { MaxPlayers = 4 });
+        PhotonNetwork.CreateRoom(title, new RoomOptions { MaxPlayers = 4, PlayerTtl = 60000 });
     }
 
     // 방 정보
@@ -166,6 +166,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
     {
         PhotonNetwork.NickName = "gg";
         PhotonNetwork.JoinRoom(roomName, null);
+        PlayerPrefs.SetString("roomTitle", roomName);
         PlayerPrefs.SetString("USER_ID", PhotonNetwork.NickName);
     }
 
