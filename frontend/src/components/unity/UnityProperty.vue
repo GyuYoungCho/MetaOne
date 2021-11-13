@@ -49,16 +49,18 @@ export default {
       var canvas = document.querySelector("#unity-canvas");
       if(val){
         this.getAllMap(true)
-        const target = document.querySelector('#unity-container').getBoundingClientRect();
-        canvas.style.width = target.width
-        canvas.style.height = window.innerHeight-302;
-        console.log(canvas.style.height)
-        // canvas.style.width = "1280px";
-        // canvas.style.height = "800px";
-        this.instance.SendMessage("GameManager","FocusCanvas","0");
+        // const target = document.querySelector('#unity-container').getBoundingClientRect();
+        // canvas.style.width = target.width
+        // canvas.style.height = window.innerHeight-302;
+        // console.log(canvas.style.height)
+        canvas.style.width = "1280px";
+        canvas.style.height = "800px";
+        this.instance.SendMessage("LoadScene","FocusCanvas","0");
       }
       else{
         this.getAllMap(false)
+        canvas.style.width = "150px";
+        canvas.style.height = "100px";
         this.instance.SendMessage("GameManager","FocusCanvas","1");
       }
     },
@@ -120,11 +122,11 @@ export default {
           mobileWarning.style.display = "none";
         }, 5000);
       } else {
-        const target = document.querySelector('#unity-container').getBoundingClientRect();
-        canvas.style.width = target.width;
-        canvas.style.height = window.innerHeight-102;
-        // canvas.style.width = "1280px";
+        // const target = document.querySelector('#unity-container').getBoundingClientRect();
+        // canvas.style.width = target.width;
         // canvas.style.height = "800px";
+        canvas.style.width = "1280px";
+        canvas.style.height = "800px";
       }
       loadingBar.style.display = "block";
       var script = document.createElement("script");
@@ -144,14 +146,14 @@ export default {
       document.body.appendChild(script);
 
       if(this.allMap){
-        const target = container.getBoundingClientRect();
-        canvas.style.width = target.width;
-        canvas.style.height = window.innerHeight-102;
-        // canvas.style.width = "1280px";
-        // canvas.style.height = "800px";
+        // const target = container.getBoundingClientRect();
+        // canvas.style.width = target.width;
+        // canvas.style.height = window.innerHeight-102;
+        canvas.style.width = "1280px";
+        canvas.style.height = "800px";
       }else{
-        canvas.style.width = "150";
-        canvas.style.height = "100";
+        canvas.style.width = "150px";
+        canvas.style.height = "100px";
       }
     },
     startUnityMap(){
