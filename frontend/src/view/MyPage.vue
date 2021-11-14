@@ -35,7 +35,7 @@
                 <div class=" row col-md-10">
                     <div class="col-md-2"> </div>
                     <div class="row col-md-10" style="text-align:left;">
-                        <button class="btn col-md-5" @click="confirm()" :disabled="!this.nicknamePass || !this.passwordConfirmFormat">수정하기</button>
+                        <button class="btn col-md-5" @click="confirm()" :disabled="writeAllInfo">수정하기</button>
                         <div class="col-md-1"></div>
                         <button class="btn yellow-btn col-md-5" @click="cancel()">취소</button>
                     </div>
@@ -59,13 +59,14 @@ export default {
     },
     data(){
         return{
-            titles: ["이름", "Email", "닉네임", "기존 비밀번호", "비밀번호 수정", "비밀번호 확인"],
+            myinfotitles: ["이름", "Email", "닉네임", "기존 비밀번호", "비밀번호 수정", "비밀번호 확인"],
+            kakaotitles: ["이름", "Email", "닉네임"],
             placeholderDatas: ["이름 자리", "이메일 자리", "닉네임 자리", "Origin Password", "New Password", "Password Confirm"],
             originNickname: "",
         }
     },
     methods:{
-        ...mapActions('user', ['getMyInfo', 'checkDuplicate', 'updateInfo']),
+        ...mapActions('user', ['getMyInfo', 'checkDuplicate', 'updateInfo','updateNickname']),
 
         async init(){     
             
@@ -104,11 +105,11 @@ export default {
             }
         },
         async confirm(){
-            if(this.originPassword == "") {
+            if(!this.isKakaoLogin && this.originPassword == "") {
                 alert("비밀번호를 입력해주세요.")
                 return
             }
-            if(!this.passwordConfirm){
+            if(!this.isKakaoLogin && !this.passwordConfirm){
                 alert("비밀번호가 다릅니다.")
                 return
             }
@@ -116,10 +117,13 @@ export default {
                 alert("닉네임 중복 확인이 필요합니다.")
                 return
             }
-            console.log(this.originPassword)
-            console.log(this.newPassword)
-            console.log(this.nickname)
-            await this.updateInfo()
+            
+            if(this.isKakaoLogin){
+                await this.updateNickname()
+            }
+            else{
+                await this.updateInfo()
+            }
         },
         cancel(){
             this.$router.go(-1)
@@ -143,7 +147,16 @@ export default {
     },
     computed:{
         ...mapState('user', ['name', 'nickname', 'email', 'nicknamePass', 'originPassword', 'newPassword', 'passwordConfirm',
-                            'nicknameFormat','passwordFormat','passwordConfirmFormat'])
+                            'nicknameFormat','passwordFormat','passwordConfirmFormat', 'isKakaoLogin']),
+        writeAllInfo(){
+            if(this.isKakaoLogin) return !this.nicknamePass
+            else return !this.nicknamePass || !this.passwordConfirmFormat
+        },
+        titles(){
+            if(this.isKakaoLogin) return this.kakaotitles
+            else return this.myinfotitles
+        }
+
     },
     watch:{
 
