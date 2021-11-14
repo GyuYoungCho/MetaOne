@@ -101,7 +101,6 @@ public class UserController {
     public ResponseEntity update(
             @RequestBody @ApiParam(value="회원수정 정보", required = true) UserDto.UpdateRequest updateInfo, HttpServletRequest request
         ) throws IOException{
-    	System.out.println(request);
     	
         if(updateInfo.getOriginPassword() == null || updateInfo.getOriginPassword().equals("")) return ResponseEntity.status(401).build();
         userService.checkPassword(updateInfo, request);
@@ -118,6 +117,33 @@ public class UserController {
 
         return ResponseEntity.status(200).build();
     }
+    
+    /***
+    *
+    * @param updateInfo : 회원수정 정보
+    * @return
+    * @throws IOException
+    */
+   @PutMapping("/my-info/{nickname}")
+   @ApiOperation(value="회원정보 닉네임만 수정", notes = "카카오 로그인 시 닉네임만 수정한다.")
+   public ResponseEntity updateNickname(@PathVariable String nickname, HttpServletRequest request
+       ) throws IOException{
+
+       if(nickname != null && !nickname.equals("")){
+    	   Optional<User> user = userRepository.findById((int) request.getAttribute("userId"));
+           if(!user.isPresent()) throw new ApplicationException(HttpStatus.valueOf(401), "회원 정보가 없습니다.");
+
+           user.ifPresent(userSelect -> {
+               userSelect.setNickname(nickname);
+               userRepository.save(userSelect);
+           });
+       }
+
+       if(nickname == null)
+           throw new ApplicationException(HttpStatus.valueOf(401), "수정할 정보가 없습니다.");
+
+       return ResponseEntity.status(200).build();
+   }
 
     /***
      *
