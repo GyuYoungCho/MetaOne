@@ -69,6 +69,8 @@ export default {
           alert("못가져옴");
           console.log(error);
         });
+      let today = moment(new Date()).format("yyyy-MM-DD")
+      await this.getGuestbooks(today)
     },
   },
 };

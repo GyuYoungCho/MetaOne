@@ -59,6 +59,12 @@ export default {
       },
     });
   },
+  updateNickname(nickname) {
+    return _axios({
+      url: `/users/my-info/${nickname}`,
+      method: "put",
+    });
+  },
   sendTempPw(data) {
     return _axios({
       url: `/users/find-pw`,
