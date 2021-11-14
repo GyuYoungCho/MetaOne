@@ -1,9 +1,6 @@
 <template>
   <div>
     <ChattingView/>
-    <div id="unity-container">
-        <div id="unity"></div>
-    </div>
   </div>
 </template>
 
