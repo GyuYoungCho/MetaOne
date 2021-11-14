@@ -29,6 +29,7 @@ const state = {
   refreshToken: "",
 
   isLogin: false,
+  isKakaoLogin: false,
 };
 
 const actions = {
@@ -164,6 +165,21 @@ const actions = {
         alert("기존 비밀번호가 틀렸습니다");
       });
   },
+  async updateNickname({ state }) {
+    await userApi
+      .updateNickname(state.nickname)
+      .then((res) => {
+        console.log(res);
+        if (res.status == 200) {
+          alert("성공적으로 수정되었습니다.");
+          router.go();
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("닉네임 변경에 실패했습니다.");
+      });
+  },
   async sendTempPw({ state }) {
     await userApi
       .sendTempPw(state)
@@ -192,6 +208,7 @@ const actions = {
     commit("SET_JOIN_NICKNAME", "");
     commit("SET_JOIN_PASSWORD", "");
     commit("SET_USER_ISLOGIN", false);
+    commit("SET_USER_ISKAKAOLOGIN", false);
     commit("SET_USER_ACCESSTOKEN", "");
     commit("SET_USER_REFRESHTOKEN", "");
   },
@@ -218,6 +235,7 @@ const actions = {
           commit("SET_USER_ACCESSTOKEN", res.headers.accesstoken);
           commit("SET_USER_REFRESHTOKEN", res.headers.refreshtoken);
           commit("SET_USER_ISLOGIN", true);
+          commit("SET_USER_ISKAKAOLOGIN", true);
 
           router.push({ name: "UnityMap" });
         }
@@ -256,6 +274,9 @@ const mutations = {
 
   SET_USER_ISLOGIN(state, payload) {
     state.isLogin = payload;
+  },
+  SET_USER_ISKAKAOLOGIN(state, payload) {
+    state.isKakaoLogin = payload;
   },
 
   SET_JOIN_NICKNAMEPASS(state, payload) {
