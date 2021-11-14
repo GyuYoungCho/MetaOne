@@ -84,6 +84,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
     {
         // 방에서 나가기 위해 연결 끊어줌
         PhotonNetwork.Disconnect();
+        isRejoin = true;
     }
     
 
@@ -111,13 +112,13 @@ public class LoadScene : MonoBehaviourPunCallbacks
 
         // 메인 맵으로 이동
         quitMission();
+        isRejoin = true;
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
         // 연결이 성공적으로 끊어지면 재접속 (같은방으로 접속 됨)
         Debug.Log("연결끊기");
-        isRejoin = true;
         Debug.Log(PhotonNetwork.ReconnectAndRejoin());
     }
 
@@ -136,7 +137,8 @@ public class LoadScene : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        PhotonNetwork.LoadLevel("ChooseRoom");
+        if(!isRejoin)
+            PhotonNetwork.LoadLevel("ChooseRoom");
         //base.OnLeftRoom();
     }
 
