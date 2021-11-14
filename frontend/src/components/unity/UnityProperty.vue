@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import UnityData from "./UnityData.vue";
 export default {
   components:{
@@ -39,6 +39,7 @@ export default {
   },
   computed:{
     ...mapGetters('process',['getInstance','subComplete','allMap','chattingOpen']),
+    ...mapState('user',['isLogin']),
     unityfocus(){
         if(this.$route.name == 'UnityMap') return true;
         else return false;
@@ -55,27 +56,30 @@ export default {
         // console.log(canvas.style.height)
         canvas.style.width = "1280px";
         canvas.style.height = "800px";
-        this.instance.SendMessage("LoadScene","FocusCanvas","0");
+        this.instance.SendMessage("GameManager","FocusCanvas","1");
       }
       else{
         this.getAllMap(false)
         canvas.style.width = "150px";
         canvas.style.height = "100px";
-        this.instance.SendMessage("GameManager","FocusCanvas","1");
+        this.instance.SendMessage('GameManager','FocusCanvas','0');
       }
     },
     chattingOpen(val){
       if(val){
-        this.instance.SendMessage("GameManager","FocusCanvas","1");
+        this.instance.SendMessage('GameManager','FocusCanvas','0');
       }
       else{
-        this.instance.SendMessage("GameManager","FocusCanvas","0");
+        this.instance.SendMessage('GameManager','FocusCanvas','1');
       }
     }
   },
   created(){
     if(!this.getInstance){
       this.getSubComplete(true)
+    }
+    if(!this.getInstance && !this.isLogin){
+      this.instance.SendMessage("GameManager","FocusCanvas","0");
     }
   },
   mounted(){
@@ -138,7 +142,10 @@ export default {
         }).then((unityInstance) => {
           this.instance = unityInstance
           loadingBar.style.display = "none";
-          if(this.instance !== undefined) this.instance.SendMessage('LobbyManager','initPlayerName',this.nickname);
+          if(this.instance !== undefined) {
+            this.instance.SendMessage('GameManager','FocusCanvas','1');
+            this.instance.SendMessage('LobbyManager','initPlayer',this.nickname);
+          }
         }).catch((message) => {
           alert(message);
         });
