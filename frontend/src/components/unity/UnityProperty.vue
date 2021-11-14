@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapActions, mapGetters, mapState } from 'vuex';
 import UnityData from "./UnityData.vue";
 export default {
   components:{
@@ -33,10 +33,13 @@ export default {
     return{
       instance : null,
       unityInterval : '',
+      mapHeight : 0,
+      mapWidth : 0,
     }
   },
   computed:{
     ...mapGetters('process',['getInstance','subComplete','allMap','chattingOpen']),
+    ...mapState('user',['isLogin']),
     unityfocus(){
         if(this.$route.name == 'UnityMap') return true;
         else return false;
@@ -47,29 +50,36 @@ export default {
       var canvas = document.querySelector("#unity-canvas");
       if(val){
         this.getAllMap(true)
+        // const target = document.querySelector('#unity-container').getBoundingClientRect();
+        // canvas.style.width = target.width
+        // canvas.style.height = window.innerHeight-302;
+        // console.log(canvas.style.height)
         canvas.style.width = "1280px";
         canvas.style.height = "800px";
-        this.instance.SendMessage("GameManager","FocusCanvas","0");
+        this.instance.SendMessage("GameManager","FocusCanvas","1");
       }
       else{
         this.getAllMap(false)
         canvas.style.width = "150px";
         canvas.style.height = "100px";
-        this.instance.SendMessage("GameManager","FocusCanvas","1");
+        this.instance.SendMessage('GameManager','FocusCanvas','0');
       }
     },
     chattingOpen(val){
       if(val){
-        this.instance.SendMessage("GameManager","FocusCanvas","1");
+        this.instance.SendMessage('GameManager','FocusCanvas','0');
       }
       else{
-        this.instance.SendMessage("GameManager","FocusCanvas","0");
+        this.instance.SendMessage('GameManager','FocusCanvas','1');
       }
     }
   },
   created(){
     if(!this.getInstance){
       this.getSubComplete(true)
+    }
+    if(!this.getInstance && !this.isLogin){
+      this.instance.SendMessage("GameManager","FocusCanvas","0");
     }
   },
   mounted(){
@@ -82,6 +92,10 @@ export default {
       },5000)
     }
     this.runWebGL()
+  },
+
+  updated(){
+    
   },
 
   methods:{
@@ -112,6 +126,9 @@ export default {
           mobileWarning.style.display = "none";
         }, 5000);
       } else {
+        // const target = document.querySelector('#unity-container').getBoundingClientRect();
+        // canvas.style.width = target.width;
+        // canvas.style.height = "800px";
         canvas.style.width = "1280px";
         canvas.style.height = "800px";
       }
@@ -125,7 +142,10 @@ export default {
         }).then((unityInstance) => {
           this.instance = unityInstance
           loadingBar.style.display = "none";
-          if(this.instance !== undefined) this.instance.SendMessage('LobbyManager','initPlayerName',this.nickname);
+          if(this.instance !== undefined) {
+            this.instance.SendMessage('GameManager','FocusCanvas','1');
+            this.instance.SendMessage('LobbyManager','initPlayer',this.nickname);
+          }
         }).catch((message) => {
           alert(message);
         });
@@ -133,6 +153,9 @@ export default {
       document.body.appendChild(script);
 
       if(this.allMap){
+        // const target = container.getBoundingClientRect();
+        // canvas.style.width = target.width;
+        // canvas.style.height = window.innerHeight-102;
         canvas.style.width = "1280px";
         canvas.style.height = "800px";
       }else{
