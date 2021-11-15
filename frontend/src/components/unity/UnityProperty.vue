@@ -39,7 +39,7 @@ export default {
   },
   computed:{
     ...mapGetters('process',['getInstance','subComplete','allMap','chattingOpen']),
-    ...mapState('user',['isLogin']),
+    ...mapState('user',['isLogin','isTutorial']),
     unityfocus(){
         if(this.$route.name == 'UnityMap') return true;
         else return false;
@@ -108,8 +108,8 @@ export default {
         frameworkUrl: buildUrl + "/unity.framework.js",
         codeUrl: buildUrl + "/unity.wasm",
         streamingAssetsUrl: "StreamingAssets",
-        companyName: "DefaultCompany",
-        productName: "MetaOne",
+        companyName: "MetaCompany",
+        productName: "metaone",
         productVersion: "1.0",
       };
       var container = document.querySelector("#unity-container");

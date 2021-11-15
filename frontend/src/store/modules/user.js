@@ -30,6 +30,7 @@ const state = {
 
   isLogin: false,
   isKakaoLogin: false,
+  isTutorial: false,
 };
 
 const actions = {
@@ -119,6 +120,7 @@ const actions = {
           commit("SET_JOIN_NAME", res.data.name);
           commit("SET_JOIN_EMAIL", res.data.email);
           commit("SET_JOIN_NICKNAME", res.data.nickname);
+          commit("SET_JOIN_TUTORIAL", res.data.tutorial);
 
           commit("SET_USER_ACCESSTOKEN", res.headers.accesstoken);
           commit("SET_USER_REFRESHTOKEN", res.headers.refreshtoken);
@@ -231,6 +233,7 @@ const actions = {
           commit("SET_JOIN_NAME", res.data.name);
           commit("SET_JOIN_EMAIL", res.data.email);
           commit("SET_JOIN_NICKNAME", res.data.nickname);
+          commit("SET_JOIN_TUTORIAL", res.data.tutorial);
 
           commit("SET_USER_ACCESSTOKEN", res.headers.accesstoken);
           commit("SET_USER_REFRESHTOKEN", res.headers.refreshtoken);
@@ -264,6 +267,9 @@ const mutations = {
   },
   SET_JOIN_PASSWORD(state, payload) {
     state.password = payload;
+  },
+  SET_JOIN_TUTORIAL(state, payload) {
+    state.isTutorial = payload;
   },
   SET_JOIN_PASSWORDCONFIRM(state, payload) {
     state.passwordConfirm = payload;
