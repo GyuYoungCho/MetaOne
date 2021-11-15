@@ -133,6 +133,7 @@ export default {
         
         cancel(){
             this.$router.push({name: 'Login'})
+            location.reload();
         },
         reset(val){
             let num = val=='email' ? 2 : 3;

@@ -9,7 +9,21 @@
           </div>
           <div class="modal-body">
             <div class="help-content">
-                도움이 필요해 <br><br><br><br><br> 도움
+                <br> 조작법<br> 방향키 : 
+                <i class="fas fa-long-arrow-alt-up"></i>&nbsp;
+                <i class="fas fa-long-arrow-alt-left"></i>&nbsp;
+                <i class="fas fa-long-arrow-alt-down"></i>&nbsp; 
+                <i class="fas fa-long-arrow-alt-right"></i>
+                &nbsp;&nbsp;또는 &nbsp; W A S D
+                <br> 사물을 누르면 교육 영상 시청 및 미션을 수행하거나 방명록, 랭킹 등을 볼 수 있습니다
+                <br><br>
+                
+                메뉴 설명<br> 
+                기본 맵, Back : 원래 게임 화면으로 돌아옵니다.<br>
+                쪽지 : 원하는 상대와 쪽지를 주고 받을 수 있습니다.<br>
+                마이페이지 : 내 정보 수정, 교육 이수 내역을 확인할 수 있습니다.<br><br> 
+                전체 채팅 : 모든 유저와 대화 가능합니다.<br>
+                <br>
             </div>
           </div>
           <div class="modal-footer justify-content-center">
