@@ -139,7 +139,15 @@ public class LoadScene : MonoBehaviourPunCallbacks
     {
         if(!isRejoin)
             PhotonNetwork.LoadLevel("ChooseRoom");
+       
         //base.OnLeftRoom();
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 4, PlayerTtl = 60000 });
+        PhotonNetwork.RejoinRoom(roomName);
+        //base.OnJoinRoomFailed(returnCode, message);
     }
 
 }
