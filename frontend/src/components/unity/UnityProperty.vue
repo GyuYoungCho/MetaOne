@@ -56,21 +56,21 @@ export default {
         // console.log(canvas.style.height)
         canvas.style.width = "1280px";
         canvas.style.height = "800px";
-        this.instance.SendMessage("GameManager","FocusCanvas","1");
+        this.instance.SendMessage("KeyManager","FocusCanvas","1");
       }
       else{
         this.getAllMap(false)
         canvas.style.width = "150px";
         canvas.style.height = "100px";
-        this.instance.SendMessage('GameManager','FocusCanvas','0');
+        this.instance.SendMessage('KeyManager','FocusCanvas','0');
       }
     },
     chattingOpen(val){
       if(val){
-        this.instance.SendMessage('GameManager','FocusCanvas','0');
+        this.instance.SendMessage('KeyManager','FocusCanvas','0');
       }
       else{
-        this.instance.SendMessage('GameManager','FocusCanvas','1');
+        this.instance.SendMessage('KeyManager','FocusCanvas','1');
       }
     }
   },
@@ -79,7 +79,7 @@ export default {
       this.getSubComplete(true)
     }
     if(!this.getInstance && !this.isLogin){
-      this.instance.SendMessage("GameManager","FocusCanvas","0");
+      this.instance.SendMessage("KeyManager","FocusCanvas","0");
     }
   },
   mounted(){
@@ -143,7 +143,7 @@ export default {
           this.instance = unityInstance
           loadingBar.style.display = "none";
           if(this.instance !== undefined) {
-            this.instance.SendMessage('GameManager','FocusCanvas','1');
+            this.instance.SendMessage('KeyManager','FocusCanvas','1');
             this.instance.SendMessage('LobbyManager','initPlayer',this.nickname);
           }
         }).catch((message) => {

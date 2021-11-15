@@ -11,7 +11,7 @@ public interface UserService {
     public boolean isExistEmail(String email);
     public boolean isExistNickname(String nickname);
     public UserDto.Response login(String email);
-    public String TokenGeneration(int userId, String receiverEmail, String url);
+    
     public void kakaoRegister(String email, String name);
     public UserDto.userInfoResponse getUserInfo(String nickname);
     public UserDto.userInfoResponse getMyInfo(int userId);
