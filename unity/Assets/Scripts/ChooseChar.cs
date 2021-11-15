@@ -7,8 +7,13 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;   // 유니티용 포톤 컴포넌트
 using Photon.Realtime;  // 포톤 서비스 관련 라이브러리
 
+using System.Runtime.InteropServices;
+
 public class ChooseChar : MonoBehaviour
 {
+    [DllImport("__Internal")]
+    private static extern void UnityCharacterHook(string character);
+
     public Button preBtn, nextBtn;
     public Text characterNum;
     public GameObject character;
@@ -30,7 +35,7 @@ public class ChooseChar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     // 이전 캐릭터
@@ -91,6 +96,9 @@ public class ChooseChar : MonoBehaviour
         // 캐릭터 데이터 저장
         PlayerPrefs.SetString("character", characterData);
         PlayerPrefs.SetString("characterN", characterName);
+
+        // unity -> front로 캐릭터 전달
+        UnityCharacterHook(characterData);
 
         // 다음 씬(방 선택) 로드
         PhotonNetwork.LoadLevel("ChooseRoom");
