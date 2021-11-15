@@ -16,9 +16,12 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
     private Animator anim;
     public float moveSpeed = 20.0f;
     public float rotSpeed = 30.0f;
+    float jumpSpeed = 10.0f;
     CharacterController cc;
     Vector3 playerPosition;
     float gravity = 50.0f;
+
+    private Vector3 MoveDir;
 
     // Start is called before the first frame update
     void Start()
@@ -34,7 +37,9 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
         // Animator와 CharacterController는 child(Character)에만 있어서 GetComponentInChildren으로 받아올 수 있음
         anim = GetComponentInChildren<Animator>();
         cc = GetComponentInChildren<CharacterController>();
-        
+
+        MoveDir = Vector3.zero;
+
     }
 
     // Update is called once per frame
@@ -131,8 +136,11 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
             cc.Move(Vector3.left * moveSpeed * Time.deltaTime);
             anim.SetBool("IsWalking", true);
         }
+        if (Input.GetKey(KeyCode.Alpha3)) anim.SetTrigger("IsSitting");
+        if (Input.GetKey(KeyCode.Alpha2))    anim.SetTrigger("IsDancing");
+        if (Input.GetKey(KeyCode.Alpha1)) anim.SetTrigger("IsCrying");
 
-        if(!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)
+        if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)
             && !Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.RightArrow))
             anim.SetBool("IsWalking", false);
     }
@@ -143,4 +151,5 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
         Debug.Log("isWalking >>> " + isWalking);
         anim.SetBool("IsWalking", isWalking);
     }
+    
 }
