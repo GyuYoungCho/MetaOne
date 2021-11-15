@@ -253,6 +253,19 @@ const actions = {
         return;
       });
   },
+  async comTutorial({ commit }) {
+    await userApi
+      .comTutorial(state)
+      .then((res) => {
+        console.log(res);
+        if (res.status == 200) {
+          commit("SET_JOIN_TUTORIAL", true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
 };
 
 const mutations = {

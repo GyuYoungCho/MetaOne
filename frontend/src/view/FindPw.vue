@@ -70,6 +70,7 @@ export default {
         },
         cancel(){
             this.$router.push({name: 'Login'}).catch(() => {})
+            location.reload();
         },
     }, 
     mounted(){

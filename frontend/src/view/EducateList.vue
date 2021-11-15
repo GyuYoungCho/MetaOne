@@ -17,7 +17,7 @@
           <li class="list-group-item bg-transparent" v-for="(eduitem, index) in educations" :key="index" :eduitem="eduitem">
             <div class="row">
               <div class="pt-2 col">{{eduitem.education}}</div>
-              <div class="pt-2 col">{{isEducated(eduitem)}}</div>
+              <div class="pt-2 col">{{isEducated(eduitem.educated)}}</div>
               <div class="pt-2 col">{{pass_time(eduitem.passTime)}}</div>
               <div class="pt-2 col">
                 <RouterLink v-if="eduitem.authenticated" :to="{name:'Certificate'}" @click.native="goCertificate(eduitem)">

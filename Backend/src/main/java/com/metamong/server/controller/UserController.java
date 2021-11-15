@@ -425,5 +425,22 @@ public class UserController {
 
         return ResponseEntity.ok().body(res);
     }
+    
+    /***
+    *
+    * @param updateInfo : 처음 왔을때
+    * @return
+    * @throws IOException
+    */
+   @PutMapping("/tutorial")
+   @ApiOperation(value="tutorial 수정", notes = "처음 로그인 여부 확인")
+   public ResponseEntity updateTutorial(HttpServletRequest request) throws IOException{
+
+	   int userId = (Integer) request.getAttribute("userId");
+       User user = userRepository.findById(userId).get();
+       user.setTutorial(1);
+       userRepository.save(user);
+       return ResponseEntity.status(200).build();
+   }
 }
 
