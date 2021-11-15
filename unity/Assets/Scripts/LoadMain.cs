@@ -5,14 +5,8 @@ using UnityEngine;
 using Photon.Pun;   // 유니티용 포톤 컴포넌트
 using Photon.Realtime;  // 포톤 서비스 관련 라이브러리
 
-using System.Runtime.InteropServices;
-
 public class LoadMain : MonoBehaviourPunCallbacks
 {
-    [DllImport("__Internal")]
-    private static extern void UnityCharacterHook(string str);
-
-
     string characterName;
     string characterData;
     string roomTitle;
@@ -31,9 +25,6 @@ public class LoadMain : MonoBehaviourPunCallbacks
         PhotonNetwork.IsMessageQueueRunning = true;
         //PhotonNetwork.AutomaticallySyncScene = true;
         Invoke("CheckPlayerCount", 0.5f);
-
-        Debug.Log(characterData);
-        UnityCharacterHook(characterData);
     }
 
     // Update is called once per frame
