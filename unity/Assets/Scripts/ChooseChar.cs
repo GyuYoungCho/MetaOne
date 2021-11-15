@@ -82,7 +82,7 @@ public class ChooseChar : MonoBehaviour
 
         switchCharacter.transform.SetParent(character.transform);
 
-        characterNum.text = charNum + "/20";
+        characterNum.text = charNum + " / 20";
     }
 
     // 캐릭터 선택 완료
