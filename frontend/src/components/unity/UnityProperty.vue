@@ -73,27 +73,28 @@ export default {
       else{
         this.instance.SendMessage('KeyManager','FocusCanvas','1');
       }
+    },
+    isLogin(val){
+      if(!val) this.instance.SendMessage('KeyManager','FocusCanvas','0');
     }
   },
   created(){
     this.getSubComplete(true)
-    if(!this.getInstance){
-      this.getSubComplete(true)
-    }else{
+    if(this.getInstance && this.isTutorial){
       setTimeout(()=>{
         this.getSubComplete(false)
       },3000)
+    }else if(!this.getInstance && this.isTutorial){
+      setTimeout(()=>{
+        this.getSubComplete(false)
+      },8000)
     }
     if(!this.getInstance && !this.isLogin){
       this.instance.SendMessage("KeyManager","FocusCanvas","0");
     }
   },
   mounted(){ // 
-    if(!this.getInstance ){
-      setTimeout(()=>{
-        this.getSubComplete(false)
-      },8000)
-    }
+    
     this.runWebGL()
   },
 
@@ -147,7 +148,8 @@ export default {
           this.instance = unityInstance
           loadingBar.style.display = "none";
           if(this.instance !== undefined) {
-            this.instance.SendMessage('KeyManager','FocusCanvas','1');
+            if(this.allMap) this.instance.SendMessage('KeyManager','FocusCanvas','1');
+            else this.instance.SendMessage('KeyManager','FocusCanvas','0');
             this.instance.SendMessage('LobbyManager','initPlayer',this.nickname);
             // this.instance.SendMessage('LobbyManager','initPlayer',this.nickname);
 
