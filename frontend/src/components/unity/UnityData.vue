@@ -31,15 +31,13 @@ export default {
         
         this.unityCharacter = document.getElementById("unity-character").innerHTML
         this.unityRoom = document.getElementById("unity-room").innerHTML
-        this.unityRoomPopulation = document.getElementById("unity-room-population")
-        this.unityEducationName = document.getElementById("unity-education-name")     // fire, earthquake, corona, typhoon
-        this.unityEducationTime = document.getElementById("unity-education-time")
-        this.unityEducationAuth = document.getElementById("unity-education-auth")
+        this.unityRoomPopulation = document.getElementById("unity-room-population").innerHTML
+        this.unityEducationName = document.getElementById("unity-education-name").innerHTML     // fire, earthquake, corona, typhoon
+        this.unityEducationTime = document.getElementById("unity-education-time").innerHTML
+        this.unityEducationAuth = document.getElementById("unity-education-auth").innerHTML
 
 
         console.log("unity-data")
-        // this.unityCharacter = "test_character_file";
-        // await this.setCharacterMethod();
     },
     methods:{
         ...mapActions('unity', ['setCharacter', 'setRoom', 'setRoomPopulation', 'setEducationTime', 'setEducationAuth']),
@@ -87,23 +85,24 @@ export default {
                     break;
             }
         },
-        unityCharacter(){               // 캐릭터 파일 ID
-            this.setCharacterMethod()
+        unityCharacter(val){
+            console.log(val)
+            if(val) this.setCharacterMethod()
         },
-        unityRoom(){                    // 방 이름
-            this.setRoomMethod()
+        unityRoom(val){               // 방 이름
+            console.log(val)
+            if(val) this.setRoomMethod()
         },
-        unityRoomPopulation(){          // 방 최대 인원
-            this.setRoomPopulationMethod()
+        unityEducationName(val){           // 교육 명 : Vuex 저장
+            console.log(val)
+            if(val) this.$store.commit('unity/SET_UNITY_EDUCATIONNAME', this.unityEducationName)
         },
-        unityEducationName(){           // 교육 명 : Vuex 저장
-            this.$store.commit('unity/SET_UNITY_EDUCATIONNAME', this.unityEducationName)
+        unityEducationTime(val){           // 시험 통과 시간
+            console.log(val)
+            if(val) this.setEducationTimeMethod()
         },
-        unityEducationTime(){           // 시험 통과 시간
-            this.setEducationTimeMethod()
-        },
-        unityEducationAuth(){           // 교육 수강 여부
-            this.setEducationAuthMethod()
+        unityEducationAuth(val){           // 교육 수강 여부
+            if(val) this.setEducationAuthMethod()
         },
     }
 }
