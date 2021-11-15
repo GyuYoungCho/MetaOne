@@ -46,6 +46,8 @@ public class FireURL : MonoBehaviour
     {
         // 내 캐릭터의 위치 받아오기
         GameObject me = GameObject.FindWithTag("ME");
+        if (me == null) return false;
+
         Transform tr = me.GetComponent<Transform>();
 
         // 과학실 좌표 범위 -> x -19.31  -10.65  /  z -7.36  -19.72
