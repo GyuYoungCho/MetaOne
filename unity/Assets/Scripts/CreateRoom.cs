@@ -10,8 +10,13 @@ using Photon.Realtime;  // 포톤 서비스 관련 라이브러리
 
 using System;   // convert
 
+using System.Runtime.InteropServices;
+
 public class CreateRoom : MonoBehaviourPunCallbacks
 {
+    [DllImport("__Internal")]
+    private static extern void UnityRoomHook(string roomNumber);
+
     string characterData, characterName;
     int IsOut;
     string title;
@@ -105,6 +110,8 @@ public class CreateRoom : MonoBehaviourPunCallbacks
     {
         Debug.Log(arg0);
         title = arg0;
+        // unity -> front로 방 이름 전달
+        UnityRoomHook(title);
     }
 
     // 취소하기 버튼 click
