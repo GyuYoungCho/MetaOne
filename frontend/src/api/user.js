@@ -95,4 +95,10 @@ export default {
       },
     });
   },
+  comTutorial() {
+    return _axios({
+      url: `/users/tutorial`,
+      method: "put",
+    });
+  },
 };
