@@ -330,7 +330,6 @@ public class UserController {
 
         // 이메일 이미있으면 가입된 유저이므로 유저 정보 가져와서 넘겨줌
         UserDto.Response res = userService.login(email);
-        
         firebaseCloudMessageService.save(res, payload.get("firebaseToken"));
         System.out.println("파베토큰 저장 완료");
         
@@ -341,7 +340,6 @@ public class UserController {
 
         Map<String, Object> map = jwtService.createToken(res.getId());
         System.out.println("map : "+ map.get(accessToken));
-
         HttpHeaders resHeader = new HttpHeaders();
 
         resHeader.set(accessToken, (String) map.get(accessToken));

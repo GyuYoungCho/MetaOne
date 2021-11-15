@@ -30,6 +30,7 @@ public class UserDto {
     private String nickname;
     private String name;
     private boolean state;
+    private boolean tutorial;
 
     @JsonIgnore
     private RoomDto roomDto;
@@ -54,6 +55,7 @@ public class UserDto {
         private String name;
         private String email;
         private String nickname;
+        private boolean tutorial;
     }
 
     @Getter
@@ -113,6 +115,7 @@ public class UserDto {
         private String email;
         private String name;
         private String nickname;
+        private boolean tutorial;
     }
 
     @Getter
