@@ -36,7 +36,7 @@ export default {
     data(){
         return{
             edu: "",
-            kind: "",                                       // 교육 분류 (Unity에서 넘겨주어야 한다)
+            kind: ["fire", "earthquake", "corona", "typhoon"],
             // 교육 종목 : 화재, 지진, 코로나, 태풍
             // fire, earthquake, corona, typhoon
         }
@@ -48,22 +48,18 @@ export default {
         },
     }, 
     async mounted(){
-        // document.getElementById('unity-education-name').innerHTML = "fire";             // ???
-        // this.kind = document.getElementById('unity-education-name').innerHTML;
-        this.kind = "fire";
 
-        await this.getRank(this.kind)
-        if(this.kind == "fire") this.edu = "화재"
-        else if(this.kind == "earthquake") this.edu = "지진"
-        else if(this.kind == "corona") this.edu = "코로나"
-        else if(this.kind == "typhoon") this.edu = "태풍"
-
+        if(this.edunum == "fire") this.edu = "화재"
+        else if(this.edunum == "earthquake") this.edu = "지진"
+        else if(this.edunum == "corona") this.edu = "코로나"
+        else if(this.edunum == "typhoon") this.edu = "태풍"
+        await this.getRank(this.kind[this.edunum-1])
 
     },
     async created(){
     },
     computed:{
-        ...mapState('education', ['rank'])
+        ...mapState('education', ['rank','edunum'])
     },
     watch:{
 
