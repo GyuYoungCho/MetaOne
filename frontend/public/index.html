@@ -34,15 +34,18 @@
     <script>
       // 오브젝트 이름
       function _objectHook(object) {
+        console.log(object)
         document.getElementById("unity-object").innetHTML = object;
       }
 
       // 캐릭터 파일 명
       function _characterHook(character) {
+        console.log(character)
         document.getElementById("unity-character").innerHTML = character;
       }
       // 방 정보
       function _roomHook(room) {
+        console.log(room)
         document.getElementById("unity-room").innerHTML = room;
       }
       // 방 인원 정보
