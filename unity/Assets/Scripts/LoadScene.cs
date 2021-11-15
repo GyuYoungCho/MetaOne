@@ -80,6 +80,17 @@ public class LoadScene : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("Fire");
     }
 
+    public void ChangeEarthquake()
+    {
+        // 연결된 모든 유저들에게서 내 캐릭터 삭제
+        PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
+
+        // 화면 동기화 끊어주고 LoadLevel로 이동해야만 같이 이동 XX
+        PhotonNetwork.AutomaticallySyncScene = false;
+        PhotonNetwork.IsMessageQueueRunning = false;
+        PhotonNetwork.LoadLevel("Earthquake");
+    }
+
     public void quitMission()
     {
         // 방에서 나가기 위해 연결 끊어줌
