@@ -7,9 +7,7 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;   // 유니티용 포톤 컴포넌트
 using Photon.Realtime;  // 포톤 서비스 관련 라이브러리
 
-using System.Runtime.InteropServices;
-
-public class ChooseChar : MonoBehaviour
+public class ChooseChar : MonoBehaviourPunCallbacks
 {
     [DllImport("__Internal")]
     private static extern void UnityCharacterHook(string character);
@@ -23,10 +21,16 @@ public class ChooseChar : MonoBehaviour
     // 전달할 데이터
     string characterData;
     string characterName;
+    int isChange;
+    string roomName;
 
     // Start is called before the first frame update
     void Start()
     {
+        isChange = PlayerPrefs.GetInt("isChange");
+        Debug.Log(isChange);
+        roomName = PlayerPrefs.GetString("roomTitle");
+
         // Default 캐릭터 설정
         characterData = "Low-poly characters pack/Prefabs/Ch_01";
         characterName = "Ch_01";
@@ -100,7 +104,31 @@ public class ChooseChar : MonoBehaviour
         // unity -> front로 캐릭터 전달
         UnityCharacterHook(characterData);
 
+        if(isChange == 1)
+        {
+            isChange = 0;
+            PlayerPrefs.SetInt("isChange", 0);
+            PhotonNetwork.RejoinRoom(roomName);
+        }
+        else
         // 다음 씬(방 선택) 로드
         PhotonNetwork.LoadLevel("ChooseRoom");
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 4, PlayerTtl = 60000 });
+        PhotonNetwork.RejoinRoom(roomName);
+        //base.OnJoinRoomFailed(returnCode, message);
+    }
+
+    public override void OnJoinedRoom()
+    {
+        // 방에 접속되면 Main Scene 다시 로드
+        Debug.Log("ReJoined Room !!!");
+        // photonNetwork의 데이터 통신을 잠깐 정지 시켜준다. 
+        // gamemanager에서 creatTank하고 나면 다시 연결시킨다
+        PhotonNetwork.IsMessageQueueRunning = false;
+        SceneManager.LoadScene("Main");
     }
 }
