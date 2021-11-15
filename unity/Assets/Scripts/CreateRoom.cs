@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.Threading;
 
 using Photon.Pun;   // 유니티용 포톤 컴포넌트
 using Photon.Realtime;  // 포톤 서비스 관련 라이브러리
@@ -12,6 +13,7 @@ using System;   // convert
 public class CreateRoom : MonoBehaviourPunCallbacks
 {
     string characterData, characterName;
+    int IsOut;
     string title;
     byte limit = 4;
     RoomInfo[] roomInfoList;
@@ -31,6 +33,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
         // 전달받은 데이터 불러오기
         characterData = PlayerPrefs.GetString("character");
         characterName = PlayerPrefs.GetString("characterN");
+        IsOut = PlayerPrefs.GetInt("IsOut");
 
         if (PhotonNetwork.IsConnected)
         {
@@ -42,6 +45,12 @@ public class CreateRoom : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
+        //if (IsOut == 1)
+        //{
+        //    PhotonNetwork.LeaveRoom();
+        //    IsOut = 0;
+        //    PlayerPrefs.SetInt("IsOut", IsOut);
+        //}
         // 방 목록 가져오기
         //        roomInfoList = PhotonNetwork.GetRoomList(); // 없어짐 OnRoomListUpdate 이걸로 해야함
         // ILobbyCallbacks.OnRoomListUpdate(List < RoomInfo > roomList)
@@ -137,7 +146,17 @@ public class CreateRoom : MonoBehaviourPunCallbacks
         }
         foreach(RoomInfo roomInfo in roomList)
         {
-            GameObject _room = Instantiate(room, gridTr);
+            // 방 나가면 한번 더 OnRoomListUpdate가 호출되면서 나간 방의 Instantiate가 null이 됨
+            GameObject _room;
+            try
+            {
+                _room = Instantiate(room, gridTr);
+            }
+            catch
+            {
+                PhotonNetwork.LoadLevel("ChooseRoom");
+                continue;
+            }
 
             Image roomImg = _room.GetComponent(typeof(Image)) as Image;
             roomImg.enabled = true;

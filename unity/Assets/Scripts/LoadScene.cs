@@ -9,7 +9,8 @@ using Photon.Realtime;
 
 public class LoadScene : MonoBehaviourPunCallbacks
 {
-//    private Text[] timeText = { "05", "00" };
+    //    private Text[] timeText = { "05", "00" };
+    int IsOut;
     private float LimitTime = 300;
     public Text text_Timer;
     private bool startTimer = false;
@@ -57,6 +58,17 @@ public class LoadScene : MonoBehaviourPunCallbacks
         }
     }
 
+    public void outRoom()
+    {
+        // 연결된 모든 유저들에게서 내 캐릭터 삭제
+        PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
+
+        // false 매개변수 주지 않으면 기본값 true
+        // true일 때 -> 플레이어는 방의 플레이어 목록에 남아 있고 나중에 돌아올 수 있습니다. (플레이어수 유지)
+        // 따라서 false로 바꾸고 플레이어 목록에서 지워줘야 함.
+        PhotonNetwork.LeaveRoom(false);
+    }
+
     public void ChangeFire()
     {
         // 연결된 모든 유저들에게서 내 캐릭터 삭제
@@ -72,6 +84,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
     {
         // 방에서 나가기 위해 연결 끊어줌
         PhotonNetwork.Disconnect();
+        isRejoin = true;
     }
     
 
@@ -95,17 +108,17 @@ public class LoadScene : MonoBehaviourPunCallbacks
     public void clearMission()
     {
         // 결과 서버에 전송
-        //        아이디 & text_Timer.text
+        //        text_Timer.text
 
         // 메인 맵으로 이동
         quitMission();
+        isRejoin = true;
     }
 
     public override void OnDisconnected(DisconnectCause cause)
     {
         // 연결이 성공적으로 끊어지면 재접속 (같은방으로 접속 됨)
         Debug.Log("연결끊기");
-        isRejoin = true;
         Debug.Log(PhotonNetwork.ReconnectAndRejoin());
     }
 
@@ -121,4 +134,12 @@ public class LoadScene : MonoBehaviourPunCallbacks
             SceneManager.LoadScene("Main");
         }
     }
+
+    public override void OnLeftRoom()
+    {
+        if(!isRejoin)
+            PhotonNetwork.LoadLevel("ChooseRoom");
+        //base.OnLeftRoom();
+    }
+
 }
