@@ -1,6 +1,7 @@
 <template>
   <div class="unityScreen">
     <UnityData :instance="instance" />
+    <Tutorial  v-if="!isTutorial" />
     <div id="unity-container" class="unity-desktop" :class="{'unity-mini':!allMap}">
       
       <div class="back-map" v-if="!allMap" @click="goUnityMap()"> 
@@ -16,18 +17,17 @@
         </div>
       </div>
     </div>
-    <!-- <div class="row start" v-if="!getInstance">
-        <button class="btn yellow-btn" @click="startUnityMap()">시작하기</button>
-    </div> -->
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex';
 import UnityData from "./UnityData.vue";
+import Tutorial from "@/components/Tutorial.vue";
 export default {
   components:{
-    UnityData
+    UnityData,
+    Tutorial,
   },
   data(){
     return{
@@ -76,15 +76,20 @@ export default {
     }
   },
   created(){
+    this.getSubComplete(true)
     if(!this.getInstance){
       this.getSubComplete(true)
+    }else{
+      setTimeout(()=>{
+        this.getSubComplete(false)
+      },3000)
     }
     if(!this.getInstance && !this.isLogin){
       this.instance.SendMessage("KeyManager","FocusCanvas","0");
     }
   },
-  mounted(){
-    if(!this.getInstance){
+  mounted(){ // 
+    if(!this.getInstance ){
       setTimeout(()=>{
         this.getSubComplete(false)
       },8000)
@@ -164,13 +169,6 @@ export default {
         canvas.style.width = "150px";
         canvas.style.height = "100px";
       }
-    },
-    startUnityMap(){
-        this.$store.commit("process/SET_UNITY_INSTANCE",true);
-        this.getSubComplete(true)
-        setTimeout(() => {
-          this.getSubComplete(false)
-        }, 1000);
     },
     goUnityMap(){
         this.$router.push({name: 'UnityMap'})
