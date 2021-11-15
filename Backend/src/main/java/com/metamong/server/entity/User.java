@@ -29,6 +29,9 @@ public class User extends BaseEntity {
 
     @Column(name="state", columnDefinition = "TINYINT", length=4)
     private int state;
+    
+    @Column(name="tutorial", columnDefinition = "TINYINT", length=4)
+    private int tutorial;
 
     public User(String email, String password, String name, String nickname) {
         this.email = email;
@@ -44,9 +47,6 @@ public class User extends BaseEntity {
     @OneToOne
     @JoinColumn(name = "character_id", referencedColumnName = "id")
     private Characters character;
-
-//    @OneToMany(mappedBy = "user")
-//    private List<Message> messages = new ArrayList<>();
 
     @OneToMany(mappedBy = "user")
     private List<GuestBook> guestBooks = new ArrayList<>();

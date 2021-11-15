@@ -54,13 +54,12 @@ public class UserServiceImpl implements UserService{
     @Override
     public boolean isExistNickname(String nickname) {
         Optional<User> user = userRepository.findByNickname(nickname);
-        System.out.println("있나 확인해보았는데.. "+user );
         return user.isPresent();
     }
 
     @Override
     public UserDto.LoginRes login(UserDto.LoginRequest loginReq) {
-//        PasswordEncoder passwordEncoder = new DelegatingPasswordEncoder(ENCODE_ID, encoders);
+
         Optional<User> user = userRepository.findByEmail(loginReq.getEmail());
 
         if (!user.isPresent()) throw new ApplicationException(HttpStatus.valueOf(401), "일치하는 이메일이 없습니다.");
@@ -72,6 +71,7 @@ public class UserServiceImpl implements UserService{
         login.setNickname(loginuser.getNickname());
         login.setEmail(loginuser.getEmail());
         login.setId(loginuser.getId());
+        login.setTutorial(loginuser.getTutorial()==1?true:false);
         
         // 온라인 변경
         User ouser = user.get();
@@ -91,6 +91,7 @@ public class UserServiceImpl implements UserService{
             res.setName(user.getName());
             res.setEmail(user.getEmail());
             res.setNickname(user.getNickname());
+            res.setTutorial(user.getTutorial()==1?true:false);
         }
 
         return res;
@@ -110,11 +111,6 @@ public class UserServiceImpl implements UserService{
         userRepository.save(user);
     }
 
-    @Override
-    public String TokenGeneration(int userId, String receiverEmail, String url) {
-
-        return null;
-    }
 
     @Override
     public UserDto.userInfoResponse getUserInfo(String nickname) {
