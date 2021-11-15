@@ -11,7 +11,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
 {
     //    private Text[] timeText = { "05", "00" };
     int IsOut;
-    private float LimitTime = 300;
+    private float LimitTime = 30;
     public Text text_Timer;
     private bool startTimer = false;
     private int min, sec;
@@ -39,9 +39,21 @@ public class LoadScene : MonoBehaviourPunCallbacks
 
             if (LimitTime < 60) text_Timer.color = Color.red;   // 시간이 1분 미만 남았을 경우
 
+            // 시간 초과
             if(min<= 0 && sec<=0)
             {
                 text_Timer.text = "00 : 00";
+
+                // 더이상 움직이지 않도록 FirstPersonCam 컴포넌트 삭제
+                Destroy(GetComponent<firstPersonCam>());
+
+                // 그만두기 버튼 hide
+                // Null Exception 뜨지 않도록 try-catch 처리
+                try { GameObject.Find("Button").gameObject.SetActive(false); }
+                catch { }
+
+                // MissonFail 패널 show
+                GameObject.Find("Canvas").transform.Find("MissionFail").gameObject.SetActive(true);
             }
             else
             {
@@ -78,6 +90,17 @@ public class LoadScene : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.IsMessageQueueRunning = false;
         PhotonNetwork.LoadLevel("Fire");
+    }
+
+    public void ChangeEarthquake()
+    {
+        // 연결된 모든 유저들에게서 내 캐릭터 삭제
+        PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
+
+        // 화면 동기화 끊어주고 LoadLevel로 이동해야만 같이 이동 XX
+        PhotonNetwork.AutomaticallySyncScene = false;
+        PhotonNetwork.IsMessageQueueRunning = false;
+        PhotonNetwork.LoadLevel("Earthquake");
     }
 
     public void quitMission()

@@ -60,8 +60,10 @@ public class LoadMain : MonoBehaviourPunCallbacks
 
         // 카메라 설정
         mc.AddComponent<Camera>();
-        mc.transform.position = new Vector3(28f, 3.62f, -10.12f);
-        mc.transform.rotation = Quaternion.Euler(new Vector3(26.251f, 180f, -0.6f));
+        mc.transform.position = new Vector3(28f, 6.4f, -8.4f);
+        mc.transform.rotation = Quaternion.Euler(new Vector3(37.9f, -180f, -0.68f));
+        //mc.transform.position = new Vector3(28f, 3.62f, -10.12f);
+        //mc.transform.rotation = Quaternion.Euler(new Vector3(26.251f, 180f, -0.6f));
 
         // rigidbody 추가 및 설정
         //Rigidbody rb = me.AddComponent<Rigidbody>();
