@@ -213,6 +213,9 @@ const actions = {
     commit("SET_USER_ISKAKAOLOGIN", false);
     commit("SET_USER_ACCESSTOKEN", "");
     commit("SET_USER_REFRESHTOKEN", "");
+
+    localStorage.clear();
+    location.reload();
   },
 
   async kakaoLogin({ state, commit, dispatch }) {

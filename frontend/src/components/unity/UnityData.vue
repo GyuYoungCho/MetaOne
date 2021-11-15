@@ -43,6 +43,7 @@ export default {
     },
     methods:{
         ...mapActions('unity', ['setCharacter', 'setRoom', 'setRoomPopulation', 'setEducationTime', 'setEducationAuth']),
+        ...mapActions('education',['getEdunum']),
         async setCharacterMethod(){
             await this.$store.commit('unity/SET_UNITY_CHARACTER', this.unityCharacter)        // 파일명 저장
             await this.setCharacter()
@@ -73,11 +74,13 @@ export default {
                 case "guestbook":
                     this.$router.push({name : 'GuestBook'});
                     break;
-                case "award":
+                case "rank1":
+                    this.getEdunum(1);
                     this.$router.push({name : 'Rank'});
                     break;
-                case "myedu": 
-                    this.$router.push({name : 'EducationList'});
+                case "rank2":
+                    this.getEdunum(2);
+                    this.$router.push({name : 'Rank'});
                     break;
                 
                 default:
