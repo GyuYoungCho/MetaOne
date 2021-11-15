@@ -1,7 +1,7 @@
 <template>
   <section class="pageNotFound">
     <div class="entire">
-      <img src="../../../src/assets/image/notFound.png" alt="">
+      <img src="@/assets/image/notfound.gif" alt="">
       <h2>페이지를 찾을 수 없습니다.</h2>
       <h1>404</h1>
       <p>잘못된 주소이거나, 다시 시도해 주세요!</p>
@@ -15,7 +15,7 @@
 
 <script>
 export default {
-  name: "404",
+  name: "NotFound",
   methods: {
     onHomeBtnClick () {
       this.$router.push({ name: 'UnityMap' })

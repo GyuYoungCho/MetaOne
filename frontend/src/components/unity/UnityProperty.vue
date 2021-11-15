@@ -16,9 +16,9 @@
         </div>
       </div>
     </div>
-    <div class="row start" v-if="!getInstance">
+    <!-- <div class="row start" v-if="!getInstance">
         <button class="btn yellow-btn" @click="startUnityMap()">시작하기</button>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -40,6 +40,7 @@ export default {
   computed:{
     ...mapGetters('process',['getInstance','subComplete','allMap','chattingOpen']),
     ...mapState('user',['isLogin','isTutorial']),
+    ...mapGetters("education", ["educations"]),
     unityfocus(){
         if(this.$route.name == 'UnityMap') return true;
         else return false;
@@ -84,12 +85,9 @@ export default {
   },
   mounted(){
     if(!this.getInstance){
-      let loader = document.querySelector(".loader__wrap");
-      loader.style.zIndex = 2004;
       setTimeout(()=>{
-        loader.style.zIndex = 2000;
-        
-      },5000)
+        this.getSubComplete(false)
+      },8000)
     }
     this.runWebGL()
   },
@@ -100,6 +98,7 @@ export default {
 
   methods:{
     ...mapActions('process',['getSubComplete','getAllMap']),
+    ...mapActions('education',['getEducations']),
     runWebGL(){
       var buildUrl = "unity/Build";
       var loaderUrl = buildUrl + "/unity.loader.js";
@@ -145,6 +144,9 @@ export default {
           if(this.instance !== undefined) {
             this.instance.SendMessage('KeyManager','FocusCanvas','1');
             this.instance.SendMessage('LobbyManager','initPlayer',this.nickname);
+            // this.instance.SendMessage('LobbyManager','initPlayer',this.nickname);
+
+            this.$store.commit("process/SET_UNITY_INSTANCE",true);
           }
         }).catch((message) => {
           alert(message);

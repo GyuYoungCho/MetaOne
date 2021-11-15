@@ -1,7 +1,7 @@
 <template>
   <div class="loader__wrap inactive">
     <div class="loader__box">
-      <img class="loader__logo" src="@/../public/pavicon.png" alt="">
+      <img class="loader__logo" src="@/assets/image/loading.gif" alt="">
     </div>
   </div>
 </template>
@@ -47,10 +47,10 @@ export default {
       opacity: 1;
     }
     50% {
-      opacity: 0.5;
+      opacity: 0.7;
     }
     to {
-      opacity: 0;
+      opacity: 0.3;
     }
   }
 }
