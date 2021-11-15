@@ -38,7 +38,7 @@
 import Inputparam from '../components/Inputparam.vue'
 import MainTitle from '../components/MainTitle.vue'
 import { mapState, mapActions } from 'vuex'
-// import BASE from "@/api/client.js";
+import BASE from "@/api/client.js";
 
 export default {
     name: "Login",
@@ -69,7 +69,7 @@ export default {
         },
         kakaoLogin(){
             window.Kakao.Auth.authorize({
-                redirectUri: "http://localhost:8000" + '/auth'
+                redirectUri: BASE.url + '/auth'
             })
         },  
         toJoin(){
