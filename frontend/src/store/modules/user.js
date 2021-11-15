@@ -131,7 +131,7 @@ const actions = {
       })
       .catch((err) => {
         console.log(err);
-        state.password = "";
+
         alert("로그인 실패!");
         return;
       });

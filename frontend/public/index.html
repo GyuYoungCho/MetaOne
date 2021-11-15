@@ -50,18 +50,22 @@
       }
       // 방 인원 정보
       function _roomPopulationHook(roomPopulation) {
+        console.log(roomPopulation)
         document.getElementById("unity-room-population").innerHTML = roomPopulation;
       }
       // 교육 명
       function _educationNameHook(educationName) {
-        document.getElementById("unity-education-name").innerHTML = educatinName;
+        console.log("eduname" + educationName)
+        document.getElementById("unity-education-name").innerHTML = educationName;
       }
       // 교육 passTime
       function _educationTimeHook(educationTime) {
+        console.log("time : " + educationTime)
         document.getElementById("unity-education-time").innerHTML = educationTime;
       }
       // 교육 이수 유무
       function _educationAuthHook(educationAuth) {
+        console.log("auth : " + educationAuth)
         document.getElementById("unity-education-auth").innerHTML = educationAuth;
       }
 

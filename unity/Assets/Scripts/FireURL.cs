@@ -2,8 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+using System.Runtime.InteropServices;
+
 public class FireURL : MonoBehaviour
 {
+    [DllImport("__Internal")]
+    private static extern void UnityEducationNameHook(string eduName);
+
+    [DllImport("__Internal")]
+    private static extern void UnityEducationAuthHook(string boolean);
+
     public GameObject btn;
     private bool isListened;
     private string characterName;
@@ -35,6 +43,12 @@ public class FireURL : MonoBehaviour
 
             if (GetComponent<BoxCollider>().Raycast(ray, out hit, 10000f))
             {
+                // unity -> front로 교육명 전달
+                UnityEducationNameHook("화재");
+
+                // unity -> front로 교육 이수 유무 전달
+                UnityEducationAuthHook("True");
+
                 Application.OpenURL("https://schoolsafe.kr/post/view?id=630");
                 isListened = true;
                 btn.SetActive(true);
