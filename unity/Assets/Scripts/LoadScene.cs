@@ -18,6 +18,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
 
     string roomName;
     bool isRejoin=false;
+    bool isChange = false;
 
     private void Start()
     {
@@ -79,6 +80,17 @@ public class LoadScene : MonoBehaviourPunCallbacks
         // true일 때 -> 플레이어는 방의 플레이어 목록에 남아 있고 나중에 돌아올 수 있습니다. (플레이어수 유지)
         // 따라서 false로 바꾸고 플레이어 목록에서 지워줘야 함.
         PhotonNetwork.LeaveRoom(false);
+    }
+
+    public void changeCharacter()
+    {
+        // 연결된 모든 유저들에게서 내 캐릭터 삭제
+        PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
+
+        isChange = true;
+        PlayerPrefs.SetInt("isChange", 1);
+        // false 매개변수 주지 않으면 기본값 true
+        PhotonNetwork.LeaveRoom();
     }
 
     public void ChangeFire()
@@ -160,7 +172,12 @@ public class LoadScene : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
-        if(!isRejoin)
+        if (isChange)
+        {
+            isChange = false;
+            PhotonNetwork.LoadLevel("ChooseCharacter");
+        }
+        else if (!isRejoin)
             PhotonNetwork.LoadLevel("ChooseRoom");
        
         //base.OnLeftRoom();
