@@ -173,6 +173,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
 
     void OnClickRoom(string roomName)
     {
+        UnityRoomHook(roomName);
         PhotonNetwork.NickName = "gg";
         PhotonNetwork.JoinRoom(roomName, null);
         PlayerPrefs.SetString("roomTitle", roomName);
