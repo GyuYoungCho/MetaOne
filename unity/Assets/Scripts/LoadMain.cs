@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Photon.Pun;   // 유니티용 포톤 컴포넌트
 using Photon.Realtime;  // 포톤 서비스 관련 라이브러리
@@ -27,6 +28,9 @@ public class LoadMain : MonoBehaviourPunCallbacks
     public Material m1;
     public Material m2;
 
+    public GameObject Menu;
+    public Slider slider;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -51,7 +55,6 @@ public class LoadMain : MonoBehaviourPunCallbacks
         rend1.material = m1;
         rend2.material = m1;
         rend3.material = m1;
-
     }
 
     // Update is called once per frame
@@ -65,6 +68,8 @@ public class LoadMain : MonoBehaviourPunCallbacks
             rend2.material.Lerp(m1, m2, lerp);
             rend3.material.Lerp(m1, m2, lerp);
         }
+
+
     }
 
     void CreateCharacter()
@@ -124,4 +129,28 @@ public class LoadMain : MonoBehaviourPunCallbacks
         Debug.Log("현재 몇명? " + currPlayer);
     }
 
+    // Menu panel on/off
+    public void OnOffMenu()
+    {
+        if (GameObject.Find("MenuPanel") == null) Menu.SetActive(true);
+        else Menu.SetActive(false);
+    }
+
+    // bgm on/off
+    public void BGMOn()
+    {
+        BGM.Play(); 
+    }
+
+    public void BGMOff()
+    {
+        BGM.Pause();
+    }
+
+    // volume control
+    public void VolumeControl()
+    {
+        BGM.volume = slider.value;
+        PlayerPrefs.SetFloat("volume", slider.value);
+    }
 }
