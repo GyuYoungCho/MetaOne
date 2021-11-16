@@ -28,7 +28,6 @@ export default {
     created(){
         this.$store.commit('unity/SET_UNITY_CHARACTER', "") 
         this.$store.commit('unity/SET_UNITY_ROOM', "")
-        this.$store.commit('unity/SET_UNITY_ROOMID', "")
         this.$store.commit('unity/SET_UNITY_EDUCATIONNAME', "")
         this.$store.commit('unity/SET_UNITY_EDUCATIONTIME', 0)
         this.$store.commit('unity/SET_UNITY_EDUCATIONAUTH', false)
@@ -50,7 +49,7 @@ export default {
         clearInterval(this.interval);
     },
     methods:{
-        ...mapActions('unity', ['setCharacter', 'setRoom', 'setRoomPopulation', 'setEducationTime', 'setEducationAuth']),
+        ...mapActions('unity', ['setCharacter', 'setRoom',  'setEducationTime', 'setEducationAuth']),
         ...mapActions('education',['getEdunum']),
         async setCharacterMethod(){
             await this.$store.commit('unity/SET_UNITY_CHARACTER', this.unityCharacter)        // 파일명 저장
