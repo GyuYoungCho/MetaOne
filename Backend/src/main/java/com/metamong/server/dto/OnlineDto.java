@@ -13,4 +13,5 @@ public class OnlineDto {
 	private boolean isOnline;
 	private String nickname;
 	private String email;
+	private int characid;
 }

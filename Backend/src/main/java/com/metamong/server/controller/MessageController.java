@@ -180,7 +180,8 @@ public class MessageController {
 		for(User u : userlist.get()) {
 			OnlineDto od = OnlineDto.builder().isOnline(u.getState()==1?true:false)
 					.nickname(u.getNickname())
-					.email(u.getEmail()).
+					.email(u.getEmail())
+					.characid(u.getCharacter()==null?0:u.getCharacter().getId()).
 					build();
 			onlinelist.add(od);
 		}

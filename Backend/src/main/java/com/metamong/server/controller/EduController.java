@@ -3,6 +3,7 @@ package com.metamong.server.controller;
 import com.metamong.server.dto.EducationDto;
 import com.metamong.server.dto.MyAttendDto;
 import com.metamong.server.dto.RankDto;
+import com.metamong.server.entity.Room;
 import com.metamong.server.service.AttendanceService;
 import com.metamong.server.service.CertificateService;
 import com.metamong.server.service.UnityService;
@@ -37,7 +38,7 @@ public class EduController {
     public ResponseEntity setCharacter(@RequestBody Map<String, String> unityCharacter, HttpServletRequest request){
         int userId = (int) request.getAttribute("userId");
 
-        unityService.setCharacter(userId, unityCharacter.get("unityCharacter"));
+        unityService.setCharacter(userId, Integer.parseInt(unityCharacter.get("unityCharacter")));
 
         return ResponseEntity.ok().build();
     }
@@ -47,8 +48,8 @@ public class EduController {
     public ResponseEntity setRoom(@RequestBody Map<String, String> unityRoom, HttpServletRequest request){
         int userId = (int) request.getAttribute("userId");
         System.out.println("방이름 : " + unityRoom.get("unityRoom"));
-        unityService.setRoom(userId, unityRoom.get("unityRoom"));            // 유저 ID, 방이름
-        return ResponseEntity.ok().build();
+        Room room = unityService.setRoom(userId, unityRoom.get("unityRoom"));            // 유저 ID, 방이름
+        return ResponseEntity.ok().body(room);
     }
 
     // 방 최대 인원 저장
