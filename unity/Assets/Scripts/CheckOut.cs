@@ -41,5 +41,9 @@ public class CheckOut : MonoBehaviour
 
         // 미션완료(성공)
         GameObject.Find("Canvas").transform.Find("MissionClear").gameObject.SetActive(true);
+
+        Destroy(mc.GetComponent<firstPersonCam>());
+        Destroy(mc.GetComponent<CheckWall>());
+        Destroy(mc.GetComponent<CheckOut>());
     }
 }
