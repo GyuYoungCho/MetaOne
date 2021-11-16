@@ -38,7 +38,7 @@ public class ClickExtinguisher : MonoBehaviour
         GameObject guideText = GameObject.Find("Guide").transform.Find("Text").gameObject;
         Text pt = guideText.GetComponent(typeof(Text)) as Text;
 
-        pt.text = "지진이 났을 때에는\n화재를 대비해서 소화기 위치를 파악해야해!";
+        pt.text = "화재를 대비해서 소화기 위치 파악하기!\n 이제 정문으로 가자!";
 
         // 3초 후 Guide 숨기기
         Invoke("hideGuide", 3);
