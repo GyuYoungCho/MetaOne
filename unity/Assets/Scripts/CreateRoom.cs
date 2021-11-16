@@ -11,8 +11,13 @@ using Photon.Realtime;  // 포톤 서비스 관련 라이브러리
 
 using System;   // convert
 
+using System.Runtime.InteropServices;
+
 public class CreateRoom : MonoBehaviourPunCallbacks
 {
+    [DllImport("__Internal")]
+    private static extern void UnityRoomHook(string roomName);
+
     string characterData, characterName;
     int IsOut;
     byte limit = 4;
@@ -90,6 +95,9 @@ public class CreateRoom : MonoBehaviourPunCallbacks
         PlayerPrefs.SetString("character", characterData);
         PlayerPrefs.SetString("characterN", characterName);
         Debug.Log("createRoom    " + characterName);
+
+        // unity -> front로 방 이름 전달
+        UnityRoomHook(title);
 
         SceneManager.LoadScene("Main");
     }

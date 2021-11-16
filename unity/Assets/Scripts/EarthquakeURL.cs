@@ -3,8 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+using System.Runtime.InteropServices;
+
 public class EarthquakeURL : MonoBehaviour
 {
+    [DllImport("__Internal")]
+    private static extern void UnityEducationNameHook(string eduName);
+
+    [DllImport("__Internal")]
+    private static extern void UnityEducationAuthHook(bool auth);
+
     public GameObject btn;
     private bool isListened;
 
@@ -34,6 +42,12 @@ public class EarthquakeURL : MonoBehaviour
 
             if(GetComponent<BoxCollider>().Raycast(ray, out hit, 10000f))
             {
+                // unity -> front로 교육명 전달
+                UnityEducationNameHook("earthquake");
+
+                // unity -> front로 교육 이수 유무 전달
+                UnityEducationAuthHook(true);
+
                 Application.OpenURL("https://schoolsafe.kr/post/view?id=1526");
                 isListened = true;
                 btn.SetActive(true);

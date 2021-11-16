@@ -7,11 +7,16 @@ using UnityEngine.SceneManagement;
 using Photon.Pun;
 using Photon.Realtime;
 
+using System.Runtime.InteropServices;
+
 public class LoadScene : MonoBehaviourPunCallbacks
 {
+    [DllImport("__Internal")]
+    private static extern void UnityEducationTimeHook(int eduTime);
+
     //    private Text[] timeText = { "05", "00" };
     int IsOut;
-    private float LimitTime = 30;
+    private float LimitTime = 120;
     public Text text_Timer;
     private bool startTimer = false;
     private int min, sec;
@@ -121,7 +126,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
         PhotonNetwork.Disconnect();
         isRejoin = true;
     }
-    
+
 
     public void startMission()
     {
@@ -142,8 +147,8 @@ public class LoadScene : MonoBehaviourPunCallbacks
 
     public void clearMission()
     {
-        // 결과 서버에 전송
-        //        text_Timer.text
+        // unity -> front 미션 타임 전송
+        UnityEducationTimeHook((int)(120-LimitTime));
 
         // 메인 맵으로 이동
         quitMission();
@@ -179,7 +184,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
         }
         else if (!isRejoin)
             PhotonNetwork.LoadLevel("ChooseRoom");
-       
+
         //base.OnLeftRoom();
     }
 

@@ -5,8 +5,6 @@ using UnityEngine;
 using Photon.Pun;   // 유니티용 포톤 컴포넌트
 using Photon.Realtime;  // 포톤 서비스 관련 라이브러리
 
-using System.Runtime.InteropServices;
-
 public class LoadMain : MonoBehaviourPunCallbacks
 {
     //[DllImport("__Internal")]
@@ -42,10 +40,9 @@ public class LoadMain : MonoBehaviourPunCallbacks
         Invoke("CheckPlayerCount", 0.5f);
 
         Debug.Log(characterData);
-        //UnityCharacterHook(characterData);
 
         // 캐릭터의 transform
-        tr = focus.transform;
+        //tr = focus.transform;
 
         // 방명록 책들 renderer 설정
         rend1.material = m1;
@@ -102,6 +99,7 @@ public class LoadMain : MonoBehaviourPunCallbacks
         me.tag = "ME";
 
         focus = GameObject.FindWithTag("ME");
+        tr = focus.transform;
     }
 
     void CheckPlayerCount()
