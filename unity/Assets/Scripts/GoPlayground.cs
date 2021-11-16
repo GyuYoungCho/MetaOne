@@ -30,6 +30,9 @@ public class GoPlayground : MonoBehaviour
             t.isOn = true;
 
             GameObject.Find("Canvas").transform.Find("MissionClear").gameObject.SetActive(true);
+
+            Destroy(mc.GetComponent<firstPersonCam>());
+            Destroy(mc.GetComponent<GoPlayground>());
         }
 
     }
