@@ -59,9 +59,8 @@ public class CertificateServiceImpl implements CertificateService{
     }
 
     public RankDto.ResponseList getRank(String education){
-        String educationName = convertEducationName(education);
 
-        Optional<Education> edu = educationRepository.findByEducation(educationName);
+        Optional<Education> edu = educationRepository.findByEducation(education);
 
         List<Certificate> certificateList = certificateRepository.findAllByEducation(edu.get());
 
@@ -88,50 +87,14 @@ public class CertificateServiceImpl implements CertificateService{
 
     @Override
     public void setMissionClearTime(int userId, int unityTime, String education) {
-
-        String educationName = convertEducationName(education);
-        Optional<Education> edu = educationRepository.findByEducation(educationName);
+        Optional<Education> edu = educationRepository.findByEducation(education);
 
         Optional<Certificate> certificate = certificateRepository.findByEducationAndUserId(edu.get(), userId);
 
         certificate.ifPresent(select -> {
             select.setPassTime(Math.min(select.getPassTime(), unityTime));
-
+            select.setAuthenticated(true);
             certificateRepository.save(select);
         });
-    }
-
-    @Override
-    public void setEducationAuth(int userId, int auth, String education) {
-        String educationName = convertEducationName(education);
-        Optional<Education> edu = educationRepository.findByEducation(educationName);
-
-        Optional<Certificate> certificate = certificateRepository.findByEducationAndUserId(edu.get(), userId);
-
-        certificate.ifPresent(select -> {
-            select.setAuthenticated(auth == 1);
-
-            certificateRepository.save(select);
-        });
-    }
-
-    private String convertEducationName(String education){
-        String educationName = null;
-        switch (education) {
-            case "fire":
-                educationName = "화재";
-                break;
-            case "earthquake":
-                educationName = "지진";
-                break;
-            case "typhoon":
-                educationName = "태풍";
-                break;
-            case "corona":
-                educationName = "코로나";
-                break;
-        }
-
-        return educationName;
     }
 }
