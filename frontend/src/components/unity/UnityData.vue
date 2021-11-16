@@ -57,8 +57,8 @@ export default {
             await this.setCharacter()
         },
         async setRoomMethod(){
-            await this.$store.commit('unity/SET_UNITY_ROOM', this.unityRoom) 
-            await this.setRoom()
+            await this.$store.commit('unity/SET_UNITY_ROOM', this.unityRoom)
+            // await this.setRoom()
         },
         async setEducationTimeMethod(){
             await this.$store.commit('unity/SET_UNITY_EDUCATIONTIME', this.unityEducationTime)
