@@ -42,38 +42,22 @@ public class checkTowel : MonoBehaviour
         GameObject guideText = GameObject.Find("Guide").transform.Find("Text").gameObject;
         Text pt = guideText.GetComponent(typeof(Text)) as Text;
 
-        /*GameObject panel = new GameObject("Guide");
-        panel.transform.SetParent(canvas.transform);    // 캔버스의 하위로 추가
-
-        RectTransform rt = panel.AddComponent<RectTransform>();
-        rt.anchoredPosition = new Vector2(0, -374);
-        rt.sizeDelta = new Vector2(1920f, 1080f);
-        rt.pivot = new Vector2(0.5f, 0.5f);
-        rt.transform.localScale = new Vector3(0.5f, 0.2f, 1f);
-
-        Image pImg = panel.AddComponent<Image>();
-        pImg.sprite = Resources.Load<Sprite>("bg") as Sprite;
-        pImg.color = new Color32(29, 29, 29, 183);
-
-        GameObject pText = new GameObject("Text");
-        Text pt = pText.AddComponent<Text>();
-        pText.transform.SetParent(panel.transform);*/
-
         pt.text = "수건을 찾았다!\n컵을 찾아서 물로 수건을 적시자!";
-        /*pt.font = Resources.GetBuiltinResource(typeof(Font), "Arial.ttf") as Font;
-        pt.alignment = TextAnchor.MiddleCenter;
-        pt.fontSize = 50;
-        pt.color = new Color32(255, 255, 255, 255);*/
-
-        /*RectTransform ptrt = pText.GetComponent<RectTransform>();
-        ptrt.anchoredPosition = new Vector2(0, 1);
-        ptrt.sizeDelta = new Vector2(500f, 200f);*/
 
         // 3초 후 Guide 숨기기
         Invoke("hideGuide", 3);
 
         // 3번째 미션 추가
-        GameObject.Find("asset_kitchen_glass_120").AddComponent<CheckCup>();
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Cup"))
+        {
+            obj.AddComponent<CheckCup>();
+        }
+
+        // 2번째 미션 삭제
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Napkin"))
+        {
+            Destroy(obj.GetComponent<checkTowel>());
+        }
 
     }
 
