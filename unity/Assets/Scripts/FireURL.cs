@@ -10,7 +10,7 @@ public class FireURL : MonoBehaviour
     private static extern void UnityEducationNameHook(string eduName);
 
     [DllImport("__Internal")]
-    private static extern void UnityEducationAuthHook(string boolean);
+    private static extern void UnityEducationAuthHook(bool auth);
 
     public GameObject btn;
     private bool isListened;
@@ -44,10 +44,10 @@ public class FireURL : MonoBehaviour
             if (GetComponent<BoxCollider>().Raycast(ray, out hit, 10000f))
             {
                 // unity -> front로 교육명 전달
-                UnityEducationNameHook("화재");
+                UnityEducationNameHook("fire");
 
                 // unity -> front로 교육 이수 유무 전달
-                UnityEducationAuthHook("True");
+                UnityEducationAuthHook(true);
 
                 Application.OpenURL("https://schoolsafe.kr/post/view?id=630");
                 isListened = true;

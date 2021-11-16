@@ -12,11 +12,11 @@ using System.Runtime.InteropServices;
 public class LoadScene : MonoBehaviourPunCallbacks
 {
     [DllImport("__Internal")]
-    private static extern void UnityEducationTimeHook(string eduTime);
+    private static extern void UnityEducationTimeHook(int eduTime);
 
     //    private Text[] timeText = { "05", "00" };
     int IsOut;
-    private float LimitTime = 30;
+    private float LimitTime = 120;
     public Text text_Timer;
     private bool startTimer = false;
     private int min, sec;
@@ -148,7 +148,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
     public void clearMission()
     {
         // unity -> front 미션 타임 전송
-        UnityEducationTimeHook(LimitTime.ToString());
+        UnityEducationTimeHook((int)(120-LimitTime));
 
         // 메인 맵으로 이동
         quitMission();

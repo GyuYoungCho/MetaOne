@@ -12,7 +12,7 @@ using System.Runtime.InteropServices;
 public class ChooseChar : MonoBehaviourPunCallbacks
 {
     [DllImport("__Internal")]
-    private static extern void UnityCharacterHook(string character);
+    private static extern void UnityCharacterHook(int number);
 
     public Button preBtn, nextBtn;
     public Text characterNum;
@@ -104,7 +104,7 @@ public class ChooseChar : MonoBehaviourPunCallbacks
         PlayerPrefs.SetString("characterN", characterName);
 
         // unity -> front로 캐릭터 전달
-        UnityCharacterHook(characterData);
+        UnityCharacterHook(charNum);
 
         if(isChange == 1)
         {

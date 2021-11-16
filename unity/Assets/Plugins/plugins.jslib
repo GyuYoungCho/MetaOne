@@ -1,22 +1,22 @@
 mergeInto(LibraryManager.library, {
 
-  UnityObjectHook: function (str){
-    _objectHook(Pointer_stringify(str));
+  UnityObjectHook: function (obj){
+    _objectHook(Pointer_stringify(obj));
   },
-  UnityCharacterHook: function (str){
-    _characterHook(Pointer_stringify(str));
+  UnityCharacterHook: function (number){
+    _characterHook(number);
   },
-  UnityRoomHook: function (str){
-    _roomHook(Pointer_stringify(str));
+  UnityRoomHook: function (roomName){
+    _roomHook(Pointer_stringify(roomName));
   },
   UnityEducationNameHook: function (str){
     _educationNameHook(Pointer_stringify(str));
   },
-  UnityEducationTimeHook: function (str){
-    _educationTimeHook(Pointer_stringify(str));
+  UnityEducationTimeHook: function (time)){
+    _educationTimeHook(time);
   },
-  UnityEducationAuthHook: function (str){
-    _educationAuthHook(Pointer_stringify(str));
+  UnityEducationAuthHook: function (auth){
+    _educationAuthHook(auth);
   },
   
   
