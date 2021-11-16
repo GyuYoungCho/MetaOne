@@ -63,17 +63,6 @@ public class EduController {
 
         return ResponseEntity.ok().build();
     }
-
-    // 교육 수강 인증 0 -> 1
-    @PostMapping("/auth")
-    public ResponseEntity setEducationAuth(@RequestBody Map<String, String> unity, HttpServletRequest request){
-        int userId = (int) request.getAttribute("userId");
-
-        certificateService.setEducationAuth(userId, Integer.parseInt(unity.get("unityEducationAuth")), unity.get("unityEducation"));
-
-        return ResponseEntity.ok().build();
-    }
-
     /**
      * 교육 내역 조회
      * @return
