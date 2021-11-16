@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 public class RankFire : MonoBehaviour
 {
     [DllImport("__Internal")]
-    private static extern void UnityObjectHookk(string obj);
+    private static extern void UnityObjectHook(string obj);
 
     private bool isListened;
 
@@ -38,7 +38,7 @@ public class RankFire : MonoBehaviour
             if (GetComponent<BoxCollider>().Raycast(ray, out hit, 10000f))
             {
                 // unity -> front로 교육명 전달
-                UnityObjectHookk("rank2");
+                UnityObjectHook("rank2");
                 isListened = true;
             }
         }
