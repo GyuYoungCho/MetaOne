@@ -17,6 +17,9 @@ public class LoadMain : MonoBehaviourPunCallbacks
     GameObject focus;
     Transform tr;
 
+    private AudioSource BGM;
+    private AudioClip bgmSource;
+
     public Renderer rend1;
     public Renderer rend2;
     public Renderer rend3;
@@ -86,6 +89,16 @@ public class LoadMain : MonoBehaviourPunCallbacks
         mc.transform.rotation = Quaternion.Euler(new Vector3(37.9f, -180f, -0.68f));
         //mc.transform.position = new Vector3(28f, 3.62f, -10.12f);
         //mc.transform.rotation = Quaternion.Euler(new Vector3(26.251f, 180f, -0.6f));
+
+        // 
+        mc.AddComponent<AudioListener>();
+
+        // bgm 설정
+        BGM = mc.AddComponent<AudioSource>();
+        BGM.clip = Resources.Load("Sound/Rainbow Forest - Quincas Moreira") as AudioClip;
+        BGM.loop = true;
+        BGM.volume = 0.15f;
+        BGM.Play();
 
         // rigidbody 추가 및 설정
         //Rigidbody rb = me.AddComponent<Rigidbody>();

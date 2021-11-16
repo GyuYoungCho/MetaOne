@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 public class Guestbook : MonoBehaviour
 {
     [DllImport("__Internal")]
-    private static extern void UnityObjectHookk(string obj);
+    private static extern void UnityObjectHook(string obj);
 
     // Start is called before the first frame update
     void Start()
@@ -27,7 +27,7 @@ public class Guestbook : MonoBehaviour
             if (GetComponent<BoxCollider>().Raycast(ray, out hit, 10000f))
             {
                 // unity -> front로 교육명 전달
-                UnityObjectHookk("guestbook");
+                UnityObjectHook("guestbook");
             }
         }
     }

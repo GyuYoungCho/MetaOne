@@ -23,6 +23,10 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
 
     private Vector3 MoveDir;
 
+    private bool isDance = false;
+    private bool isSit = false;
+    private bool isCry = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -47,6 +51,8 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
+            if (cc == null) return;
+
             h = Input.GetAxis("Horizontal");    // 좌우값
             v = Input.GetAxis("Vertical");      // 상하값
 
@@ -85,16 +91,38 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
         else
         {
             // anim 적용
-            if (tr.position != currPos) anim.SetBool("IsWalking", true);
-            else anim.SetBool("IsWalking", false);
-
             tr.position = Vector3.Lerp(tr.position, currPos, Time.deltaTime * 7f);
             tr.rotation = Quaternion.Slerp(tr.rotation, currRot, Time.deltaTime * 7f);
+            bool dance = currDance;
+            bool cry = currCry;
+            bool sit = currSit;
+
+            if (currDance)
+            {
+                anim.SetTrigger("IsDancing");
+                currDance = false;
+            }
+            if (currCry)
+            {
+                anim.SetTrigger("IsCrying");
+                currCry = false;
+            }
+            if (currSit)
+            {
+                anim.SetTrigger("IsSitting");
+                currSit = false;
+            }
+
+            if (tr.position != currPos) anim.SetBool("IsWalking", true);
+            else anim.SetBool("IsWalking", false);
         }
     }
 
     private Vector3 currPos;
     private Quaternion currRot;
+    private bool currDance = true;
+    private bool currCry = true;
+    private bool currSit = true;
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -103,11 +131,20 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
             // Sending Datas ...
             stream.SendNext(tr.position);
             stream.SendNext(tr.rotation);
+            stream.SendNext(isDance);
+            stream.SendNext(isCry);
+            stream.SendNext(isSit);
+            isDance = false;
+            isCry = false;
+            isSit = false;
         }
         else
         {
             currPos = (Vector3)stream.ReceiveNext();
             currRot = (Quaternion)stream.ReceiveNext();
+            currDance = (bool)stream.ReceiveNext();
+            currCry = (bool)stream.ReceiveNext();
+            currSit = (bool)stream.ReceiveNext();
         }
 
     }
@@ -136,9 +173,21 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
             cc.Move(Vector3.left * moveSpeed * Time.deltaTime);
             anim.SetBool("IsWalking", true);
         }
-        if (Input.GetKey(KeyCode.Alpha3)) anim.SetTrigger("IsSitting");
-        if (Input.GetKey(KeyCode.Alpha2))    anim.SetTrigger("IsDancing");
-        if (Input.GetKey(KeyCode.Alpha1)) anim.SetTrigger("IsCrying");
+        if (Input.GetKey(KeyCode.Alpha3))
+        {
+            anim.SetTrigger("IsSitting");
+            isSit = true;
+        }
+        if (Input.GetKey(KeyCode.Alpha2))
+        {
+            anim.SetTrigger("IsDancing");
+            isDance = true;
+        }
+        if (Input.GetKey(KeyCode.Alpha1))
+        {
+            anim.SetTrigger("IsCrying");
+            isCry = true;
+        }
 
         if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S) && !Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)
             && !Input.GetKey(KeyCode.UpArrow) && !Input.GetKey(KeyCode.LeftArrow) && !Input.GetKey(KeyCode.DownArrow) && !Input.GetKey(KeyCode.RightArrow))
