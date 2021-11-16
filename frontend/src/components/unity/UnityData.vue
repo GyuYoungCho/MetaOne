@@ -11,7 +11,8 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapState ,mapGetters} from 'vuex'
+import educationAPI from "@/api/education.js";
 
 export default {
     name: "UnityData",
@@ -23,6 +24,7 @@ export default {
             unityEducationName: "",
             unityEducationTime: "",
             unityEducationAuth: "",
+            education:"",
         }
     },
     created(){
@@ -32,6 +34,9 @@ export default {
         this.$store.commit('unity/SET_UNITY_EDUCATIONTIME', 0)
         this.$store.commit('unity/SET_UNITY_EDUCATIONAUTH', false)
         this.$store.commit('unity/SET_UNITY_OBJECT','')
+
+        this.getEducations()
+
     },
     async mounted(){                                // 테스트를 위해 페이지 로딩 시 axois 수행해보기
         this.interval = setInterval(()=>{
@@ -50,7 +55,7 @@ export default {
     },
     methods:{
         ...mapActions('unity', ['setCharacter', 'setRoom',  'setEducationTime', 'setEducationAuth']),
-        ...mapActions('education',['getEdunum']),
+        ...mapActions('education',['getEdunum','getEducations']),
         async setCharacterMethod(){
             await this.$store.commit('unity/SET_UNITY_CHARACTER', this.unityCharacter)        // 파일명 저장
             await this.setCharacter()
@@ -61,16 +66,25 @@ export default {
         },
         async setEducationTimeMethod(){
             await this.$store.commit('unity/SET_UNITY_EDUCATIONTIME', this.unityEducationTime)
-            await this.setEducationTime()
+            await this.setEducationTime(this.education)
         },
         async setEducationAuthMethod(){
-            await this.$store.commit('unity/SET_UNITY_EDUCATIONAUTH', this.unityEducationAuth)
-            await this.setEducationAuth()
+            await this.$store.commit('SET_UNITY_EDUCATIONNAME', this.education)
+            await educationAPI.registerAttendance(this.education)
+                .then((res) => {
+                    console.log(res.daat)
+                })
+                .catch((error) => {
+                alert("못가져옴");
+                console.log(error);
+                });
+            // await this.$store.commit('unity/SET_UNITY_EDUCATIONAUTH', this.unityEducationAuth)
+            // await this.setEducationAuth()
         },
     },
     computed:{
         ...mapState('user', ['nickname', 'email']),
-        
+        ...mapGetters("education", ["educations"])
     },
     watch:{
         unityObject(val){
@@ -105,7 +119,10 @@ export default {
             if(val) this.setRoomMethod()
         },
         unityEducationName(val){           // 교육 명 : Vuex 저장
-            if(val) this.$store.commit('unity/SET_UNITY_EDUCATIONNAME', this.unityEducationName)
+            if(val){
+                if(val=='fire') this.education = "화재"
+                if(val=='earthquake') this.education = "지진"
+            }
         },
         unityEducationTime(val){           // 시험 통과 시간
             if(val) this.setEducationTimeMethod()
@@ -113,6 +130,8 @@ export default {
         unityEducationAuth(val){           // 교육 수강 여부
             if(val) this.setEducationAuthMethod()
         },
+
+        
     }
 }
 </script>
