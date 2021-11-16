@@ -1,7 +1,7 @@
 mergeInto(LibraryManager.library, {
 
-  UnityObjectHook: function (rank){
-    _objectHook(Pointer_stringify(rank));
+  UnityObjectHook: function (obj){
+    _objectHook(Pointer_stringify(obj));
   },
   UnityCharacterHook: function (number){
     _characterHook(number);
