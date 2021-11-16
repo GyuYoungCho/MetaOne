@@ -15,7 +15,7 @@ using System.Runtime.InteropServices;
 public class CreateRoom : MonoBehaviourPunCallbacks
 {
     [DllImport("__Internal")]
-    private static extern void UnityRoomHook(string roomNumber);
+    private static extern void UnityRoomHook(string roomName);
 
     string characterData, characterName;
     int IsOut;
