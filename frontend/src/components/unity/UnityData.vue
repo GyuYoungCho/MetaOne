@@ -20,12 +20,18 @@ export default {
             unityObject: "",
             unityCharacter: "",
             unityRoom: "",
-            unityRoomPopulation: "",
             unityEducationName: "",
             unityEducationTime: "",
             unityEducationAuth: "",
             
         }
+    },
+    created(){
+        this.$store.commit('unity/SET_UNITY_CHARACTER', "") 
+        this.$store.commit('unity/SET_UNITY_ROOM', "")
+        this.$store.commit('unity/SET_UNITY_EDUCATIONNAME', "")
+        this.$store.commit('unity/SET_UNITY_EDUCATIONTIME', 0)
+        this.$store.commit('unity/SET_UNITY_EDUCATIONAUTH', false)
     },
     async mounted(){                                // 테스트를 위해 페이지 로딩 시 axois 수행해보기
         
@@ -49,10 +55,6 @@ export default {
         async setRoomMethod(){
             await this.$store.commit('unity/SET_UNITY_ROOM', this.unityRoom) 
             await this.setRoom()
-        },
-        async setRoomPopulationMethod(){
-            await this.$store.commit('unity/SET_UNITY_ROOMPOPULATION', this.unityRoomPopulation)
-            await this.setRoomPopulation()
         },
         async setEducationTimeMethod(){
             await this.$store.commit('unity/SET_UNITY_EDUCATIONTIME', this.unityEducationTime)

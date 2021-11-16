@@ -36,7 +36,7 @@ export default {
     data(){
         return{
             edu: "",
-            kind: ["fire", "earthquake", "corona", "typhoon"],
+            kind: ["earthquake","fire", "corona", "typhoon"],
             // 교육 종목 : 화재, 지진, 코로나, 태풍
             // fire, earthquake, corona, typhoon
         }
@@ -48,9 +48,8 @@ export default {
         },
     }, 
     async mounted(){
-
-        if(this.edunum == "fire") this.edu = "화재"
-        else if(this.edunum == "earthquake") this.edu = "지진"
+        if(this.edunum == 1) this.edu = "지진"
+        else if(this.edunum == 2) this.edu = "화재"
         else if(this.edunum == "corona") this.edu = "코로나"
         else if(this.edunum == "typhoon") this.edu = "태풍"
         await this.getRank(this.kind[this.edunum-1])

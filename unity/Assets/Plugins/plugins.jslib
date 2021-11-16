@@ -12,7 +12,7 @@ mergeInto(LibraryManager.library, {
   UnityEducationNameHook: function (str){
     _educationNameHook(Pointer_stringify(str));
   },
-  UnityEducationTimeHook: function (time)){
+  UnityEducationTimeHook: function (time){
     _educationTimeHook(time);
   },
   UnityEducationAuthHook: function (auth){

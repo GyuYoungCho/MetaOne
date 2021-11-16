@@ -5,9 +5,9 @@ const state = {
   unityCharacter: "",
   unityRoom: "",
   unityRoomPopulation: "",
-  unityEducationName: "fire", //
-  unityEducationTime: "",
-  unityEducationAuth: "",
+  unityEducationName: "", //
+  unityEducationTime: 0,
+  unityEducationAuth: false,
 };
 
 const actions = {
@@ -24,16 +24,6 @@ const actions = {
   async setRoom({ state }) {
     await unityApi
       .setRoom(state)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
-  async setRoomPopulation({ state }) {
-    await unityApi
-      .setRoomPopulation(state)
       .then((res) => {
         console.log(res);
       })
@@ -69,9 +59,6 @@ const mutations = {
   },
   SET_UNITY_ROOM(state, payload) {
     state.unityRoom = payload;
-  },
-  SET_UNITY_ROOMPOPULATION(state, payload) {
-    state.unityRoomPopulation = payload;
   },
   SET_UNITY_EDUCATIONNAME(state, payload) {
     state.unityEducationName = payload;
