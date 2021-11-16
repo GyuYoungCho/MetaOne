@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface CharactersRepository extends JpaRepository<Characters, Integer> {
-    Optional<Characters> findByName(String name);
+    Optional<Characters> findById(int cid);
 }
