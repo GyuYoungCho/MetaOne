@@ -36,6 +36,9 @@ public class CheckEmBell : MonoBehaviour
         // emergency 경보음 추가할 수 있으면 추가
 
         // 2번째 미션 추가
-        GameObject.Find("asset_kitchen_napkin_holder_011").AddComponent<checkTowel>();
+        foreach(GameObject obj in GameObject.FindGameObjectsWithTag("Napkin"))
+        {
+            obj.AddComponent<checkTowel>();
+        }
     }
 }

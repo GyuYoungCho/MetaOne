@@ -8,6 +8,8 @@ TagManager:
   - ROOM
   - CHARACTER
   - ME
+  - Napkin
+  - Cup
   layers:
   - Default
   - TransparentFX
