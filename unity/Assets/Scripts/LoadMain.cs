@@ -42,7 +42,7 @@ public class LoadMain : MonoBehaviourPunCallbacks
         Debug.Log(characterData);
 
         // 캐릭터의 transform
-        tr = focus.transform;
+        //tr = focus.transform;
 
         // 방명록 책들 renderer 설정
         rend1.material = m1;
@@ -99,6 +99,7 @@ public class LoadMain : MonoBehaviourPunCallbacks
         me.tag = "ME";
 
         focus = GameObject.FindWithTag("ME");
+        tr = focus.transform;
     }
 
     void CheckPlayerCount()
