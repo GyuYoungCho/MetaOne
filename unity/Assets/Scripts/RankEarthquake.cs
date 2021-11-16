@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 public class RankEarthquake : MonoBehaviour
 {
     [DllImport("__Internal")]
-    private static extern void UnityObjectHookk(string rank);
+    private static extern void UnityObjectHookk(string obj);
 
     private bool isListened;
 
@@ -39,8 +39,6 @@ public class RankEarthquake : MonoBehaviour
             {
                 // unity -> front로 교육명 전달
                 UnityObjectHookk("rank1");
-
-                Application.OpenURL("https://k5a305.p.ssafy.io/rank");
                 isListened = true;
             }
         }
