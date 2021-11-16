@@ -52,15 +52,6 @@ public class EduController {
         return ResponseEntity.ok().body(room);
     }
 
-    // 방 최대 인원 저장
-    @PostMapping("/room-population")
-    public ResponseEntity setRoomPopulation(@RequestBody Map<String, String> unityRoomPopulation, HttpServletRequest request){
-        int userId = (int) request.getAttribute("userId");
-
-        unityService.setRoomPopulation(userId, Integer.parseInt(unityRoomPopulation.get("unityRoomPopulation")));
-        return ResponseEntity.ok().build();
-    }
-
     // 미션 클리어 시간 저장
     @PostMapping("/time")
     public ResponseEntity setMissionClearTime(@RequestBody Map<String, String> unity, HttpServletRequest request){
