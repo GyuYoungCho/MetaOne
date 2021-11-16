@@ -51,6 +51,8 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
+            if (cc == null) return;
+
             h = Input.GetAxis("Horizontal");    // 좌우값
             v = Input.GetAxis("Vertical");      // 상하값
 

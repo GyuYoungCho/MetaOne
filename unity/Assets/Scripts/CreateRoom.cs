@@ -97,7 +97,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
         Debug.Log("createRoom    " + characterName);
 
         // unity -> front로 방 이름 전달
-        UnityRoomHook(title);
+        UnityRoomHook(PhotonNetwork.CurrentRoom.Name);
 
         SceneManager.LoadScene("Main");
     }
