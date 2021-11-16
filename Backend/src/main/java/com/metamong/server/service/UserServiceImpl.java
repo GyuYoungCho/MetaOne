@@ -138,6 +138,7 @@ public class UserServiceImpl implements UserService{
                 .name(user.get().getName())
                 .email(user.get().getEmail())
                 .nickname(user.get().getNickname())
+                .characid(user.get().getCharacter()==null?0:user.get().getCharacter().getId())
                 .build();
 
         return userRes;

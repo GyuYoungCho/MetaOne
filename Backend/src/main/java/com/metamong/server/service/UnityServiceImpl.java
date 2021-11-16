@@ -26,11 +26,11 @@ public class UnityServiceImpl implements UnityService{
     }
 
     @Override
-    public void setCharacter(int userId, String unityCharacter) {
+    public void setCharacter(int userId, int unityCharacter) {
 
         Optional<User> user = userRepository.findById(userId);
 
-        Optional<Characters> character = charactersRepository.findByName(unityCharacter);
+        Optional<Characters> character = charactersRepository.findById(unityCharacter);
         character.ifPresent(select -> {
             user.get().setCharacter(select);
             userRepository.save(user.get());
@@ -38,7 +38,7 @@ public class UnityServiceImpl implements UnityService{
     }
 
     @Override
-    public void setRoom(int userId, String unityRoom) {
+    public Room setRoom(int userId, String unityRoom) {
         Room room = Room.builder()
                 .name(unityRoom)
                 .build();
@@ -51,6 +51,7 @@ public class UnityServiceImpl implements UnityService{
 
             userRepository.save(select);
         });
+        return roomRet;
     }
 
     @Override

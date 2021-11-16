@@ -1,11 +1,11 @@
 <template>
     <div id="unity-data">
-        <div id="unity-character" hidden></div>
-        <div id="unity-room" hidden></div>
-        <div id="unity-room-population" hidden></div>
-        <div id="unity-education-name" hidden></div>
-        <div id="unity-education-time" hidden></div>
-        <div id="unity-education-auth" hidden></div>
+        <input id="unity-character" style="display:none" v-model="unityCharacter" >
+        <input id="unity-room" style="display:none" v-model="unityRoom">
+        <input id="unity-education-name" style="display:none" v-model="unityEducationName">
+        <input id="unity-education-time" style="display:none" v-model="unityEducationTime">
+        <input id="unity-education-auth" style="display:none" v-model="unityEducationAuth">
+        <input type="text" id="unity-object" style="display:none" v-model="unityObject">
     </div>
 
 </template>
@@ -23,27 +23,31 @@ export default {
             unityEducationName: "",
             unityEducationTime: "",
             unityEducationAuth: "",
-            
         }
     },
     created(){
         this.$store.commit('unity/SET_UNITY_CHARACTER', "") 
         this.$store.commit('unity/SET_UNITY_ROOM', "")
+        this.$store.commit('unity/SET_UNITY_ROOMID', "")
         this.$store.commit('unity/SET_UNITY_EDUCATIONNAME', "")
         this.$store.commit('unity/SET_UNITY_EDUCATIONTIME', 0)
         this.$store.commit('unity/SET_UNITY_EDUCATIONAUTH', false)
+        this.$store.commit('unity/SET_UNITY_OBJECT','')
     },
     async mounted(){                                // 테스트를 위해 페이지 로딩 시 axois 수행해보기
-        
-        this.unityCharacter = document.getElementById("unity-character").innerHTML
-        this.unityRoom = document.getElementById("unity-room").innerHTML
-        this.unityRoomPopulation = document.getElementById("unity-room-population").innerHTML
-        this.unityEducationName = document.getElementById("unity-education-name").innerHTML     // fire, earthquake, corona, typhoon
-        this.unityEducationTime = document.getElementById("unity-education-time").innerHTML
-        this.unityEducationAuth = document.getElementById("unity-education-auth").innerHTML
+        this.interval = setInterval(()=>{
+            this.unityObject = document.getElementById("unity-object").value
+            this.unityCharacter = document.getElementById("unity-character").value
+            this.unityRoom = document.getElementById("unity-room").value
+            this.unityEducationName = document.getElementById("unity-education-name").value    // fire, earthquake, corona, typhoon
+            this.unityEducationTime = document.getElementById("unity-education-time").value
+            this.unityEducationAuth = document.getElementById("unity-education-auth").value
 
-
-        console.log("unity-data")
+        },1000)
+        console.log( document.getElementById("unity-character"))
+    },
+    destroyed(){
+        clearInterval(this.interval);
     },
     methods:{
         ...mapActions('unity', ['setCharacter', 'setRoom', 'setRoomPopulation', 'setEducationTime', 'setEducationAuth']),
@@ -66,20 +70,28 @@ export default {
         },
     },
     computed:{
-        ...mapState('user', ['nickname', 'email'])
+        ...mapState('user', ['nickname', 'email']),
+        
     },
     watch:{
         unityObject(val){
+            console.log(val)
             switch (val) {
                 case "guestbook":
-                    this.$router.push({name : 'GuestBook'});
+                    document.getElementById("unity-object").value= "";
+                    this.unityObject=""
+                    this.$router.push({name : 'Guestbook'});
                     break;
                 case "rank1":
                     this.getEdunum(1);
+                    document.getElementById("unity-object").value= "";
+                    this.unityObject=""
                     this.$router.push({name : 'Rank'});
                     break;
                 case "rank2":
                     this.getEdunum(2);
+                    document.getElementById("unity-object").value= "";
+                    this.unityObject=""
                     this.$router.push({name : 'Rank'});
                     break;
                 
@@ -88,19 +100,15 @@ export default {
             }
         },
         unityCharacter(val){
-            console.log(val)
             if(val) this.setCharacterMethod()
         },
         unityRoom(val){               // 방 이름
-            console.log(val)
             if(val) this.setRoomMethod()
         },
         unityEducationName(val){           // 교육 명 : Vuex 저장
-            console.log(val)
             if(val) this.$store.commit('unity/SET_UNITY_EDUCATIONNAME', this.unityEducationName)
         },
         unityEducationTime(val){           // 시험 통과 시간
-            console.log(val)
             if(val) this.setEducationTimeMethod()
         },
         unityEducationAuth(val){           // 교육 수강 여부

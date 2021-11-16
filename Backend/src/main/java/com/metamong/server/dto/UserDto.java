@@ -150,6 +150,7 @@ public class UserDto {
         private String email;
         private String nickname;
         private String name;
+        private int characid;
     }
 
     @Getter

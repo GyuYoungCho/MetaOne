@@ -10,6 +10,7 @@ const state = {
   password: "",
   passwordConfirm: "",
   authNumber: "",
+  characid: "",
 
   originPassword: "",
   newPassword: "",
@@ -146,6 +147,7 @@ const actions = {
           commit("SET_JOIN_NAME", res.data.name);
           commit("SET_JOIN_EMAIL", res.data.email);
           commit("SET_JOIN_NICKNAME", res.data.nickname);
+          commit("SET_JOIN_CHARACTER", res.data.characid);
         }
       })
       .catch((err) => {
@@ -159,7 +161,6 @@ const actions = {
         console.log(res);
         if (res.status == 200) {
           alert("성공적으로 수정되었습니다.");
-          router.go(); // 새로고침
         }
       })
       .catch((err) => {
@@ -174,7 +175,6 @@ const actions = {
         console.log(res);
         if (res.status == 200) {
           alert("성공적으로 수정되었습니다.");
-          router.go();
         }
       })
       .catch((err) => {
@@ -193,7 +193,7 @@ const actions = {
         alert("이름이나 이메일이 틀렸습니다");
       });
   },
-  async logout({ state, commit, dispatch }) {
+  async logout({ state }) {
     await userApi
       .logout(state)
       .then((res) => {
@@ -202,17 +202,6 @@ const actions = {
       .catch((err) => {
         console.log(err);
       });
-    dispatch("process/getUnityInstance", false, { root: true });
-    dispatch("process/getAllMap", true, { root: true });
-    commit("SET_JOIN_USERID", "");
-    commit("SET_JOIN_NAME", "");
-    commit("SET_JOIN_EMAIL", "");
-    commit("SET_JOIN_NICKNAME", "");
-    commit("SET_JOIN_PASSWORD", "");
-    commit("SET_USER_ISLOGIN", false);
-    commit("SET_USER_ISKAKAOLOGIN", false);
-    commit("SET_USER_ACCESSTOKEN", "");
-    commit("SET_USER_REFRESHTOKEN", "");
 
     localStorage.clear();
     location.reload();
@@ -292,6 +281,9 @@ const mutations = {
   },
   SET_JOIN_AUTHNUMBER(state, payload) {
     state.authNumber = payload;
+  },
+  SET_JOIN_CHARACTER(state, payload) {
+    state.characid = payload;
   },
 
   SET_USER_ISLOGIN(state, payload) {

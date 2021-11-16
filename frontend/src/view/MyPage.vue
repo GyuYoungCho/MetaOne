@@ -5,7 +5,7 @@
         <div class="row mypage">
             <div class="col-md-2">
                 <div>
-                    <img src="@/assets/image/profileExample.png" ref="">
+                    <img :src="require(`@/assets/image/character/Ch${userCha}.png`)" ref="">
                 </div>
                 <div>
                     <button class="btn yellow-btn" style="float: center;" @click="toEducateList()">교육내역 확인하기</button>
@@ -66,7 +66,7 @@ export default {
         }
     },
     methods:{
-        ...mapActions('user', ['getMyInfo', 'checkDuplicate', 'updateInfo','updateNickname']),
+        ...mapActions('user', ['getMyInfo', 'checkDuplicate', 'updateInfo','updateNickname','characid']),
 
         async init(){     
             
@@ -147,7 +147,7 @@ export default {
     },
     computed:{
         ...mapState('user', ['name', 'nickname', 'email', 'nicknamePass', 'originPassword', 'newPassword', 'passwordConfirm',
-                            'nicknameFormat','passwordFormat','passwordConfirmFormat', 'isKakaoLogin']),
+                            'nicknameFormat','passwordFormat','passwordConfirmFormat', 'isKakaoLogin','characid']),
         writeAllInfo(){
             if(this.isKakaoLogin) return !this.nicknamePass
             else return !this.nicknamePass || !this.passwordConfirmFormat
@@ -155,8 +155,12 @@ export default {
         titles(){
             if(this.isKakaoLogin) return this.kakaotitles
             else return this.myinfotitles
-        }
+        },
 
+        userCha(){
+            if(this.characid<10) return "0" + this.characid
+            else return this.characid
+        }
     },
     watch:{
 

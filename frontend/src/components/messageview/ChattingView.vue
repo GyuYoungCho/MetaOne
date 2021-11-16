@@ -27,7 +27,7 @@
               <!-- 보내는사람 -->
               <div v-if="isme(message.nickname)" class="incoming_msg">
                 <div class="col incoming_info">
-                  <div class="row incoming_msg_img"> <img src="https://ptetutorials.com/images/user-profile.png" alt=""> </div>
+                  <div class="row incoming_msg_img"> <img :src="require(`@/assets/image/character/Ch${userCha(message.character)}.png`)" alt=""> </div>
                   <span class="incoming_name">{{message.nickname}}</span>
                 </div>
                 <div class="received_msg">
@@ -75,17 +75,15 @@ export default {
         return{
             content:'',
             messages:null,
-            roomid:1,
             newMessageMark:false,
         }
     },
     computed:{
       ...mapState('user', ['nickname']),
       ...mapState('message', ['messSize']),
-      ...mapState('unity',['unityRoom']),
+      ...mapState('unity',['unityRoom','roomid','unityCharacter']),
       ...mapState('process',['allMap','chattingOpen']),
 
-      
     },
     methods:{
         ...mapActions('message', ['getMessSize']),
@@ -98,6 +96,7 @@ export default {
             let ymd = moment(today).format("yyyyMMDD")
             let newData = firebase.database().ref('chats/' + ymd + '/'+this.roomid).push();
             newData.set({
+                character : this.unityCharacter,
                 nickname: this.nickname,
                 content: this.content,
                 sendDate: Date()
@@ -152,8 +151,12 @@ export default {
         chatClose(){
           this.newMessageMark=false
           this.getChattingOpen(false)
+        },
+        userCha(chaid){
+          if(chaid<10)
+            return "0" + chaid
+          else return chaid
         }
-        
     },
 
     created(){
