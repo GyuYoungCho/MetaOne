@@ -66,7 +66,7 @@ export default {
         }
     },
     methods:{
-        ...mapActions('user', ['getMyInfo', 'checkDuplicate', 'updateInfo','updateNickname','characid']),
+        ...mapActions('user', ['getMyInfo', 'checkDuplicate', 'updateInfo','updateNickname']),
 
         async init(){     
             
@@ -158,7 +158,7 @@ export default {
         },
 
         userCha(){
-            if(this.characid<10) return "0" + this.characid
+            if(this.characid<10) return "0" + new String(this.characid)
             else return this.characid
         }
     },

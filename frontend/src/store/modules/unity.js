@@ -27,6 +27,7 @@ const actions = {
     await unityApi
       .setRoom(state)
       .then((res) => {
+        console.log(res);
         commit("SET_UNITY_ROOMID", res.data.id);
       })
       .catch((err) => {
