@@ -55,6 +55,7 @@ public class LoadMain : MonoBehaviourPunCallbacks
         rend1.material = m1;
         rend2.material = m1;
         rend3.material = m1;
+
     }
 
     // Update is called once per frame
@@ -95,7 +96,7 @@ public class LoadMain : MonoBehaviourPunCallbacks
         //mc.transform.position = new Vector3(28f, 3.62f, -10.12f);
         //mc.transform.rotation = Quaternion.Euler(new Vector3(26.251f, 180f, -0.6f));
 
-        // 
+        // bgm listener
         mc.AddComponent<AudioListener>();
 
         // bgm 설정
@@ -104,6 +105,10 @@ public class LoadMain : MonoBehaviourPunCallbacks
         BGM.loop = true;
         BGM.volume = 0.15f;
         BGM.Play();
+
+        // 최초 설정
+        PlayerPrefs.SetFloat("volume", BGM.volume);
+        PlayerPrefs.SetInt("BgmState", 1);
 
         // rigidbody 추가 및 설정
         //Rigidbody rb = me.AddComponent<Rigidbody>();
@@ -139,12 +144,14 @@ public class LoadMain : MonoBehaviourPunCallbacks
     // bgm on/off
     public void BGMOn()
     {
-        BGM.Play(); 
+        BGM.Play();
+        PlayerPrefs.SetInt("BgmState", 1);
     }
 
     public void BGMOff()
     {
         BGM.Pause();
+        PlayerPrefs.SetInt("BgmState", 0);
     }
 
     // volume control
