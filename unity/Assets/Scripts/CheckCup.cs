@@ -45,6 +45,12 @@ public class CheckCup : MonoBehaviour
         // 4번째 미션 추가
         GameObject mission = GameObject.Find("MainCamera");
         mission.AddComponent<CheckWall>();
+
+        // 3번째 미션 삭제
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Cup"))
+        {
+            Destroy(obj.GetComponent<CheckCup>());
+        }
     }
 
     public void hideGuide()

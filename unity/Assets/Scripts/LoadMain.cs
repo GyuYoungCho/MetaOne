@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 using Photon.Pun;   // 유니티용 포톤 컴포넌트
 using Photon.Realtime;  // 포톤 서비스 관련 라이브러리
@@ -26,6 +27,9 @@ public class LoadMain : MonoBehaviourPunCallbacks
 
     public Material m1;
     public Material m2;
+
+    public GameObject Menu;
+    public Slider slider;
 
     // Start is called before the first frame update
     void Start()
@@ -65,6 +69,8 @@ public class LoadMain : MonoBehaviourPunCallbacks
             rend2.material.Lerp(m1, m2, lerp);
             rend3.material.Lerp(m1, m2, lerp);
         }
+
+
     }
 
     void CreateCharacter()
@@ -90,7 +96,7 @@ public class LoadMain : MonoBehaviourPunCallbacks
         //mc.transform.position = new Vector3(28f, 3.62f, -10.12f);
         //mc.transform.rotation = Quaternion.Euler(new Vector3(26.251f, 180f, -0.6f));
 
-        // 
+        // bgm listener
         mc.AddComponent<AudioListener>();
 
         // bgm 설정
@@ -99,6 +105,10 @@ public class LoadMain : MonoBehaviourPunCallbacks
         BGM.loop = true;
         BGM.volume = 0.15f;
         BGM.Play();
+
+        // 최초 설정
+        PlayerPrefs.SetFloat("volume", BGM.volume);
+        PlayerPrefs.SetInt("BgmState", 1);
 
         // rigidbody 추가 및 설정
         //Rigidbody rb = me.AddComponent<Rigidbody>();
@@ -124,4 +134,30 @@ public class LoadMain : MonoBehaviourPunCallbacks
         Debug.Log("현재 몇명? " + currPlayer);
     }
 
+    // Menu panel on/off
+    public void OnOffMenu()
+    {
+        if (GameObject.Find("MenuPanel") == null) Menu.SetActive(true);
+        else Menu.SetActive(false);
+    }
+
+    // bgm on/off
+    public void BGMOn()
+    {
+        BGM.Play();
+        PlayerPrefs.SetInt("BgmState", 1);
+    }
+
+    public void BGMOff()
+    {
+        BGM.Pause();
+        PlayerPrefs.SetInt("BgmState", 0);
+    }
+
+    // volume control
+    public void VolumeControl()
+    {
+        BGM.volume = slider.value;
+        PlayerPrefs.SetFloat("volume", slider.value);
+    }
 }
