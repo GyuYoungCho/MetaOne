@@ -4,6 +4,7 @@ import unityApi from "@/api/unity.js";
 const state = {
   unityCharacter: "",
   unityRoom: "",
+  unityRoomPopulation: "",
   unityEducationName: "fire", //
   unityEducationTime: "",
   unityEducationAuth: "",
@@ -30,7 +31,16 @@ const actions = {
         console.log(err);
       });
   },
-
+  async setRoomPopulation({ state }) {
+    await unityApi
+      .setRoomPopulation(state)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  },
   async setEducationTime({ state }) {
     await unityApi
       .setEducationTime(state)
@@ -59,6 +69,9 @@ const mutations = {
   },
   SET_UNITY_ROOM(state, payload) {
     state.unityRoom = payload;
+  },
+  SET_UNITY_ROOMPOPULATION(state, payload) {
+    state.unityRoomPopulation = payload;
   },
   SET_UNITY_EDUCATIONNAME(state, payload) {
     state.unityEducationName = payload;

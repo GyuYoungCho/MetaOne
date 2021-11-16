@@ -7,9 +7,22 @@ using Photon.Realtime;  // 포톤 서비스 관련 라이브러리
 
 public class LoadMain : MonoBehaviourPunCallbacks
 {
+    //[DllImport("__Internal")]
+    //private static extern void UnityCharacterHook(string str);
+
     string characterName;
     string characterData;
     string roomTitle;
+
+    GameObject focus;
+    Transform tr;
+
+    public Renderer rend1;
+    public Renderer rend2;
+    public Renderer rend3;
+
+    public Material m1;
+    public Material m2;
 
     // Start is called before the first frame update
     void Start()
@@ -25,12 +38,30 @@ public class LoadMain : MonoBehaviourPunCallbacks
         PhotonNetwork.IsMessageQueueRunning = true;
         //PhotonNetwork.AutomaticallySyncScene = true;
         Invoke("CheckPlayerCount", 0.5f);
+
+        Debug.Log(characterData);
+
+        // 캐릭터의 transform
+        //tr = focus.transform;
+
+        // 방명록 책들 renderer 설정
+        rend1.material = m1;
+        rend2.material = m1;
+        rend3.material = m1;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        // 범위 체크하여 해당 범위 안에 있으면 책 깜빡이도록
+        if(focus != null && tr.position.x > 7.358266 && tr.position.x < 27.2808)
+        {
+            float lerp = Mathf.PingPong(Time.time, 1.5f);
+            rend1.material.Lerp(m1, m2, lerp);
+            rend2.material.Lerp(m1, m2, lerp);
+            rend3.material.Lerp(m1, m2, lerp);
+        }
     }
 
     void CreateCharacter()
@@ -66,6 +97,9 @@ public class LoadMain : MonoBehaviourPunCallbacks
 
         // 내 캐릭터 찾아야할 때를 위해 ME 태그 추가
         me.tag = "ME";
+
+        focus = GameObject.FindWithTag("ME");
+        tr = focus.transform;
     }
 
     void CheckPlayerCount()
@@ -76,4 +110,5 @@ public class LoadMain : MonoBehaviourPunCallbacks
 
         Debug.Log("현재 몇명? " + currPlayer);
     }
+
 }

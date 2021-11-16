@@ -63,7 +63,7 @@ public class UserServiceImpl implements UserService{
         Optional<User> user = userRepository.findByEmail(loginReq.getEmail());
 
         if (!user.isPresent()) throw new ApplicationException(HttpStatus.valueOf(401), "일치하는 이메일이 없습니다.");
-        if(!passwordEncoder.matches(loginReq.getPassword(), user.get().getPassword())) throw new ApplicationException(HttpStatus.valueOf(401), "비밀번호가 일지하지 않습니다.");
+        if(!passwordEncoder.matches(loginReq.getPassword(), user.get().getPassword())) throw new ApplicationException(HttpStatus.valueOf(401), "비밀번호가 일치하지 않습니다.");
 
         User loginuser = user.orElseThrow(IllegalArgumentException::new);;
         UserDto.LoginRes login = new UserDto.LoginRes();

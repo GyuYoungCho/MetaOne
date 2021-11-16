@@ -16,12 +16,20 @@ public class FireURL : MonoBehaviour
     private bool isListened;
     private string characterName;
 
+    public Renderer blackboard;
+
+    public Material m1;
+    public Material m2;
+
     // Start is called before the first frame update
     void Start()
     {
         isListened = false;
         btn.SetActive(false);
         characterName = PlayerPrefs.GetString("characterN");
+
+        // 칠판 renderer 설정
+        blackboard.material = m1;
     }
 
     // Update is called once per frame
@@ -52,7 +60,18 @@ public class FireURL : MonoBehaviour
             btn.SetActive(true);
         }
 
-        if (!checkArea()) btn.SetActive(false);
+        if (!checkArea())
+        {
+            btn.SetActive(false);
+            blackboard.material = m1;
+        }
+
+        // 범위 체크하여 칠판 깜빡이도록
+        if(checkArea())
+        {
+            float lerp = Mathf.PingPong(Time.time, 1.5f);
+            blackboard.material.Lerp(m1, m2, lerp);
+        } 
     }
 
     // 교실 안에 위치해있는지 체크

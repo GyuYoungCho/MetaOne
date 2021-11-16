@@ -131,7 +131,7 @@ const actions = {
       })
       .catch((err) => {
         console.log(err);
-        state.password = "";
+
         alert("로그인 실패!");
         return;
       });
@@ -251,6 +251,19 @@ const actions = {
         state.password = "";
         alert("로그인 실패!");
         return;
+      });
+  },
+  async comTutorial({ commit }) {
+    await userApi
+      .comTutorial(state)
+      .then((res) => {
+        console.log(res);
+        if (res.status == 200) {
+          commit("SET_JOIN_TUTORIAL", true);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
       });
   },
 };

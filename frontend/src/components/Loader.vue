@@ -2,6 +2,7 @@
   <div class="loader__wrap inactive">
     <div class="loader__box">
       <img class="loader__logo" src="@/assets/image/loading.gif" alt="">
+      <p class="loader__text">잠시만요...!</p>
     </div>
   </div>
 </template>
@@ -9,8 +10,19 @@
 <script>
 export default {
   name:'Loader',
+  data(){
+    return{
+      width:1280,
+      height:800,
+    }
+  },
   props:{
     isLoading: Boolean,
+  },
+  mounted(){
+    this.$nextTick(() => {
+        window.addEventListener('resize', this.onResize);
+    })
   },
   watch:{
     isLoading: function(){
@@ -22,6 +34,20 @@ export default {
       } else{
         loader.classList.toggle('inactive')
       }
+    },
+    width(val){
+      const loader = document.querySelector('.loader__wrap');
+      loader.style.width = `${val}px`;
+    },
+    height(val){
+      const loader = document.querySelector('.loader__wrap');
+      loader.style.height = `${val}px`;
+    }
+  },
+  methods:{
+    onResize(){
+      this.width = window.innerWidth
+      this.height = window.innerHeight
     }
   }
 }
@@ -41,6 +67,11 @@ export default {
   &__logo{
     opacity: 1;
     animation: logo 1.5s ease-in Infinite;
+  }
+  &__text{
+    color: darken(white, 20%);
+    text-align: center;
+    padding-bottom: 15%;
   }
   @keyframes logo {
     0% {
