@@ -82,7 +82,7 @@ export default {
     computed:{
       ...mapState('user', ['nickname']),
       ...mapState('message', ['messSize']),
-      ...mapState('unity',['unityRoom','roomid','unityCharacter']),
+      ...mapState('unity',['unityRoom','unityCharacter']),
       ...mapState('process',['allMap','chattingOpen']),
 
     },
@@ -93,7 +93,7 @@ export default {
         sendMessage(){
             let today = new Date()
             let ymd = moment(today).format("yyyyMMDD")
-            let newData = firebase.database().ref('chats/' + ymd + '/'+this.roomid).push();
+            let newData = firebase.database().ref('chats/' + ymd + '/'+this.unityRoom).push();
             newData.set({
                 character : this.unityCharacter,
                 nickname: this.nickname,
@@ -110,7 +110,7 @@ export default {
               let today = new Date()
               let ymd = moment(today).format("yyyyMMDD")
               
-              await firebase.database().ref('chats/' + ymd + '/'+this.roomid).on('value', (snapshot) => {
+              await firebase.database().ref('chats/' + ymd + '/'+this.unityRoom).on('value', (snapshot) => {
                   
                   if (snapshot.exists()) {
                       this.messages = [];
@@ -166,7 +166,7 @@ export default {
     async mounted(){
       setTimeout(() => {
         this.fetchMessages()
-      }, 3000);
+      }, 2000);
       let offcanvas = document.getElementById('chatting')
       offcanvas.addEventListener('show.bs.offcanvas',this.chatOpen )
       offcanvas.addEventListener('hide.bs.offcanvas', this.chatClose)
