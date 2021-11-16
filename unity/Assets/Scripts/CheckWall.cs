@@ -45,7 +45,7 @@ public class CheckWall : MonoBehaviour
 
         // 4번째 미션 시작
         GameObject mission = GameObject.Find("MainCamera");
-        mission.AddComponent<CheckOut>();
+        if(mission.GetComponent<CheckOut>() == null) mission.AddComponent<CheckOut>();
     }
 
     public void warning()
