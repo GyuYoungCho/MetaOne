@@ -39,7 +39,7 @@ public class ClickBackpack : MonoBehaviour
         GameObject guideText = GameObject.Find("Guide").transform.Find("Text").gameObject;
         Text pt = guideText.GetComponent(typeof(Text)) as Text;
 
-        pt.text = "진동이 느껴질 때는\n책가방으로 머리를 보호해야해!";
+        pt.text = "이제 이 방을 탈출해서 복도로 나가자!";
 
         // 3초 후 Guide 숨기기
         Invoke("hideGuide", 3);
