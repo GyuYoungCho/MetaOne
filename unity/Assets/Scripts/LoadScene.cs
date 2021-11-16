@@ -162,7 +162,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
     public void clearMission()
     {
         // unity -> front 미션 타임 전송
-        //UnityEducationTimeHook((int)(120-LimitTime));
+        UnityEducationTimeHook((int)(120-LimitTime));
 
         // 메인 맵으로 이동
         quitMission();
