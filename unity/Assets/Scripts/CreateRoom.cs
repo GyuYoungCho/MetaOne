@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 using UnityEngine.SceneManagement;
 using System.Threading;
 
@@ -19,12 +20,12 @@ public class CreateRoom : MonoBehaviourPunCallbacks
 
     string characterData, characterName;
     int IsOut;
-    string title;
     byte limit = 4;
     RoomInfo[] roomInfoList;
 
     public GameObject room;
     public Transform gridTr;
+    public TMP_InputField txtRoomName;
 
     private void Awake()
     {
@@ -70,14 +71,6 @@ public class CreateRoom : MonoBehaviourPunCallbacks
 
         // 방 생성 패널 활성화
         GameObject.Find("Canvas").transform.Find("MakeRoom").gameObject.SetActive(true);
-
-        GameObject inputTitle = GameObject.Find("Title");
-        var inputT = inputTitle.GetComponent<InputField>();
-        var se = new InputField.SubmitEvent();
-        se.AddListener(SubmitName);
-        inputT.onEndEdit = se;
-
-        Debug.Log(inputT.onEndEdit);
     }
 
     public override void OnConnectedToMaster()
@@ -103,15 +96,10 @@ public class CreateRoom : MonoBehaviourPunCallbacks
         PlayerPrefs.SetString("characterN", characterName);
         Debug.Log("createRoom    " + characterName);
 
-        SceneManager.LoadScene("Main");
-    }
-
-    private void SubmitName(string arg0)
-    {
-        Debug.Log(arg0);
-        title = arg0;
         // unity -> front로 방 이름 전달
         UnityRoomHook(title);
+
+        SceneManager.LoadScene("Main");
     }
 
     // 취소하기 버튼 click
@@ -124,11 +112,6 @@ public class CreateRoom : MonoBehaviourPunCallbacks
         GameObject.Find("Canvas").transform.Find("Panel").gameObject.SetActive(true);
     }
 
-    public void setInputTitle(string _data)
-    {
-        title = _data;
-    }
-
     // 생성하기 버튼 click
     public void onClickCreateRoom()
     {
@@ -139,7 +122,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
         GameObject.Find("Canvas").transform.Find("Panel").gameObject.SetActive(true);
 
         // 방 생성
-        PhotonNetwork.CreateRoom(title, new RoomOptions { MaxPlayers = 4, PlayerTtl = 60000 });
+        PhotonNetwork.CreateRoom(txtRoomName.text, new RoomOptions { MaxPlayers = 4, PlayerTtl = 60000 });
     }
 
     // 방 정보
