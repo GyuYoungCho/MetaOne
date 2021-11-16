@@ -39,7 +39,8 @@ public class GetUnderTheTable : MonoBehaviour
             Invoke("hideGuide", 3);
 
             // 2번째 미션 추가
-            GameObject.Find("asset_int_backpack_orange_057").AddComponent<ClickBackpack>();
+            if(GameObject.Find("asset_int_backpack_orange_057").GetComponent<ClickBackpack>() == null)
+                GameObject.Find("asset_int_backpack_orange_057").AddComponent<ClickBackpack>();
         }
 
     }
