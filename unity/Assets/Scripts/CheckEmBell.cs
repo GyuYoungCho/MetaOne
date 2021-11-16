@@ -33,9 +33,21 @@ public class CheckEmBell : MonoBehaviour
         Toggle t = clickedToggle.GetComponent(typeof(Toggle)) as Toggle;
         t.isOn = true;
 
-        // emergency 경보음 추가할 수 있으면 추가
+        // emergency 경보음 추가 (음소거 아닐경우 play)
+        if(PlayerPrefs.GetInt("BgmState") == 1)
+        {
+            GameObject mc = GameObject.Find("MainCamera");
+            AudioSource emergencyBell = mc.AddComponent<AudioSource>();
+            emergencyBell.clip = Resources.Load("Sound/Emergency Siren Close Long") as AudioClip;
+            emergencyBell.loop = true;
+            emergencyBell.volume = PlayerPrefs.GetFloat("volume") + 0.2f;
+            emergencyBell.Play();
+        }
 
         // 2번째 미션 추가
-        GameObject.Find("asset_kitchen_napkin_holder_011").AddComponent<checkTowel>();
+        foreach (GameObject obj in GameObject.FindGameObjectsWithTag("Napkin"))
+        {
+            obj.AddComponent<checkTowel>();
+        }
     }
 }
