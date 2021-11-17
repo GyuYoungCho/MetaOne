@@ -22,27 +22,8 @@ export default {
       method: "get",
     });
   },
-  getCertificate(data) {
-    return _axios({
-      url: `/edu/certificate`,
-      method: "get",
-      params: {
-        education: data,
-      },
-    });
-  },
-  updateCertificate(data) {
-    return _axios({
-      url: `/edu/rank`,
-      method: "put",
-      data: {
-        education: data.education,
-        passtime: data.passtime,
-      },
-    });
-  },
   getRank(data) {
-    console.log("data: ", data)
+    console.log("data: ", data);
 
     return _axios({
       url: `/edu/rank`,

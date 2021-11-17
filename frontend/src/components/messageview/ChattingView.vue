@@ -179,6 +179,10 @@ export default {
               this.getMessSize(val.length)
           }
         },
+        unityRoom(val){
+          console.log(val)
+          this.fetchMessages()
+        }
     }
 }
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ChattingView v-if="unityRoom"/>
+    <ChattingView v-if="unityRoom && enterroom"/>
   </div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
         ChattingView
     },
     computed:{
-      ...mapState('unity', ['unityRoom']),
+      ...mapState('unity', ['unityRoom','enterroom']),
     }
 }
 </script>
