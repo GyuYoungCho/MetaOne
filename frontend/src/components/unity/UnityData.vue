@@ -27,12 +27,13 @@ export default {
             education:"",
             isFireEducated:0,
             isEarthEducated:0,
+            
         }
     },
     props:{
         instance :Object
     },
-    created(){
+    async created(){
         this.$store.commit('unity/SET_UNITY_CHARACTER', "") 
         this.$store.commit('unity/SET_UNITY_ROOM', "")
         this.$store.commit('unity/SET_UNITY_EDUCATIONNAME', "")
@@ -40,8 +41,14 @@ export default {
         this.$store.commit('unity/SET_UNITY_EDUCATIONAUTH', false)
         this.$store.commit('unity/SET_UNITY_OBJECT','')
 
-        this.getEducations()
+        await this.getEducations()
 
+        if(this.educations){
+            this.educations.forEach((item) => {
+                if(item.education=="화재") this.isFireEducated = 1
+                if(item.education=="지진") this.isEarthEducated = 1
+            });
+        }
     },
     async mounted(){                                // 테스트를 위해 페이지 로딩 시 axois 수행해보기
         this.interval = setInterval(()=>{
@@ -75,7 +82,7 @@ export default {
             console.log("time...")
             await this.$store.commit('unity/SET_UNITY_EDUCATIONTIME', this.unityEducationTime)
             await this.setEducationTime()
-            await this.getEducations()
+            await this.getEducaitons()
             document.getElementById("unity-education-time").value= "";
             this.unityEducationTime=""
             
@@ -92,24 +99,23 @@ export default {
 
             document.getElementById("unity-education-auth").value= "";
             this.unityEducationAuth=""
+            await this.getEducaitons()
         },
     },
     computed:{
         ...mapState('user', ['nickname', 'email']),
         ...mapGetters("education", ["educations"]),
         ...mapState('unity',['unityEduName']),
-        educated_list(){
-            let elist=[]
-            if(this.educations){
-                this.educations.forEach((item) => {
-                    if(item.education=="화재") this.isFireEducated = 1
-                    if(item.education=="지진") this.isEarthEducated = 1
-                });
-
-                
-            }
-            return elist
-        }
+        // educated_list(){
+        //     let elist=[]
+        //     if(this.educations){
+        //         this.educations.forEach((item) => {
+        //             if(item.education=="화재") this.isFireEducated = 1
+        //             if(item.education=="지진") this.isEarthEducated = 1
+        //         });
+        //     }
+        //     return elist
+        // }
     },
     watch:{
         unityObject(val){
@@ -173,7 +179,14 @@ export default {
         unityEducationAuth(val){           // 교육 수강 여부
             if(val) this.setEducationAuthMethod()
         },
-
+        educations(val){
+            if(val){
+                val.forEach((item) => {
+                    if(item.education=="화재") this.isFireEducated = 1
+                    if(item.education=="지진") this.isEarthEducated = 1
+                });
+            }
+        }
         
     }
 }
