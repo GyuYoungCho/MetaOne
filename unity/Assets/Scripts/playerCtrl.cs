@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 using Photon.Pun;
 using Photon.Realtime;
@@ -27,6 +29,8 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
     private bool isSit = false;
     private bool isCry = false;
 
+    public TextMeshPro nick;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -43,7 +47,10 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
         cc = GetComponentInChildren<CharacterController>();
 
         MoveDir = Vector3.zero;
-
+        
+        //nick.text = photonView.Owner.NickName;
+        nick.text = PhotonNetwork.NickName;
+        
     }
 
     // Update is called once per frame
