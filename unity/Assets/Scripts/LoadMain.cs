@@ -77,7 +77,7 @@ public class LoadMain : MonoBehaviourPunCallbacks
     void CreateCharacter()
     {
         Debug.Log(characterName);
-
+        
         GameObject me = PhotonNetwork.Instantiate(characterName, new Vector3(-0.7f, 0, -5.06f), Quaternion.identity);
 
         //me.AddComponent<MovingCharacter>();
@@ -86,18 +86,18 @@ public class LoadMain : MonoBehaviourPunCallbacks
         me.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
 
         // 닉네임 추가
-        GameObject nickname = new GameObject("Nickname");
-        nickname.transform.position = new Vector3(28f, 2.6f, -15f);
-        nickname.transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
-        nickname.transform.SetParent(me.transform);
+        //GameObject nickname = new GameObject("Nickname");
+        //nickname.transform.position = new Vector3(28f, 2.6f, -15f);
+        //nickname.transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
+        //nickname.transform.SetParent(me.transform);
 
-        TextMeshPro nn = nickname.AddComponent<TextMeshPro>();
-        nn.text = PhotonNetwork.NickName;
-        nn.font = Resources.Load("Font/SDSamliphopangcheBasic SDF") as TMP_FontAsset;
-        nn.fontSize = 6;
-        nn.color = Color.black;
-        nn.horizontalAlignment = HorizontalAlignmentOptions.Center;
-        nn.verticalAlignment = VerticalAlignmentOptions.Middle;
+        //TextMeshPro nn = nickname.AddComponent<TextMeshPro>();
+        //nn.text = PhotonNetwork.NickName;
+        //nn.font = Resources.Load("Font/SDSamliphopangcheBasic SDF") as TMP_FontAsset;
+        //nn.fontSize = 6;
+        //nn.color = Color.black;
+        //nn.horizontalAlignment = HorizontalAlignmentOptions.Center;
+        //nn.verticalAlignment = VerticalAlignmentOptions.Middle;
 
         // 하위에 카메라 추가
         GameObject mc = new GameObject("Main Camera");
