@@ -3,7 +3,7 @@
         <main-title :title="'마이페이지'"></main-title>
 
         <div class="row mypage">
-            <div class="col-md-2">
+            <div class="col-md-2 profile">
                 <div>
                     <img :src="require(`@/assets/image/character/Ch${userCha}.png`)" ref="">
                 </div>
@@ -158,6 +158,7 @@ export default {
         },
 
         userCha(){
+            if(!this.characid) return "00"
             if(this.characid<10) return "0" + new String(this.characid)
             else return this.characid
         }

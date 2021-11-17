@@ -8,7 +8,7 @@
         <img class="avatar avatar-48 bg-transparent rounded-circle text-white p-1 "
             :src= "require(`@/assets/image/character/Ch${userCha}.png`)">
         </div>
-        <div class="username col-4 mt-2">
+        <div class="username col-8 mt-2">
           <span>{{user.nickname}}</span>
         </div>
       
