@@ -21,7 +21,7 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
     float jumpSpeed = 10.0f;
     CharacterController cc;
     Vector3 playerPosition;
-    float gravity = 50.0f;
+    float gravity = 100.0f;
 
     private Vector3 MoveDir;
 
@@ -90,7 +90,7 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
 
             dir = new Vector3(h, 0, v);
             dir = dir.normalized;
-            dir.y -= gravity * Time.deltaTime;  // 중력
+            dir.y -= gravity * Time.deltaTime*3;  // 중력
 
             dir = dir * moveSpeed * Time.deltaTime;
             cc.Move(dir * moveSpeed * Time.deltaTime);
@@ -207,5 +207,19 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
         Debug.Log("isWalking >>> " + isWalking);
         anim.SetBool("IsWalking", isWalking);
     }
-    
+
+    float pushPower = 2.0F;
+    void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        Rigidbody body = hit.collider.attachedRigidbody;
+        if (body == null || body.isKinematic)
+            return;
+
+        if (hit.moveDirection.y < -0.3F)
+            return;
+
+        Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
+        body.velocity = pushDir * pushPower;
+    }
+
 }
