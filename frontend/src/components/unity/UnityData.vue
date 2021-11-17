@@ -82,7 +82,7 @@ export default {
             console.log("time...")
             await this.$store.commit('unity/SET_UNITY_EDUCATIONTIME', this.unityEducationTime)
             await this.setEducationTime()
-            await this.getEducaitons()
+            await this.getEducations()
             document.getElementById("unity-education-time").value= "";
             this.unityEducationTime=""
             
@@ -99,7 +99,7 @@ export default {
 
             document.getElementById("unity-education-auth").value= "";
             this.unityEducationAuth=""
-            await this.getEducaitons()
+            await this.getEducations()
         },
     },
     computed:{
