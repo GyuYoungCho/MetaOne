@@ -14,6 +14,9 @@ public class LoadScene : MonoBehaviourPunCallbacks
     [DllImport("__Internal")]
     private static extern void UnityEducationTimeHook(int eduTime);
 
+    [DllImport("__Internal")]
+    private static extern void UnityObjectHook(string obj);
+
     //    private Text[] timeText = { "05", "00" };
     int IsOut;
     private float LimitTime = 120;
@@ -197,7 +200,11 @@ public class LoadScene : MonoBehaviourPunCallbacks
             PhotonNetwork.LoadLevel("ChooseCharacter");
         }
         else if (!isRejoin)
+        {
+            // unity -> front 방 나갈 때 메세지 전송
+            UnityObjectHook("roomOut");
             PhotonNetwork.LoadLevel("ChooseRoom");
+        }
 
         //base.OnLeftRoom();
     }
