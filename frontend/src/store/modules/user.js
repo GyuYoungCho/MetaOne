@@ -166,7 +166,9 @@ const actions = {
       .catch((err) => {
         console.log(err);
         alert("기존 비밀번호가 틀렸습니다");
+        return;
       });
+    router.go();
   },
   async updateNickname({ state }) {
     await userApi
@@ -180,7 +182,9 @@ const actions = {
       .catch((err) => {
         console.log(err);
         alert("닉네임 변경에 실패했습니다.");
+        return;
       });
+    router.go();
   },
   async sendTempPw({ state }) {
     await userApi

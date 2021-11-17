@@ -88,13 +88,22 @@ public class CertificateServiceImpl implements CertificateService{
     @Override
     public void setMissionClearTime(int userId, int unityTime, String education) {
         Optional<Education> edu = educationRepository.findByEducation(education);
-
+        System.out.println(education);
         Optional<Certificate> certificate = certificateRepository.findByEducationAndUserId(edu.get(), userId);
 
         certificate.ifPresent(select -> {
-            select.setPassTime(Math.min(select.getPassTime(), unityTime));
-            select.setAuthenticated(true);
-            certificateRepository.save(select);
+        	if(select.getPassTime()!=null && select.getPassTime()> unityTime) {
+        		select.setPassTime(Math.min(select.getPassTime(), unityTime));
+        		select.setCreateAt(new Date());
+        		select.setAuthenticated(true);
+        		certificateRepository.save(select);
+        	}else if(select.getPassTime()==null){
+        		select.setPassTime(unityTime);
+        		select.setCreateAt(new Date());
+        		select.setAuthenticated(true);
+        		certificateRepository.save(select);
+        	}
+            
         });
     }
 }
