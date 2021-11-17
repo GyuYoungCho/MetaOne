@@ -44,7 +44,9 @@
     margin: 0px;
     padding-left: 20px;
     cursor: pointer;
-    color: #3a4394;
+    color: #202b8f;
+    font-size: 1.1rem;
+    font-weight: 500;
     &:hover {
       box-shadow: 200px 0 0 0 rgba(38, 56, 133, 0.5) inset;
       color: $offwhite;
