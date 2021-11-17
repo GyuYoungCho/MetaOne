@@ -89,4 +89,16 @@
       margin-bottom: 40px;
     }
   }
+
+  .rank {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    margin-top: 40px;
+    height: 500px;
+
+    .rank-list {
+      font-size: 2rem;
+    }
+  }
 }
