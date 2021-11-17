@@ -34,7 +34,6 @@
     <script>
       // 오브젝트 이름
       function _objectHook(object) {
-        console.log(object)
         document.getElementById("unity-object").value= object;
       }
 
@@ -44,22 +43,18 @@
       }
       // 방 정보
       function _roomHook(room) {
-        console.log(room)
         document.getElementById("unity-room").value= room;
       }
       // 교육 명
       function _educationNameHook(educationName) {
-        console.log("eduname" + educationName)
         document.getElementById("unity-education-name").value= educationName;
       }
       // 교육 passTime
       function _educationTimeHook(educationTime) {
-        console.log("time : " + educationTime)
         document.getElementById("unity-education-time").value= educationTime;
       }
       // 교육 이수 유무
       function _educationAuthHook(educationAuth) {
-        console.log("auth : " + educationAuth)
         document.getElementById("unity-education-auth").value = educationAuth;
       }
 
