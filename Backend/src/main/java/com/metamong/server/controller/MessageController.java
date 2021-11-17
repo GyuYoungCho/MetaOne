@@ -137,31 +137,6 @@ public class MessageController {
 	}
 
 	/***
-	 	 * @param : Note
-	 	 * title : 제목 String, content : 내용 String
-	     * @return : Created(201)
-		 * @throws IOException : 자동 완성
-	 * @throws InterruptedException 
-	 * @throws FirebaseMessagingException 
-	*/
-	
-	@PostMapping("/public")
-	@ApiOperation(value = "전체 쪽지를 발신한다")
-	public ResponseEntity<String> sendAll(@RequestBody MessageDto.AllSendRequest allSend, HttpServletRequest request) throws IOException, FirebaseMessagingException, InterruptedException { 
-		int userId = (int) request.getAttribute("userId");
-		Optional<User> user = userRepository.findById(userId);
-		if(!user.isPresent()) return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
-
-		Optional<List<FirebaseToken>> recv_tokens = firebaseTokenRepository.findByUserIdNot(userId);
-		
-		if(!recv_tokens.isPresent())  return ResponseEntity.noContent().build();
-		
-		firebaseCloudMessageService.sends(recv_tokens.get(), Integer.toString(0), allSend.getTitle(), allSend.getContent());
-		
-		return ResponseEntity.status(201).build();
-	}
-
-	/***
 	 * @return : List<Online> 
 		* isOnline: boolean, nickname: String, email: String,
 	 * @throws IOException : 자동 완성

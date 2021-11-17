@@ -7,7 +7,6 @@ import com.metamong.server.entity.Education;
 import com.metamong.server.exception.ApplicationException;
 import com.metamong.server.repository.CertificateRepository;
 import com.metamong.server.repository.EducationRepository;
-import com.metamong.server.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,9 +15,6 @@ import java.util.*;
 
 @Service
 public class CertificateServiceImpl implements CertificateService{
-
-    @Autowired
-    private UserRepository userRepository;
 
     @Autowired
     private CertificateRepository certificateRepository;
@@ -38,24 +34,6 @@ public class CertificateServiceImpl implements CertificateService{
         eduResponse.setCreateAt(certificate.get().getCreateAt());
 
         return eduResponse;
-    }
-
-    public void updateCertificate(EducationDto.EduRequest eduReq, int userId){
-        Optional<Education> edu = educationRepository.findByEducation(eduReq.getEducation());
-
-        Optional<Certificate> certificate = certificateRepository.findByEducationAndUserId(edu.get(), userId);
-        if(!certificate.isPresent()) throw new ApplicationException(HttpStatus.valueOf(404), "There is no certification");
-
-        if(certificate.get().getPassTime() == null){
-            if(eduReq.getPassTime() > edu.get().getDuration()) throw new ApplicationException(HttpStatus.valueOf(404), "TIME OUT");
-            certificate.get().setPassTime(eduReq.getPassTime());
-            certificateRepository.save(certificate.get());
-        }
-
-        else if(eduReq.getPassTime() < certificate.get().getPassTime()){
-            certificate.get().setPassTime(eduReq.getPassTime());
-            certificateRepository.save(certificate.get());
-        }
     }
 
     public RankDto.ResponseList getRank(String education){

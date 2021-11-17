@@ -16,9 +16,6 @@ public interface UserService {
     public UserDto.userInfoResponse getUserInfo(String nickname);
     public UserDto.userInfoResponse getMyInfo(int userId);
 
-    public void setCharacter(int userId, int character);
-    public UserDto.characterResponse getCharacter(int userId);
-    public UserDto.allCharactersResponse getAllCharacter();
     public UserDto.LoginRes login(UserDto.LoginRequest loginReq);
     public void validatePassword(String password);
     public Optional<User> checkPassword(UserDto.UpdateRequest updateInfo, HttpServletRequest request);

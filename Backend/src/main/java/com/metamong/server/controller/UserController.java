@@ -376,57 +376,6 @@ public class UserController {
     }
 
     /***
-     *
-     * @param characterId : 캐릭터 file url
-     * @return
-     * @throws IOException
-     */
-    @PutMapping("character")
-    @ApiOperation(value="사용자 캐릭터 선택")
-//    public ResponseEntity selectcharacter(
-//            @RequestBody @ApiParam(value = "캐릭터 file url", required = true) Object fileUrl
-//            ) throws IOException{
-    public ResponseEntity selectcharacter(
-            @RequestBody @ApiParam(value = "캐릭터 Id", required = true) int characterId, HttpServletRequest request) throws IOException{
-
-        int userId = (Integer) request.getAttribute("userId");
-        // 선택한 characterId를 token에 저장되어 있는 userId와 함께 service로 보내줌
-        userService.setCharacter(userId, characterId);
-
-        return ResponseEntity.status(200).build();
-    }
-
-    /***
-     *
-     * @return
-     * @throws IOException
-     */
-    @GetMapping("character")
-    @ApiOperation(value="현재 사용자 캐릭터 조회")
-    public ResponseEntity character(HttpServletRequest request) throws IOException{
-
-        int userId = (Integer) request.getAttribute("userId");
-        // token에 저장되어 있는 userId를 service로 보내줌
-        UserDto.characterResponse res = userService.getCharacter(userId);
-
-        return ResponseEntity.ok().body(res);
-    }
-
-    /***
-     *
-     * @return
-     * @throws IOException
-     */
-    @GetMapping("characters")
-    @ApiOperation(value="모든 캐릭터 조회")
-    public ResponseEntity<UserDto.allCharactersResponse> allcharacters() throws IOException{
-
-        UserDto.allCharactersResponse res = userService.getAllCharacter();
-
-        return ResponseEntity.ok().body(res);
-    }
-    
-    /***
     *
     * @param updateInfo : 처음 왔을때
     * @return

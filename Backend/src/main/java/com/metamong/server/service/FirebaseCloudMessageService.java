@@ -19,8 +19,6 @@ public interface FirebaseCloudMessageService {
 
 	List<FirebaseToken> getUserToken(int userId);
 
-	List<FirebaseToken> getBroadcastToken();
-
 	void sends(List<FirebaseToken> tokens, String messageKey, String title, String body)
 			throws InterruptedException, IOException, FirebaseMessagingException;
 
