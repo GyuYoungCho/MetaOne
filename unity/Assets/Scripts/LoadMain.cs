@@ -7,10 +7,15 @@ using TMPro;
 using Photon.Pun;   // 유니티용 포톤 컴포넌트
 using Photon.Realtime;  // 포톤 서비스 관련 라이브러리
 
+using System.Runtime.InteropServices;
+
 public class LoadMain : MonoBehaviourPunCallbacks
 {
     //[DllImport("__Internal")]
     //private static extern void UnityCharacterHook(string str);
+
+    [DllImport("__Internal")]
+    private static extern void UnityEducationNameHook(string eduName);
 
     string characterName;
     string characterData;
@@ -56,6 +61,10 @@ public class LoadMain : MonoBehaviourPunCallbacks
         rend1.material = m1;
         rend2.material = m1;
         rend3.material = m1;
+
+        // unity -> front로 교육명 전달
+        UnityEducationNameHook("earthquake");
+        UnityEducationNameHook("fire");
 
     }
 
