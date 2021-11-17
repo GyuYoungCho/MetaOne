@@ -84,6 +84,8 @@ public class LoadMain : MonoBehaviourPunCallbacks
         CharacterController cc = me.AddComponent<CharacterController>();
         me.transform.position = new Vector3(28f, 0, -15f);
         me.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+        cc.slopeLimit = 90f;
+        cc.stepOffset = 0.1f;
 
         // 닉네임 추가
         //GameObject nickname = new GameObject("Nickname");
