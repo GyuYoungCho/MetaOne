@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 using Photon.Pun;   // 유니티용 포톤 컴포넌트
 using Photon.Realtime;  // 포톤 서비스 관련 라이브러리
@@ -83,6 +84,20 @@ public class LoadMain : MonoBehaviourPunCallbacks
         CharacterController cc = me.AddComponent<CharacterController>();
         me.transform.position = new Vector3(28f, 0, -15f);
         me.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
+
+        // 닉네임 추가
+        GameObject nickname = new GameObject("Nickname");
+        nickname.transform.position = new Vector3(28f, 2.6f, -15f);
+        nickname.transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
+        nickname.transform.SetParent(me.transform);
+
+        TextMeshPro nn = nickname.AddComponent<TextMeshPro>();
+        nn.text = PhotonNetwork.NickName;
+        nn.font = Resources.Load("Font/SDSamliphopangcheBasic SDF") as TMP_FontAsset;
+        nn.fontSize = 6;
+        nn.color = Color.black;
+        nn.horizontalAlignment = HorizontalAlignmentOptions.Center;
+        nn.verticalAlignment = VerticalAlignmentOptions.Middle;
 
         // 하위에 카메라 추가
         GameObject mc = new GameObject("Main Camera");

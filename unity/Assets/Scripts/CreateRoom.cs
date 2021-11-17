@@ -175,10 +175,24 @@ public class CreateRoom : MonoBehaviourPunCallbacks
     {
         // unity -> front로 방 이름 전달(이미 생성되어 있는 방 클릭 시)
         UnityRoomHook(roomName);
-        PhotonNetwork.NickName = "gg";
         PhotonNetwork.JoinRoom(roomName, null);
         PlayerPrefs.SetString("roomTitle", roomName);
         PlayerPrefs.SetString("USER_ID", PhotonNetwork.NickName);
+    }
+
+    void initPlayerNickName(string nickname)
+    {
+        PhotonNetwork.NickName = nickname;
+    }
+
+    void isFireEducated(int state)
+    {
+        PlayerPrefs.SetInt("fire", state);
+    }
+
+    void isEarthquakeEducated(int state)
+    {
+        PlayerPrefs.SetInt("earthquake", state);
     }
 
 }

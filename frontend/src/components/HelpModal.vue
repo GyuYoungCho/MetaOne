@@ -15,7 +15,9 @@
                 <i class="fas fa-long-arrow-alt-down"></i>&nbsp; 
                 <i class="fas fa-long-arrow-alt-right"></i>
                 &nbsp;&nbsp;또는 &nbsp; W A S D
-                <br> 사물을 누르면 교육 영상 시청 및 미션을 수행하거나 방명록, 랭킹 등을 볼 수 있습니다
+                 <br> 캐릭터 행동 : 1 2 3
+                <br> 사물을 클릭하면 교육 영상 시청 및 미션을 수행하고 방명록, 랭킹 등을 볼 수 있습니다.
+                <br> 게임 내에서도 사물을 클릭함으로써 미션을 수행할 수 있습니다.
                 <br><br>
                 
                 메뉴 설명<br> 

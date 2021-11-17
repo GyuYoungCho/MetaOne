@@ -6,9 +6,9 @@ const state = {
   unityCharacter: "",
   unityRoom: "",
   roomid: "",
-  unityEducationName: "", //
-  unityEducationTime: 0,
-  unityEducationAuth: false,
+  unityEduName: "", //
+  unityEduTime: 0,
+  unityEduAuth: false,
 };
 
 const actions = {
@@ -48,13 +48,13 @@ const mutations = {
     state.roomid = payload;
   },
   SET_UNITY_EDUCATIONNAME(state, payload) {
-    state.unityEducationName = payload;
+    state.unityEduName = payload;
   },
   SET_UNITY_EDUCATIONTIME(state, payload) {
-    state.unityEducationTime = payload;
+    state.unityEduTime = payload;
   },
   SET_UNITY_EDUCATIONAUTH(state, payload) {
-    state.unityEducationAuth = payload;
+    state.unityEduAuth = payload;
   },
 };
 

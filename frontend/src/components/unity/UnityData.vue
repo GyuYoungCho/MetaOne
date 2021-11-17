@@ -25,7 +25,12 @@ export default {
             unityEducationTime: "",
             unityEducationAuth: "",
             education:"",
+            isFireEducated:0,
+            isEarthEducated:0,
         }
+    },
+    props:{
+        instance :Object
     },
     created(){
         this.$store.commit('unity/SET_UNITY_CHARACTER', "") 
@@ -48,7 +53,7 @@ export default {
             this.unityEducationAuth = document.getElementById("unity-education-auth").value
 
         },1000)
-        console.log( document.getElementById("unity-character"))
+        
     },
     destroyed(){
         clearInterval(this.interval);
@@ -59,32 +64,53 @@ export default {
         async setCharacterMethod(){
             await this.$store.commit('unity/SET_UNITY_CHARACTER', this.unityCharacter)        // 파일명 저장
             await this.setCharacter()
+            this.instance.SendMessage('MainCamera','initPlayerNickName',this.nickname);
+            this.instance.SendMessage('MainCamera','isFireEducated',this.isFireEducated);
+            this.instance.SendMessage('MainCamera','isEarthquakeEducated',this.isEarthEducated);
         },
         async setRoomMethod(){
             await this.$store.commit('unity/SET_UNITY_ROOM', this.unityRoom)
-            // await this.setRoom()
+            
         },
         async setEducationTimeMethod(){
+            console.log("time...")
             await this.$store.commit('unity/SET_UNITY_EDUCATIONTIME', this.unityEducationTime)
-            await this.setEducationTime(this.education)
+            await this.setEducationTime()
+            await this.getEducations()
+            document.getElementById("unity-education-time").value= "";
+            this.unityEducationTime=""
+            this.instance.SendMessage('LoadMain','is_educate',this.educated_list);
         },
         async setEducationAuthMethod(){
-            await this.$store.commit('SET_UNITY_EDUCATIONNAME', this.education)
             await educationAPI.registerAttendance(this.education)
                 .then((res) => {
-                    console.log(res.daat)
+                    console.log(res)
                 })
                 .catch((error) => {
                 alert("못가져옴");
                 console.log(error);
                 });
-            // await this.$store.commit('unity/SET_UNITY_EDUCATIONAUTH', this.unityEducationAuth)
-            // await this.setEducationAuth()
+
+            document.getElementById("unity-education-auth").value= "";
+            this.unityEducationAuth=""
         },
     },
     computed:{
         ...mapState('user', ['nickname', 'email']),
-        ...mapGetters("education", ["educations"])
+        ...mapGetters("education", ["educations"]),
+        ...mapState('unity',['unityEduName']),
+        educated_list(){
+            let elist=[]
+            if(this.educations){
+                this.educations.forEach((item) => {
+                    if(item.education=="화재") this.isFireEducated = 1
+                    if(item.education=="지진") this.isEarthEducated = 1
+                });
+
+                
+            }
+            return elist
+        }
     },
     watch:{
         unityObject(val){
@@ -122,6 +148,9 @@ export default {
             if(val){
                 if(val=='fire') this.education = "화재"
                 if(val=='earthquake') this.education = "지진"
+                this.$store.commit('unity/SET_UNITY_EDUCATIONNAME', this.education)
+                document.getElementById("unity-education-name").value= "";
+                this.unityEducationName=""
             }
         },
         unityEducationTime(val){           // 시험 통과 시간
