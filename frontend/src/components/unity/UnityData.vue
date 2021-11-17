@@ -64,9 +64,9 @@ export default {
         async setCharacterMethod(){
             await this.$store.commit('unity/SET_UNITY_CHARACTER', this.unityCharacter)        // 파일명 저장
             await this.setCharacter()
-            this.instance.SendMessage('MainCamera','initPlayerNickname',this.nickname);
+            this.instance.SendMessage('MainCamera','initPlayerNickName',this.nickname);
             this.instance.SendMessage('MainCamera','isFireEducated',this.isFireEducated);
-            this.instance.SendMessage('MainCamera','isEarthEducated',this.isEarthEducated);
+            this.instance.SendMessage('MainCamera','isEarthquakeEducated',this.isEarthEducated);
         },
         async setRoomMethod(){
             await this.$store.commit('unity/SET_UNITY_ROOM', this.unityRoom)

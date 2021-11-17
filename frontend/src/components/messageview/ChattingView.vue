@@ -161,7 +161,7 @@ export default {
 
     async created(){
         this.getChattingOpen(false)
-        this.getMessSize(0)
+        // this.getMessSize(0)
     },
     async mounted(){
       setTimeout(() => {
