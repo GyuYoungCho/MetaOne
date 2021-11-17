@@ -150,8 +150,6 @@ export default {
           if(this.instance !== undefined) {
             if(this.allMap) this.instance.SendMessage('KeyManager','FocusCanvas','1');
             else this.instance.SendMessage('KeyManager','FocusCanvas','0');
-            this.instance.SendMessage('LobbyManager','initPlayer',this.nickname);
-            // this.instance.SendMessage('LobbyManager','initPlayer',this.nickname);
 
             this.$store.commit("process/SET_UNITY_INSTANCE",true);
           }

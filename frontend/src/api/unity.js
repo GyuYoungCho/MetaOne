@@ -27,8 +27,8 @@ export default {
       url: `/edu/time`,
       method: "post",
       data: {
-        unityEducationTime: data.unityEducationTime,
-        unityEducation: data.unityEducationName,
+        unityEducationTime: data.unityEduTime,
+        unityEducation: data.unityEduName,
       },
     });
   },
