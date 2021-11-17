@@ -5,7 +5,7 @@
       <!-- 채팅 페이지 여는 버튼 -->
       <!-- v-if="unityRoom!=''" 추가하기 -->
       <button class="icon-btn" data-bs-toggle="offcanvas" data-bs-target="#chatting" aria-controls="chatting">
-        <i class="far fa-comments fa-5x"></i>
+        <img class="chatting" src="@/assets/image/chatting.png" alt="">
       </button>
 
       <!-- 새 메시지용 아이콘 -->
