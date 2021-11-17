@@ -12,7 +12,7 @@
             <div class="pt-2 col-4 txl">{{guestitem.content}}</div>
             <div class="pt-2 col-1 txl"></div>
             <div class="pt-2 col-3 txl">{{register_time(guestitem.createAt)}}</div>
-            <div class="pt-1 col txl">
+            <div class="col txl">
               <button class="btn-modify" @click="openModal('modify',guestitem)" v-if="guestitem.nickname==nickname"
               data-bs-toggle="modal" data-bs-target="#FormModal">수정</button>
             </div>

@@ -16,8 +16,8 @@
                     <li class="list-group-item" v-for="e, i in rank" :key="i" >
                         <div class="row" :class="{'first' : i==0,'second' : i==1,'third' : i==2}">
                             <div class="col-2"></div>
-                            <div class="col-3">{{i+1}}위</div> 
-                            <div class="col-3"> {{e.nickname}}</div> 
+                            <div class="col-2">{{i+1}}위</div> 
+                            <div class="col-4"> {{e.nickname}}</div> 
                             <div class="col-4">{{(e.passTime - (e.passTime % 60)) / 60}}분 {{e.passTime % 60}}초</div>
                         </div>
                     </li>
