@@ -178,7 +178,7 @@ export default {
               this.newMessageMark=true
               this.getMessSize(val.length)
           }
-        }
+        },
     }
 }
 </script>

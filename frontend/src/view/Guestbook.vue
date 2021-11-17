@@ -9,8 +9,9 @@
         <li class="list-group-item bg-transparent" v-for="(guestitem, index) in guestbooks" :key="index" :guestitem="guestitem">
           <div class="row">
             <div class="pt-2 col-2 txl">{{guestitem.nickname}}</div>
-            <div class="pt-2 col-3 txl">{{guestitem.content}}</div>
-            <div class="pt-2 col-5 txr">{{register_time(guestitem.createAt)}}</div>
+            <div class="pt-2 col-4 txl">{{guestitem.content}}</div>
+            <div class="pt-2 col-1 txl"></div>
+            <div class="pt-2 col-3 txl">{{register_time(guestitem.createAt)}}</div>
             <div class="pt-1 col txl">
               <button class="btn-modify" @click="openModal('modify',guestitem)" v-if="guestitem.nickname==nickname"
               data-bs-toggle="modal" data-bs-target="#FormModal">수정</button>

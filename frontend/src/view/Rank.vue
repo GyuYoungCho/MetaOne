@@ -3,7 +3,7 @@
         <main-title :title="edu + ' 교육 랭킹'"></main-title>
 
         <div class="rank">
-            
+            <div class="m-contain"></div>
             <div v-if="rank.length == 0" class="row rank">
                 
                 <div class="col-md-5"></div>
@@ -11,10 +11,18 @@
                     해당 교육에 대한 순위 내역이 없습니다.
                 </div>
             </div>
-
-            <li class="input-label rank-list" v-for="e, i in rank" :key="i" >
-                {{i+1}}위 <span style="padding-left: 30px;">{{e.nickname}}</span> <span style="padding-left: 50px; color: red;">{{(e.passTime - (e.passTime % 60)) / 60}}분 {{e.passTime % 60}}초</span>
-            </li>
+            <div class="row rank-list">
+                <ul class="list-group">
+                    <li class="list-group-item" v-for="e, i in rank" :key="i" >
+                        <div class="row" :class="{'first' : i==0,'second' : i==1,'third' : i==2}">
+                            <div class="col-2"></div>
+                            <div class="col-3">{{i+1}}위</div> 
+                            <div class="col-3"> {{e.nickname}}</div> 
+                            <div class="col-4">{{(e.passTime - (e.passTime % 60)) / 60}}분 {{e.passTime % 60}}초</div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
 </template>
