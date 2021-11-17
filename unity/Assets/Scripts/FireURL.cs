@@ -15,6 +15,7 @@ public class FireURL : MonoBehaviour
     public GameObject btn;
     private bool isListened;
     private string characterName;
+    private int isEducated;
 
     public Renderer blackboard;
 
@@ -27,6 +28,7 @@ public class FireURL : MonoBehaviour
         isListened = false;
         btn.SetActive(false);
         characterName = PlayerPrefs.GetString("characterN");
+        isEducated = PlayerPrefs.GetInt("fire");
 
         // 칠판 renderer 설정
         blackboard.material = m1;
@@ -46,16 +48,23 @@ public class FireURL : MonoBehaviour
                 // unity -> front로 교육명 전달
                 UnityEducationNameHook("fire");
 
-                // unity -> front로 교육 이수 유무 전달
-                UnityEducationAuthHook(true);
-
                 Application.OpenURL("https://schoolsafe.kr/post/view?id=630");
-                isListened = true;
+
+                // 교육 이수한적 없다면
+                if (isEducated==0)
+                {
+                    isEducated = 1;
+                    PlayerPrefs.SetInt("fire", 1);
+
+                    // unity -> front로 교육 이수 유무 전달
+                    UnityEducationAuthHook(true);
+                }
+
                 btn.SetActive(true);
             }
         }
 
-        if(isListened && checkArea())
+        if(isEducated==1 && checkArea())
         {
             btn.SetActive(true);
         }
