@@ -96,7 +96,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
         PlayerPrefs.SetString("characterN", characterName);
         Debug.Log("createRoom    " + characterName);
 
-        // unity -> front로 방 이름 전달
+        // unity -> front로 방 이름 전달(방 생성 시)
         UnityRoomHook(PhotonNetwork.CurrentRoom.Name);
 
         SceneManager.LoadScene("Main");
@@ -173,6 +173,8 @@ public class CreateRoom : MonoBehaviourPunCallbacks
 
     void OnClickRoom(string roomName)
     {
+        // unity -> front로 방 이름 전달(이미 생성되어 있는 방 클릭 시)
+        UnityRoomHook(roomName);
         PhotonNetwork.NickName = "gg";
         PhotonNetwork.JoinRoom(roomName, null);
         PlayerPrefs.SetString("roomTitle", roomName);

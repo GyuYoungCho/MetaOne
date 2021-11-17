@@ -112,7 +112,7 @@ ENGINE=INNODB;
 
 insert into characters values (1,'Ch01.png'),(2,'Ch02.png'),(3,'Ch03.png'),(4,'Ch04.png'),(5,'Ch05.png'),(6,'Ch06.png'),(7,'Ch07.png'),(8,'Ch08.png'),(9,'Ch09.png'),(10,'Ch10.png'),(11,'Ch11.png'),(12,'Ch12.png'),(13,'Ch13.png'),(14,'Ch14.png'),(15,'Ch15.png'),(16,'Ch16.png'),(17,'Ch17.png'),(18,'Ch18.png'),(19,'Ch19.png'),(20,'Ch20.png');
 
-insert into education values (1 ,180,'지진'),(2 ,180,'화재');
+insert into education values (1 ,120,'지진'),(2 ,120,'화재');
 
 COMMIT;
 

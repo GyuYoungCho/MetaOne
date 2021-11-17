@@ -27,7 +27,8 @@
               <!-- 보내는사람 -->
               <div v-if="isme(message.nickname)" class="incoming_msg">
                 <div class="col incoming_info">
-                  <div class="row incoming_msg_img"> <img :src="require(`@/assets/image/character/Ch${userCha(message.character)}.png`)" alt=""> </div>
+                  <div class="row incoming_msg_img"> <img :src="require(`@/assets/image/character/Ch`+ userCha(message.character) +`.png`)" 
+                  alt="@/assets/image/character/Ch00.png"> </div>
                   <span class="incoming_name">{{message.nickname}}</span>
                 </div>
                 <div class="received_msg">
@@ -81,7 +82,7 @@ export default {
     computed:{
       ...mapState('user', ['nickname']),
       ...mapState('message', ['messSize']),
-      ...mapState('unity',['unityRoom','roomid','unityCharacter']),
+      ...mapState('unity',['unityRoom','unityCharacter']),
       ...mapState('process',['allMap','chattingOpen']),
 
     },
@@ -89,12 +90,10 @@ export default {
         ...mapActions('message', ['getMessSize']),
         ...mapActions('process', ['getChattingOpen']),
 
-        //roomid -> unityRoom 으로 쓸 예정
-
         sendMessage(){
             let today = new Date()
             let ymd = moment(today).format("yyyyMMDD")
-            let newData = firebase.database().ref('chats/' + ymd + '/'+this.roomid).push();
+            let newData = firebase.database().ref('chats/' + ymd + '/'+this.unityRoom).push();
             newData.set({
                 character : this.unityCharacter,
                 nickname: this.nickname,
@@ -106,11 +105,12 @@ export default {
             this.content=''
         },
 
-        fetchMessages(){
+        async fetchMessages(){
             try {
               let today = new Date()
               let ymd = moment(today).format("yyyyMMDD")
-              firebase.database().ref('chats/' + ymd + '/'+this.roomid).on('value', (snapshot) => {
+              
+              await firebase.database().ref('chats/' + ymd + '/'+this.unityRoom).on('value', (snapshot) => {
                   
                   if (snapshot.exists()) {
                       this.messages = [];
@@ -119,7 +119,7 @@ export default {
                           item.key = doc.key
                           this.messages.push(item)
                       });
-                      
+                      console.log(this.messages)
                       setTimeout(()=>{
                           this.scrollToBottom()
                       },1000)
@@ -153,17 +153,20 @@ export default {
           this.getChattingOpen(false)
         },
         userCha(chaid){
+          console.log(chaid)
           if(chaid<10)
             return "0" + chaid
           else return chaid
         }
     },
 
-    created(){
-        this.fetchMessages()
+    async created(){
         this.getChattingOpen(false)
     },
-    mounted(){
+    async mounted(){
+      setTimeout(() => {
+        this.fetchMessages()
+      }, 2000);
       let offcanvas = document.getElementById('chatting')
       offcanvas.addEventListener('show.bs.offcanvas',this.chatOpen )
       offcanvas.addEventListener('hide.bs.offcanvas', this.chatClose)

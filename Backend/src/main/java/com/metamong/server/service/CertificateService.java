@@ -12,6 +12,4 @@ public interface CertificateService {
     public RankDto.ResponseList getRank(String education);
 
     void setMissionClearTime(int userId, int unityTime, String unityEducation);
-
-    void setEducationAuth(int userId, int auth, String unityEducation);
 }

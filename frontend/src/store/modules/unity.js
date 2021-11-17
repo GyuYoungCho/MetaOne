@@ -6,7 +6,6 @@ const state = {
   unityCharacter: "",
   unityRoom: "",
   roomid: "",
-  unityRoomPopulation: "",
   unityEducationName: "", //
   unityEducationTime: 0,
   unityEducationAuth: false,
@@ -23,29 +22,9 @@ const actions = {
         console.log(err);
       });
   },
-  async setRoom({ state, commit }) {
-    await unityApi
-      .setRoom(state)
-      .then((res) => {
-        commit("SET_UNITY_ROOMID", res.data.id);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
   async setEducationTime({ state }) {
     await unityApi
       .setEducationTime(state)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  },
-  async setEducationAuth({ state }) {
-    await unityApi
-      .setEducationAuth(state)
       .then((res) => {
         console.log(res);
       })
