@@ -188,11 +188,13 @@ public class CreateRoom : MonoBehaviourPunCallbacks
     void isFireEducated(int state)
     {
         PlayerPrefs.SetInt("fire", state);
+        Debug.Log("isFireEducated >> " + state);
     }
 
     void isEarthquakeEducated(int state)
     {
         PlayerPrefs.SetInt("earthquake", state);
+        Debug.Log("isEarthquakeEducated >> " + state);
     }
 
 }

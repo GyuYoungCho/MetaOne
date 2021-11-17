@@ -48,8 +48,8 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
 
         MoveDir = Vector3.zero;
         
-        //nick.text = photonView.Owner.NickName;
-        nick.text = PhotonNetwork.NickName;
+        nick.text = photonView.Owner.NickName;
+        //nick.text = PhotonNetwork.NickName;
         
     }
 
