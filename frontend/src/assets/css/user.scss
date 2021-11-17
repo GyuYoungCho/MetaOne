@@ -94,11 +94,70 @@
     display: flex;
     flex-direction: column;
     text-align: center;
-    margin-top: 40px;
     height: 500px;
 
+    .m-contain {
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, 0%);
+      background-color: white;
+      margin: 0 auto;
+      opacity: 0.7;
+      border-radius: 10px;
+      width: 40%;
+      height: 500px;
+    }
+
     .rank-list {
-      font-size: 2rem;
+      top: 33%;
+      left: 50%;
+      transform: translate(-45%, 0%);
+
+      position: absolute;
+      font-size: 1.7rem;
+      width: 58%;
+
+      ul {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        font-size: 1.7rem;
+        width: 90%;
+        padding: 0px;
+        overflow-y: auto;
+        li {
+          margin: 0px;
+          background-color: transparent;
+          color: $medium-light-blue;
+          border: none;
+          text-align: left;
+        }
+
+        .first {
+          color: #fff704;
+          font-size: 2.5rem;
+        }
+        .second {
+          color: #9a9a9a;
+          font-size: 2rem;
+        }
+        .third {
+          color: #cd7f32;
+          font-size: 1.9rem;
+        }
+      }
+    }
+
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      height: 17%;
+      background-color: #333861;
+      border-radius: 10px;
     }
   }
 }
