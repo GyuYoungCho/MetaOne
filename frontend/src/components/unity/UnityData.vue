@@ -79,7 +79,7 @@ export default {
             await this.getEducations()
             document.getElementById("unity-education-time").value= "";
             this.unityEducationTime=""
-            this.instance.SendMessage('LoadMain','is_educate',this.educated_list);
+            
         },
         async setEducationAuthMethod(){
             await educationAPI.registerAttendance(this.education)
@@ -139,10 +139,18 @@ export default {
             }
         },
         unityCharacter(val){
-            if(val) this.setCharacterMethod()
+            if(val) {
+                this.setCharacterMethod()
+                document.getElementById("unity-character").value= "";
+                this.unityRoom = ""
+            }
         },
         unityRoom(val){               // 방 이름
-            if(val) this.setRoomMethod()
+            if(val) {
+                this.setRoomMethod()
+                document.getElementById("unity-room").value= "";
+                this.unityRoom = ""
+            }
         },
         unityEducationName(val){           // 교육 명 : Vuex 저장
             if(val){
