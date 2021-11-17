@@ -53,7 +53,7 @@ public class EarthquakeURL : MonoBehaviour
                 if (isEducated == 0)
                 {
                     isEducated = 1;
-                    PlayerPrefs.SetInt("fire", 1);
+                    PlayerPrefs.SetInt("earthquake", 1);
 
                     // unity -> front로 교육 이수 유무 전달
                     UnityEducationAuthHook(true);
