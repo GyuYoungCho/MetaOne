@@ -5,10 +5,10 @@ const state = {
   unityObject: "",
   unityCharacter: "",
   unityRoom: "",
-  roomid: "",
   unityEduName: "", //
   unityEduTime: 0,
   unityEduAuth: false,
+  enterroom: false,
 };
 
 const actions = {
@@ -44,9 +44,6 @@ const mutations = {
   SET_UNITY_ROOM(state, payload) {
     state.unityRoom = payload;
   },
-  SET_UNITY_ROOMID(state, payload) {
-    state.roomid = payload;
-  },
   SET_UNITY_EDUCATIONNAME(state, payload) {
     state.unityEduName = payload;
   },
@@ -55,6 +52,9 @@ const mutations = {
   },
   SET_UNITY_EDUCATIONAUTH(state, payload) {
     state.unityEduAuth = payload;
+  },
+  SET_UNITY_ENTERROOM(state, payload) {
+    state.enterroom = payload;
   },
 };
 

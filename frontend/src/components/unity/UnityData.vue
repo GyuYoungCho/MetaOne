@@ -132,6 +132,11 @@ export default {
                     this.unityObject=""
                     this.$router.push({name : 'Rank'});
                     break;
+                case "roomOut":
+                    this.$store.commit('unity/SET_UNITY_ENTERROOM', false)
+                    document.getElementById("unity-object").value= "";
+                    this.unityObject=""
+                    break;
                 
                 default:
                     break;
@@ -147,12 +152,10 @@ export default {
         unityRoom(val){               // 방 이름
             if(val) {
                 this.setRoomMethod()
-                this.$store.commit('unity/SET_UNITY_ENTERROOM', false)
                 document.getElementById("unity-room").value= "";
                 this.unityRoom = ""
-                setTimeout(() => {
-                    this.$store.commit('unity/SET_UNITY_ENTERROOM', true)
-                }, 1000);
+                this.$store.commit('unity/SET_UNITY_ENTERROOM', true)
+               
             }
         },
         unityEducationName(val){           // 교육 명 : Vuex 저장
