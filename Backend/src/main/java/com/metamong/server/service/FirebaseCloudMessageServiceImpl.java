@@ -1,6 +1,5 @@
 package com.metamong.server.service;
 
-import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.messaging.*;
 import com.metamong.server.dto.FcmMessage;
 import com.metamong.server.dto.UserDto;
@@ -10,7 +9,6 @@ import com.metamong.server.entity.User;
 import com.metamong.server.repository.FirebaseTokenRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -131,17 +129,7 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
         return firebaseTokens.orElse(null);
     }
 
-    /**
-     * 현재 접속해 있는 모든 사용자에게 캐스팅을 위해
-     * @return :  Firebase 인증 토큰
-     */
-    @Override
-    public List<FirebaseToken> getBroadcastToken() {
-        List<FirebaseToken> firebaseTokens = firebaseTokenRepository.findAll();
-
-        if(firebaseTokens.size() == 0) return null;
-        return firebaseTokens;
-    }
+    
 
     /**
      * 로그아웃 시 해당 브라우저 연동 Firebase 토큰 DB에서 삭제
@@ -168,22 +156,6 @@ public class FirebaseCloudMessageServiceImpl implements FirebaseCloudMessageServ
         firebaseTokens.ifPresent(select ->{
             firebaseTokenRepository.deleteAll(firebaseTokens.get());
         });
-    }
-
-    
-
-
-
-    private String getAccessToken() throws IOException {
-        String firebaseConfigPath = "firebase/greenfingers-3cbec-firebase-adminsdk-ckq86-7871b76c97.json";
-
-        GoogleCredentials googleCredentials = GoogleCredentials
-                .fromStream(new ClassPathResource(firebaseConfigPath).getInputStream())
-                .createScoped(Arrays.asList("https://www.googleapis.com/auth/cloud-platform"));
-
-        googleCredentials.refreshIfExpired();
-
-        return googleCredentials.getAccessToken().getTokenValue();
     }
     
 }

@@ -112,40 +112,6 @@ public class EduController {
 
     /**
      *
-     * @param education : 교육명
-     * @param request : Client 요청 정보
-     * @return
-     */
-    @GetMapping("/certificate")
-    @ApiOperation(value = "교육 증명서 조회")
-    public ResponseEntity<EducationDto.EduResponse> getCertificate(@RequestParam String education, HttpServletRequest request){
-
-        int userId = (Integer) request.getAttribute("userId");
-
-        EducationDto.EduResponse eduResponse = certificateService.getCertificate(education, userId);
-
-        return ResponseEntity.ok().body(eduResponse);
-    }
-
-    /**
-     *
-     * @param eduReq : 교육명, 통과시간
-     * @param request : Client 요청 정보
-     * @return
-     */
-    @PutMapping("/rank")
-    @ApiOperation(value = "미션 기록 저장 및 수정")
-    public ResponseEntity updateCertificate(@RequestBody EducationDto.EduRequest eduReq, HttpServletRequest request){
-
-        int userId = (Integer) request.getAttribute("userId");
-
-        certificateService.updateCertificate(eduReq, userId);
-
-        return ResponseEntity.status(200).build();
-    }
-
-    /**
-     *
      * @param education : 교육 명
      * @return
      */

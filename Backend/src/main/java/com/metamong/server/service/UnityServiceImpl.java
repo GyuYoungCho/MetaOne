@@ -53,18 +53,4 @@ public class UnityServiceImpl implements UnityService{
         });
         return roomRet;
     }
-
-    @Override
-    public void setRoomPopulation(int userId, int unityRoomPopulation) {
-        Optional<User> user = userRepository.findById(userId);
-
-        user.ifPresent(select -> {
-            Room room = select.getRoom();
-            room.setMaxPopulation(unityRoomPopulation);
-            roomRepository.save(room);
-        });
-
-    }
-
-
 }

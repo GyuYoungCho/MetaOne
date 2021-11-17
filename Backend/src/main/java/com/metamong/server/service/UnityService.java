@@ -5,5 +5,4 @@ import com.metamong.server.entity.Room;
 public interface UnityService {
     void setCharacter(int userId, int unityCharacter);
     Room setRoom(int userId, String unityRoom);
-    void setRoomPopulation(int userId, int unityRoomPopulation);
 }
