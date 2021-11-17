@@ -153,7 +153,6 @@ export default {
           this.getChattingOpen(false)
         },
         userCha(chaid){
-          console.log(chaid)
           if(chaid<10)
             return "0" + chaid
           else return chaid
@@ -162,11 +161,12 @@ export default {
 
     async created(){
         this.getChattingOpen(false)
+        this.getMessSize(0)
     },
     async mounted(){
       setTimeout(() => {
         this.fetchMessages()
-      }, 2000);
+      }, 1500);
       let offcanvas = document.getElementById('chatting')
       offcanvas.addEventListener('show.bs.offcanvas',this.chatOpen )
       offcanvas.addEventListener('hide.bs.offcanvas', this.chatClose)
