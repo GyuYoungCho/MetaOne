@@ -169,7 +169,6 @@ export default {
 
 <style>
 .sort{
-    /* float: left; */
     text-align: left;
 }
 </style>

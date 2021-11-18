@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import Inputparam from '../components/Inputparam.vue'
-import MainTitle from '../components/MainTitle.vue'
+import Inputparam from "@/components/basic/Inputparam.vue";
+import MainTitle from "@/components/basic/MainTitle.vue";
 import { mapState, mapActions } from 'vuex'
 import BASE from "@/api/client.js";
 
@@ -79,18 +79,9 @@ export default {
             this.$router.push({name: 'FindPw'}).catch(() => {})
         }
     }, 
-    mounted(){
-
-    },
-    created(){
-
-    },
     computed:{
         ...mapState('user', ['email', 'password'])
     },
-    watch:{
-
-    }
 }
 </script>
 

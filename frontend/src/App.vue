@@ -13,7 +13,7 @@
 import "./assets/css/index.scss"
 import Menubar from "@/components/Menubar"
 import Loader from '@/components/Loader';
-import ConfirmModal from "@/components/ConfirmModal.vue"
+import ConfirmModal from "@/components/modal/ConfirmModal.vue"
 import UnityProperty from "@/components/unity/UnityProperty.vue"
 import { messaging } from '@/api/firebase.js'
 import { mapActions, mapState } from 'vuex'

@@ -7,7 +7,6 @@ const kakaoHeader = {
 };
 
 const getKakaoToken = async (code) => {
-  console.log("loginWithKakao");
   try {
     const data = {
       grant_type: "authorization_code",
@@ -19,7 +18,6 @@ const getKakaoToken = async (code) => {
       .map((k) => encodeURIComponent(k) + "=" + encodeURIComponent(data[k]))
       .join("&");
     const result = await axios.post("https://kauth.kakao.com/oauth/token", queryString, { headers: kakaoHeader });
-    console.log("카카오 토큰", queryString);
     return result;
   } catch (e) {
     return e;
@@ -37,7 +35,6 @@ const getKakaoUserInfo = async () => {
       console.log(error);
     },
   });
-  console.log("카카오 계정 정보", data);
   return data;
 };
 

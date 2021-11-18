@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import Inputparam from '../components/Inputparam.vue'
-import MainTitle from '../components/MainTitle.vue'
+import Inputparam from '@/components/basic/Inputparam.vue'
+import MainTitle from '@/components/basic/MainTitle.vue'
 import {mapState, mapActions} from 'vuex'
 
 export default {

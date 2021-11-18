@@ -48,8 +48,8 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import Inputparam from '../components/Inputparam.vue'
-import MainTitle from '../components/MainTitle.vue'
+import Inputparam from '@/components/basic/Inputparam.vue'
+import MainTitle from '@/components/basic/MainTitle.vue'
 
 export default {
     name: "MyPage",
