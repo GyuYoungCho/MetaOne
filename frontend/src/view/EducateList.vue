@@ -47,10 +47,10 @@ export default {
   methods:{
     ...mapActions('education', ['getEducation','getEducations']),
     pass_time(val){
-      let hour = val/3600 < 10 ? '0'+ parseInt(val/3600) : parseInt(val/3600);
+      if (val==null) return ""
       let min = (val%3600)/60 < 10 ? '0'+ parseInt((val%3600)/60) : parseInt((val%3600)/60)
       let sec = val % 60 < 10 ? '0'+parseInt(val % 60) : parseInt(val % 60);
-      return hour +":" + min+":"+sec
+      return min+":"+sec
     },
     goCertificate(item){
       this.getEducation(item)
