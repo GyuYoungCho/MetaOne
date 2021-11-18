@@ -86,7 +86,6 @@ public class UserController {
 
         Map<String, Integer> map = new HashMap<>();
         map.put("id", userService.register(registerInfo));
-        System.out.println("here");
         return ResponseEntity.status(201).body(map);
     }
 
@@ -179,7 +178,6 @@ public class UserController {
         System.out.println("map : "+ map.get(accessToken));
 
         firebaseCloudMessageService.save(loginRes, loginInfo.getFirebaseToken());
-        System.out.println("파베토큰 저장 완료");
 
         HttpHeaders resHeader = new HttpHeaders();
 
@@ -289,7 +287,6 @@ public class UserController {
     public ResponseEntity logout(
             @RequestParam @ApiParam(value="Token") String firebaseToken,@RequestParam @ApiParam String userId
             ) throws IOException{
-        System.out.println("firebase token: " + firebaseToken);
         
         // DB 파이어베이스 토큰 삭제하기
         firebaseCloudMessageService.del(firebaseToken);
@@ -315,9 +312,6 @@ public class UserController {
     @ApiOperation(value="카카오톡 로그인")
     public ResponseEntity<UserDto.Response> loginkakao(@RequestBody Map<String, String> payload) throws IOException{
 
-        System.out.println("email >>>> " + payload.get("email"));
-        System.out.println("name >>>> " + payload.get("name"));
-
         String email = payload.get("email");
         String name = payload.get("name");
         
@@ -331,7 +325,6 @@ public class UserController {
         // 이메일 이미있으면 가입된 유저이므로 유저 정보 가져와서 넘겨줌
         UserDto.Response res = userService.login(email);
         firebaseCloudMessageService.save(res, payload.get("firebaseToken"));
-        System.out.println("파베토큰 저장 완료");
         
         // 온라인
         User ouser = userRepository.findByEmail(email).get();
