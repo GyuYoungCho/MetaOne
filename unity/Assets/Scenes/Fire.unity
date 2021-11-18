@@ -27192,7 +27192,7 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: "\uBBF8\uC158\uC744 \uC2DC\uC791\uD569\uB2C8\uB2E4!\n\uAC01 \uBBF8\uC158\uC744
-    \uCC28\uB840\uB300\uB85C \uC218\uD589\uD558\uC5EC\n5\uBD84 \uC774\uB0B4\uC5D0
+    \uCC28\uB840\uB300\uB85C \uC218\uD589\uD558\uC5EC\n2\uBD84 \uC774\uB0B4\uC5D0
     \uD654\uC7AC\uB97C \uB300\uD53C\uD558\uC138\uC694."
 --- !u!222 &1398330142
 CanvasRenderer:
