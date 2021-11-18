@@ -2,8 +2,6 @@ import _axios from "./default.js";
 
 export default {
   setCharacter(data) {
-    console.log("set character");
-
     return _axios({
       url: `/edu/character`,
       method: "post",

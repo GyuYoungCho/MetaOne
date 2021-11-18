@@ -29,7 +29,7 @@
 
 <script>
 import moment from 'moment';
-import FormModal from '@/components/FormModal.vue'
+import FormModal from '@/components/modal/FormModal.vue'
 import { mapState, mapGetters,mapActions } from "vuex";
 export default {
   components:{

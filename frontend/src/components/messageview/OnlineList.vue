@@ -20,7 +20,7 @@
 
 <script>
 import { mapActions, mapGetters } from "vuex";
-import AvatarCard from "@/components/AvatarCard.vue"
+import AvatarCard from "@/components/messageview/AvatarCard.vue"
 export default {
     components:{
         AvatarCard
