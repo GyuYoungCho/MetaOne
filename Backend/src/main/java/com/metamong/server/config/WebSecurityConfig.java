@@ -31,20 +31,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Value("${token.refreshtoken}")
     private String refreshToken;
 
-//    @Bean
-//    public AuthenticationSuccessHandler successHandler() {
-//        return new CustomOAuthLoginSuccessHandler();
-//    }
-
-
-//    @Override
-//    public void configure(WebSecurity web) throws Exception
-//    {
-//        web.ignoring().antMatchers(
-//                "/css/**", "/script/**", "image/**", "/fonts/**", "lib/**"
-//        );
-//    }
-//
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -55,14 +41,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors().configurationSource(corsConfigurationSource())
                 .and()
                 .csrf().disable();
-//                .oauth2Login()
-//                .authorizationEndpoint().baseUri("/api/oauth2/authorization")
-//                .and()
-//                .redirectionEndpoint().baseUri("/api/login/oauth2/code/*");
-//                .and()
-//                .successHandler(successHandler())
-//                .userInfoEndpoint()
-//                .userService(customOAuth2UserService);
 
     }
 

@@ -66,6 +66,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void goChooseCharacter()
     {
+        Debug.Log(PhotonNetwork.AppVersion);
         PhotonNetwork.LoadLevel("ChooseCharacter");
     }
 
