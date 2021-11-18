@@ -311,6 +311,7 @@
     top: 83%;
     left: 120px;
     z-index: 3;
+    animation: bounce 0.3s ease infinite alternate;
   }
   .offcanvas {
     background-color: $medium-light-blue;
@@ -432,6 +433,11 @@
           box-shadow: 200px 0 0 0 rgba(0, 0, 0, 0.2) inset;
           color: $offwhite;
         }
+      }
+    }
+    @keyframes bounce {
+      100% {
+        left: 140px;
       }
     }
   }
