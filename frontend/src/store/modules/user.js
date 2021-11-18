@@ -100,7 +100,6 @@ const actions = {
       });
   },
   async login({ state, commit, dispatch }) {
-    // dispatch("process/getSubComplete", true, { root: true });
     await messaging
       .getToken({ vapidKey: "BHNLrFDYFvHeFVnKkYMskZfNTjOu8z5_G_QQJcIdRZdZ2lq3Sl5iMXRdtDdr_M2fboN1EKU_o-DTsxOBwljmXSY" })
       .then((token) => {
@@ -215,7 +214,6 @@ const actions = {
       .kakaoLogin(state)
       .then((res) => {
         if (res.status == 200) {
-          console.log(res);
           dispatch("process/getSubComplete", true, { root: true });
           dispatch("process/getAllMap", true, { root: true });
           commit("SET_JOIN_USERID", res.data.id);
