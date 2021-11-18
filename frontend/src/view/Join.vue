@@ -106,7 +106,6 @@ export default {
             
             await userApi.checkDuplicate(data, type)
             .then((res) => {
-                console.log(res)
                 if (res.status == 200) isPass = true;
             })
             .catch((err) => {

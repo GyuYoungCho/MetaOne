@@ -79,7 +79,6 @@ export default {
             await this.$store.commit('unity/SET_UNITY_ROOM', this.unityRoom)
         },
         async setEducationTimeMethod(){
-            console.log("time...")
             await this.$store.commit('unity/SET_UNITY_EDUCATIONTIME', this.unityEducationTime)
             await this.setEducationTime()
             await this.getEducations()
@@ -106,16 +105,6 @@ export default {
         ...mapState('user', ['nickname', 'email']),
         ...mapGetters("education", ["educations"]),
         ...mapState('unity',['unityEduName']),
-        // educated_list(){
-        //     let elist=[]
-        //     if(this.educations){
-        //         this.educations.forEach((item) => {
-        //             if(item.education=="화재") this.isFireEducated = 1
-        //             if(item.education=="지진") this.isEarthEducated = 1
-        //         });
-        //     }
-        //     return elist
-        // }
     },
     watch:{
         unityObject(val){

@@ -16,7 +16,7 @@ const actions = {
     await unityApi
       .setCharacter(state)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -26,7 +26,7 @@ const actions = {
     await unityApi
       .setEducationTime(state)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);

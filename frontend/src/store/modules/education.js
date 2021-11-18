@@ -65,8 +65,6 @@ export default {
       await educationAPI
         .getRank(kind)
         .then((res) => {
-          console.log(res);
-
           let rank = [];
           for (let i = 0; i < res.data.data.length; i++) {
             rank[i] = res.data.data[i];

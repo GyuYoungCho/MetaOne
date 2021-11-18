@@ -24,7 +24,6 @@ export default {
                 this.$router.replace('/');
                 return;
             }
-            console.log("토큰", data)
             window.Kakao.Auth.setAccessToken(data.access_token);
             await this.setUserInfo();
         },
@@ -34,9 +33,6 @@ export default {
                 email: res.kakao_account.email,
                 name: res.kakao_account.profile.nickname,
             };
-
-            console.log("유저정보", userInfo)
-
             this.$store.commit("user/SET_JOIN_NAME", userInfo.name);
             this.$store.commit("user/SET_JOIN_EMAIL", userInfo.email);
             await this.kakaoLogin()
