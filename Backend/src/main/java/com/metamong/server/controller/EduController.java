@@ -33,7 +33,7 @@ public class EduController {
     @Autowired
     private CertificateService certificateService;
 
-    // 캐릭터 파일 이름 저장
+    // 캐릭터 이름 저장
     @PostMapping("/character")
     public ResponseEntity setCharacter(@RequestBody Map<String, String> unityCharacter, HttpServletRequest request){
         int userId = (int) request.getAttribute("userId");
@@ -41,15 +41,6 @@ public class EduController {
         unityService.setCharacter(userId, Integer.parseInt(unityCharacter.get("unityCharacter")));
 
         return ResponseEntity.ok().build();
-    }
-
-    // 방 이름 저장
-    @PostMapping("/room")
-    public ResponseEntity setRoom(@RequestBody Map<String, String> unityRoom, HttpServletRequest request){
-        int userId = (int) request.getAttribute("userId");
-        System.out.println("방이름 : " + unityRoom.get("unityRoom"));
-        Room room = unityService.setRoom(userId, unityRoom.get("unityRoom"));            // 유저 ID, 방이름
-        return ResponseEntity.ok().body(room);
     }
 
     // 미션 클리어 시간 저장

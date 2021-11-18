@@ -45,7 +45,6 @@ public class GuestBookController {
 	@ApiOperation(value = "방명록을 작성한다.")
 	public ResponseEntity<String> write(@RequestBody GuestBookDto.GuestBookReq guestbook, HttpServletRequest request) throws IOException {
 		int userId = (int) request.getAttribute("userId");
-		
 
 		guestBookService.registerGuestBook(guestbook.getContent(), userId);
 
@@ -80,7 +79,6 @@ public class GuestBookController {
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	public ResponseEntity select(@RequestParam String date) throws IOException {
 		GuestBookDto.ResponseList guestBookDtoList = guestBookService.getGuestBook(date);
-		System.out.println(guestBookDtoList.getData());
 
 	  	return ResponseEntity.ok().body(guestBookDtoList);
 	}
