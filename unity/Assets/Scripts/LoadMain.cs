@@ -14,9 +14,6 @@ public class LoadMain : MonoBehaviourPunCallbacks
     //[DllImport("__Internal")]
     //private static extern void UnityCharacterHook(string str);
 
-    [DllImport("__Internal")]
-    private static extern void UnityEducationNameHook(string eduName);
-
     string characterName;
     string characterData;
     string roomTitle;
@@ -61,10 +58,6 @@ public class LoadMain : MonoBehaviourPunCallbacks
         rend1.material = m1;
         rend2.material = m1;
         rend3.material = m1;
-
-        // unity -> front로 교육명 전달
-        UnityEducationNameHook("earthquake");
-        UnityEducationNameHook("fire");
 
     }
 

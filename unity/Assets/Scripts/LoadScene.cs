@@ -17,6 +17,9 @@ public class LoadScene : MonoBehaviourPunCallbacks
     [DllImport("__Internal")]
     private static extern void UnityObjectHook(string obj);
 
+    [DllImport("__Internal")]
+    private static extern void UnityEducationNameHook(string eduName);
+
     //    private Text[] timeText = { "05", "00" };
     int IsOut;
     private float LimitTime = 120;
@@ -117,6 +120,9 @@ public class LoadScene : MonoBehaviourPunCallbacks
 
     public void ChangeFire()
     {
+        // unity -> front로 교육명 전달
+        UnityEducationNameHook("fire");
+
         // 연결된 모든 유저들에게서 내 캐릭터 삭제
         PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
 
@@ -124,10 +130,14 @@ public class LoadScene : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.IsMessageQueueRunning = false;
         PhotonNetwork.LoadLevel("Fire");
+
     }
 
     public void ChangeEarthquake()
     {
+        // unity -> front로 교육명 전달
+        UnityEducationNameHook("earthquake");
+
         // 연결된 모든 유저들에게서 내 캐릭터 삭제
         PhotonNetwork.DestroyPlayerObjects(PhotonNetwork.LocalPlayer);
 
