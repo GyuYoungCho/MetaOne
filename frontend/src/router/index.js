@@ -84,6 +84,7 @@ const routes = [
     path: "/rank",
     name: "Rank",
     component: Rank,
+    meta: { requireAuth: true },
   },
   {
     path: "*",
