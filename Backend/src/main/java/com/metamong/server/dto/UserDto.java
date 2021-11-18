@@ -37,8 +37,6 @@ public class UserDto {
     @JsonIgnore
     private List<FirebaseTokenDto> firebaseTokenDto;
     @JsonIgnore
-    private List<OauthProviderDto> oauthProviderDto;
-    @JsonIgnore
     private List<GuestBookDto> guestBookDto;
     @JsonIgnore
     private List<CertificateDto> certificateDto;
