@@ -27,8 +27,6 @@ public class MovingCharacter : MonoBehaviour
 
         // 메인 카메라를 기준으로 방향을 변환
         dir = Camera.main.transform.TransformDirection(dir);
-        //GameObject camera = GameObject.Find("myCam");
-        //dir = camera.transform.TransformDirection(dir);
 
         transform.position += dir * moveSpeed * Time.deltaTime;
         

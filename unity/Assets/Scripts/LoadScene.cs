@@ -20,9 +20,8 @@ public class LoadScene : MonoBehaviourPunCallbacks
     [DllImport("__Internal")]
     private static extern void UnityEducationNameHook(string eduName);
 
-    //    private Text[] timeText = { "05", "00" };
     int IsOut;
-    private float LimitTime = 120;
+    private float LimitTime = 120;  // 2분 시간제한
     public Text text_Timer;
     private bool startTimer = false;
     private int min, sec;
@@ -40,7 +39,8 @@ public class LoadScene : MonoBehaviourPunCallbacks
         BgmState = PlayerPrefs.GetInt("BgmState");
         BgmVolume = PlayerPrefs.GetFloat("volume");
 
-        // Fire, Earthquake일 때
+        // Fire, Earthquake Scene일 때
+        // 현재 씬의 BGM 상태를 로비에서 설정한 상태와 동기화시켜줌
         if(SceneManager.GetActiveScene().name != "Main")
         {
             if (BgmState == 1)
@@ -52,7 +52,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        // 미션 클리어 패널이 null 아닐 때 타이머 멈추기
+        // 미션 클리어 패널이 null 아닐 때 타이머 멈추기 (미션 성공 or 실패)
         if (GameObject.Find("MissionClear") != null) startTimer = false;
 
         // 타이머
@@ -63,9 +63,10 @@ public class LoadScene : MonoBehaviourPunCallbacks
             min = (int)LimitTime / 60;
             sec = ((int)LimitTime - min * 60) % 60;
 
-            if (LimitTime < 60) text_Timer.color = Color.red;   // 시간이 1분 미만 남았을 경우
+            // 시간이 1분 미만 남았을 경우 색상 변경
+            if (LimitTime < 60) text_Timer.color = Color.red;
 
-            // 시간 초과
+            // 타임 아웃
             if(min<= 0 && sec<=0)
             {
                 text_Timer.text = "00 : 00";
@@ -96,6 +97,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
         }
     }
 
+    // 방 나가기 버튼
     public void outRoom()
     {
         // 연결된 모든 유저들에게서 내 캐릭터 삭제
@@ -107,6 +109,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
         PhotonNetwork.LeaveRoom(false);
     }
 
+    // 캐릭터 변경 onclick
     public void changeCharacter()
     {
         // 연결된 모든 유저들에게서 내 캐릭터 삭제
@@ -114,10 +117,13 @@ public class LoadScene : MonoBehaviourPunCallbacks
 
         isChange = true;
         PlayerPrefs.SetInt("isChange", 1);
+
         // false 매개변수 주지 않으면 기본값 true
+        // 해당 룸으로 다시 돌아올 것이므로 방의 플레이어 목록에 남아 있게 함. (플레이어수 유지)
         PhotonNetwork.LeaveRoom();
     }
 
+    // 화재 미션하기 -> Fire Scene으로 이동
     public void ChangeFire()
     {
         // unity -> front로 교육명 전달
@@ -130,9 +136,9 @@ public class LoadScene : MonoBehaviourPunCallbacks
         PhotonNetwork.AutomaticallySyncScene = false;
         PhotonNetwork.IsMessageQueueRunning = false;
         PhotonNetwork.LoadLevel("Fire");
-
     }
 
+    // 지진 미션하기 -> Earthquake Scene으로 이동
     public void ChangeEarthquake()
     {
         // unity -> front로 교육명 전달
@@ -147,14 +153,15 @@ public class LoadScene : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("Earthquake");
     }
 
+    // 미션 그만두기 or 미션 성공 후 이동
     public void quitMission()
     {
-        // 방에서 나가기 위해 연결 끊어줌
+        // 방에 재접속 위해 연결 끊어줌 -> OnDisconnected callback
         PhotonNetwork.Disconnect();
         isRejoin = true;
     }
 
-
+    // Fire & Earthquake Scene에서 미션시작 onclick
     public void startMission()
     {
         // 미션 시작 안내 지우기
@@ -163,10 +170,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
         // 미션 내용과 그만두기 버튼 active
         GameObject.Find("Canvas").transform.Find("Panel").gameObject.SetActive(true);
         GameObject.Find("Canvas").transform.Find("Button").gameObject.SetActive(true);
-
-        // 메인카메라에 movingCharacter 스크립트 추가
-        GameObject mission = GameObject.Find("MainCamera");
-
+        
         // 타이머 시작
         GameObject.Find("Canvas").transform.Find("Timer").gameObject.SetActive(true);
         startTimer = true;
@@ -174,7 +178,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
 
     public void clearMission()
     {
-        // unity -> front 미션 타임 전송
+        // unity -> front 미션 완료 타임 전송
         UnityEducationTimeHook((int)(120-LimitTime));
 
         // 메인 맵으로 이동
@@ -185,12 +189,12 @@ public class LoadScene : MonoBehaviourPunCallbacks
     public override void OnDisconnected(DisconnectCause cause)
     {
         // 연결이 성공적으로 끊어지면 재접속 (같은방으로 접속 됨)
-        Debug.Log("연결끊기");
         Debug.Log(PhotonNetwork.ReconnectAndRejoin());
     }
 
     public override void OnJoinedRoom()
     {
+        // 방 재접속인 경우
         if(isRejoin)
         {
             // 방에 접속되면 Main Scene 다시 로드
@@ -204,11 +208,13 @@ public class LoadScene : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+        // 캐릭터 선택위해 방 떠나는 경우
         if (isChange)
         {
             isChange = false;
             PhotonNetwork.LoadLevel("ChooseCharacter");
         }
+        // 다른방 이동 위해 방 나가기 버튼으로 방 떠나는 경우
         else if (!isRejoin)
         {
             // unity -> front 방 나갈 때 메세지 전송
@@ -219,6 +225,7 @@ public class LoadScene : MonoBehaviourPunCallbacks
         //base.OnLeftRoom();
     }
 
+    // rejoin 시 방에 인원이 1명이였기 때문에 방이 없어진 경우
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 4, PlayerTtl = 60000 });

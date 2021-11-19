@@ -24,6 +24,7 @@ public class CheckOut : MonoBehaviour
     {
         pos = mc.transform.position;
 
+        // 식당 안 범위 체크
         if (pos.x < -3.63 && pos.x > -32.3 && pos.z > -0.18 && pos.z < 31.57)
         {        
         }

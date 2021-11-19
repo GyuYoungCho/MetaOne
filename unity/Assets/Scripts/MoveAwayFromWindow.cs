@@ -24,6 +24,7 @@ public class MoveAwayFromWindow : MonoBehaviour
         Toggle t = clikckedToggle.GetComponent(typeof(Toggle)) as Toggle;
         t.isOn = true;
 
+        // 범위 체크
         if (63 <= pos.x && pos.x <= 75 && 1 < pos.z && pos.z < 1.75)
         {
             Debug.Log("창문과 근접함");

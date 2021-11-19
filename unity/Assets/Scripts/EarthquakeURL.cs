@@ -14,7 +14,6 @@ public class EarthquakeURL : MonoBehaviour
     private static extern void UnityEducationAuthHook(bool auth);
 
     public GameObject btn;
-    private bool isListened;
     private int isEducated;
 
     public Renderer blackboard;
@@ -25,7 +24,6 @@ public class EarthquakeURL : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isListened = false;
         btn.SetActive(false);
         isEducated = PlayerPrefs.GetInt("earthquake");
 
@@ -36,6 +34,7 @@ public class EarthquakeURL : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 클릭 감지
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -55,19 +54,22 @@ public class EarthquakeURL : MonoBehaviour
                     isEducated = 1;
                     PlayerPrefs.SetInt("earthquake", 1);
 
-                    // unity -> front로 교육 이수 유무 전달
+                    // unity -> front로 교육 이수 완료 전달
                     UnityEducationAuthHook(true);
                 }
-                
+
+                // 미션하기 버튼 활성화
                 btn.SetActive(true);
             }
         }
 
+        // 교육 이수 & 지진 교육 교실 안에 있을 경우
         if (isEducated == 1 && checkArea())
         {
             btn.SetActive(true);
         }
 
+        // 지진 교육 교실 범위 밖 -> 버튼 비활성화, blackboard 색상 변경 x
         if (!checkArea())
         {
             btn.SetActive(false);
@@ -82,7 +84,7 @@ public class EarthquakeURL : MonoBehaviour
         }
     }
 
-    // 교실 안에 위치해있는지 체크
+    // 교실 안에 위치해있는지 범위 체크
     bool checkArea()
     {
         // 내 캐릭터의 위치 받아오기
