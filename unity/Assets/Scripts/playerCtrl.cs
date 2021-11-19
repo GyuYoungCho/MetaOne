@@ -6,7 +6,6 @@ using TMPro;
 
 using Photon.Pun;
 using Photon.Realtime;
-//using UnityStandardAssets.Utility;
 
 public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -25,6 +24,7 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
 
     private Vector3 MoveDir;
 
+    // animation trigger
     private bool isDance = false;
     private bool isSit = false;
     private bool isCry = false;
@@ -48,9 +48,8 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
 
         MoveDir = Vector3.zero;
         
+        // 각 플레이어 닉네임
         nick.text = photonView.Owner.NickName;
-        //nick.text = PhotonNetwork.NickName;
-        
     }
 
     // Update is called once per frame
@@ -131,6 +130,7 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
     private bool currCry = true;
     private bool currSit = true;
 
+    // 캐릭터 이동 & animation 유저 간 동기화
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -156,6 +156,7 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
+    // 캐릭터 조작
     public void Movement()
     {
         if(Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
@@ -175,8 +176,6 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
         }
         if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
         {
-            //playerPosition -= Vector3.left * moveSpeed * Time.deltaTime;
-            //rigidBody.MovePosition(playerPosition);
             cc.Move(Vector3.left * moveSpeed * Time.deltaTime);
             anim.SetBool("IsWalking", true);
         }
@@ -208,6 +207,7 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
         anim.SetBool("IsWalking", isWalking);
     }
 
+    // CharacterController & RigidBody 간에 부딪힘 구현
     float pushPower = 2.0F;
     void OnControllerColliderHit(ControllerColliderHit hit)
     {
@@ -221,5 +221,4 @@ public class playerCtrl : MonoBehaviourPunCallbacks, IPunObservable
         Vector3 pushDir = new Vector3(hit.moveDirection.x, 0, hit.moveDirection.z);
         body.velocity = pushDir * pushPower;
     }
-
 }
