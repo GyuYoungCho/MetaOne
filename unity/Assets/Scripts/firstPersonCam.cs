@@ -21,6 +21,7 @@ public class firstPersonCam : MonoBehaviour
     {
         // 좌우로 움직인 마우스의 이동량 * 속도에 따라 카메라가 좌우로 회전할 양 계산
         float yRotateSize = Input.GetAxis("Mouse X") * turnSpeed;
+
         // 현재 y축 회전값에 더한 새로운 회전각도 계산
         float yRotate = transform.eulerAngles.y + yRotateSize;
 

@@ -13,7 +13,6 @@ public class FireURL : MonoBehaviour
     private static extern void UnityEducationAuthHook(bool auth);
 
     public GameObject btn;
-    private bool isListened;
     private string characterName;
     private int isEducated;
 
@@ -25,7 +24,6 @@ public class FireURL : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isListened = false;
         btn.SetActive(false);
         characterName = PlayerPrefs.GetString("characterN");
         isEducated = PlayerPrefs.GetInt("fire");
@@ -37,6 +35,7 @@ public class FireURL : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 클릭 감지
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -48,6 +47,7 @@ public class FireURL : MonoBehaviour
                 // unity -> front로 교육명 전달
                 UnityEducationNameHook("fire");
 
+                // 교육 링크
                 Application.OpenURL("https://schoolsafe.kr/post/view?id=630");
 
                 // 교육 이수한적 없다면
@@ -56,19 +56,22 @@ public class FireURL : MonoBehaviour
                     isEducated = 1;
                     PlayerPrefs.SetInt("fire", 1);
 
-                    // unity -> front로 교육 이수 유무 전달
+                    // unity -> front로 교육 이수 완료 전달
                     UnityEducationAuthHook(true);
                 }
 
+                // 미션하기 버튼 활성화
                 btn.SetActive(true);
             }
         }
 
+        // 교육 이수 & 화재 교육 교실 안에 있을 경우
         if(isEducated==1 && checkArea())
         {
             btn.SetActive(true);
         }
 
+        // 화재 교육 교실 범위 밖 -> 버튼 비활성화, blackboard 색상 변경 x
         if (!checkArea())
         {
             btn.SetActive(false);
@@ -83,7 +86,7 @@ public class FireURL : MonoBehaviour
         } 
     }
 
-    // 교실 안에 위치해있는지 체크
+    // 교실 안에 위치해있는지 범위 체크
     bool checkArea()
     {
         // 내 캐릭터의 위치 받아오기

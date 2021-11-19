@@ -20,7 +20,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
 
     string characterData, characterName;
     int IsOut;
-    byte limit = 4;
+    byte limit = 4; // 방 인원제한
     RoomInfo[] roomInfoList;
 
     public GameObject room;
@@ -39,7 +39,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
         // 전달받은 데이터 불러오기
         characterData = PlayerPrefs.GetString("character");
         characterName = PlayerPrefs.GetString("characterN");
-        IsOut = PlayerPrefs.GetInt("IsOut");
+        IsOut = PlayerPrefs.GetInt("IsOut");    // 방 나가기로 씬 이동한건지?
 
         if (PhotonNetwork.IsConnected)
         {
@@ -51,15 +51,6 @@ public class CreateRoom : MonoBehaviourPunCallbacks
     // Update is called once per frame
     void Update()
     {
-        //if (IsOut == 1)
-        //{
-        //    PhotonNetwork.LeaveRoom();
-        //    IsOut = 0;
-        //    PlayerPrefs.SetInt("IsOut", IsOut);
-        //}
-        // 방 목록 가져오기
-        //        roomInfoList = PhotonNetwork.GetRoomList(); // 없어짐 OnRoomListUpdate 이걸로 해야함
-        // ILobbyCallbacks.OnRoomListUpdate(List < RoomInfo > roomList)
 
     }
 
@@ -126,6 +117,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
     }
 
     // 방 정보
+    // 방 정보가 변경되었을 때만 호출됨
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
         Debug.Log("방 목록 로드");
@@ -143,7 +135,7 @@ public class CreateRoom : MonoBehaviourPunCallbacks
                 _room = Instantiate(room, gridTr);
             }
             catch
-            {
+            {   // null 이여서 오류나면 ChooseRoom Scene 한번 더 로드
                 PhotonNetwork.LoadLevel("ChooseRoom");
                 continue;
             }
@@ -180,17 +172,20 @@ public class CreateRoom : MonoBehaviourPunCallbacks
         PlayerPrefs.SetString("USER_ID", PhotonNetwork.NickName);
     }
 
+    // front -> unity 유저 닉네임 가져오기
     void initPlayerNickName(string nickname)
     {
         PhotonNetwork.NickName = nickname;
     }
 
+    // front -> unity 화재 교육 이수 여부
     void isFireEducated(int state)
     {
         PlayerPrefs.SetInt("fire", state);
         Debug.Log("isFireEducated >> " + state);
     }
 
+    // front -> unity 지진 교육 이수 여부
     void isEarthquakeEducated(int state)
     {
         PlayerPrefs.SetInt("earthquake", state);

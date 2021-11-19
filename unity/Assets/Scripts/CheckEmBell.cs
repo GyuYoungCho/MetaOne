@@ -14,6 +14,7 @@ public class CheckEmBell : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 클릭 감지
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -33,7 +34,7 @@ public class CheckEmBell : MonoBehaviour
         Toggle t = clickedToggle.GetComponent(typeof(Toggle)) as Toggle;
         t.isOn = true;
 
-        // emergency 경보음 추가 (음소거 아닐경우 play)
+        // emergency 경보음 추가 (음소거 아닐경우 로비에서 지정한 볼륨에 맞게 play)
         if(PlayerPrefs.GetInt("BgmState") == 1)
         {
             GameObject mc = GameObject.Find("MainCamera");
