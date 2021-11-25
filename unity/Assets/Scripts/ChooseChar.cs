@@ -29,8 +29,7 @@ public class ChooseChar : MonoBehaviourPunCallbacks
     // Start is called before the first frame update
     void Start()
     {
-        isChange = PlayerPrefs.GetInt("isChange");
-        Debug.Log(isChange);
+        isChange = PlayerPrefs.GetInt("isChange");  // 캐릭터 바꾸기 인지?
         roomName = PlayerPrefs.GetString("roomTitle");
 
         // Default 캐릭터 설정
@@ -87,12 +86,14 @@ public class ChooseChar : MonoBehaviourPunCallbacks
             switchCharacter = (GameObject)Instantiate(Resources.Load(characterData));
         }
 
+        // 생성된 캐릭터 위치 지정
         switchCharacter.transform.position = new Vector3(-25.1272f, -0.01000977f, 2.327881f);
         switchCharacter.transform.rotation = Quaternion.Euler(new Vector3(0f, -79.885f, 0f));
         switchCharacter.transform.localScale = new Vector3(0.3f, 0.3f, 0.3f);
 
         switchCharacter.transform.SetParent(character.transform);
 
+        // N번째 캐릭터임을 표시
         characterNum.text = charNum + " / 20";
     }
 
@@ -106,6 +107,7 @@ public class ChooseChar : MonoBehaviourPunCallbacks
         // unity -> front로 캐릭터 전달
         UnityCharacterHook(charNum);
 
+        // 캐릭터 바꾸기일 경우 이전 room으로 바로 이동
         if(isChange == 1)
         {
             isChange = 0;
@@ -117,6 +119,7 @@ public class ChooseChar : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("ChooseRoom");
     }
 
+    // RejoinRoom 실패했을 경우 (방에 혼자있어서 없어졌을 경우 -> 동일한 제목의 방 재생성)
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
         PhotonNetwork.CreateRoom(roomName, new RoomOptions { MaxPlayers = 4, PlayerTtl = 60000 });
@@ -124,10 +127,12 @@ public class ChooseChar : MonoBehaviourPunCallbacks
         //base.OnJoinRoomFailed(returnCode, message);
     }
 
+    // 방에 접속하면 Main Scene 로드
     public override void OnJoinedRoom()
     {
         // 방에 접속되면 Main Scene 다시 로드
         Debug.Log("ReJoined Room !!!");
+
         // photonNetwork의 데이터 통신을 잠깐 정지 시켜준다. 
         // gamemanager에서 creatTank하고 나면 다시 연결시킨다
         PhotonNetwork.IsMessageQueueRunning = false;

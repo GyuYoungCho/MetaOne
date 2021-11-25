@@ -26,6 +26,27 @@
     }
   }
 
+  .kakao-btn {
+    width: 125px;
+    height: 38px;
+    background-color: none;
+
+    &:hover {
+      box-shadow: none;
+      color: none;
+    }
+  }
+
+  .kakao-img {
+    width: 126px;
+    height: 38px;
+    border-radius: 5px;
+  }
+
+  .start {
+    width: 126px;
+  }
+
   .not-submit {
     color: white;
     background: inherit;

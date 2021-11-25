@@ -51,7 +51,7 @@
 </template>
 
 <script>
-import HelpModal from '@/components/HelpModal.vue'
+import HelpModal from '@/components/modal/HelpModal.vue'
 import vClickOutside from 'v-click-outside'
 import { mapActions, mapGetters } from 'vuex'
 

@@ -14,10 +14,14 @@
                     </div>
                     <div class="col-md-3">
                         <div style="float: left;" v-if="i == 0">
-                            <button class="btn yellow-btn" @click="tryLogin()">&nbsp;&nbsp;&nbsp;&nbsp;시작하기&nbsp;&nbsp;&nbsp;&nbsp;</button>
+                            <button class="btn yellow-btn start" @click="tryLogin()">&nbsp;&nbsp;&nbsp;시작하기&nbsp;&nbsp;&nbsp;</button>
                         </div>
                         <div style="float: left;" v-if="i == 1">
-                            <button class="btn yellow-btn" @click="kakaoLogin()">카카오 로그인</button>
+                         
+                            <button class="kakao-btn" @click="kakaoLogin()">
+                                <img src="@/assets/image/kakao.png" class="kakao-img" />
+                            </button>
+               
                         </div>
                     </div>
                     <div class="col-md-2">
@@ -34,9 +38,10 @@
     </div>
 </template>
 
+
 <script>
-import Inputparam from '../components/Inputparam.vue'
-import MainTitle from '../components/MainTitle.vue'
+import Inputparam from "@/components/basic/Inputparam.vue";
+import MainTitle from "@/components/basic/MainTitle.vue";
 import { mapState, mapActions } from 'vuex'
 import BASE from "@/api/client.js";
 
@@ -79,18 +84,9 @@ export default {
             this.$router.push({name: 'FindPw'}).catch(() => {})
         }
     }, 
-    mounted(){
-
-    },
-    created(){
-
-    },
     computed:{
         ...mapState('user', ['email', 'password'])
     },
-    watch:{
-
-    }
 }
 </script>
 

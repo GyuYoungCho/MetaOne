@@ -39,7 +39,7 @@ const actions = {
     await userApi
       .registerUser(state)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
         alert("회원가입이 완료되었습니다.");
         router.push({ name: "Login" });
       })
@@ -59,7 +59,6 @@ const actions = {
     await userApi
       .checkDuplicate(data, type)
       .then((res) => {
-        console.log(res);
         if (res.status == 200) {
           alert("사용할 수 있습니다.");
           if (type == "nickname") state.nicknamePass = true;
@@ -78,7 +77,7 @@ const actions = {
     dispatch("process/getContentBody", "인증번호를 보냈습니다! 메일을 확인하세요.", { root: true });
 
     await userApi.checkEmail(state).then((res) => {
-      console.log(res);
+      console.log(res.data);
       setTimeout(() => {
         alert("인증 번호가 전송되었습니다.");
         dispatch("process/getSubComplete", false, { root: true });
@@ -89,7 +88,6 @@ const actions = {
     await userApi
       .authenticateNumber(state)
       .then((res) => {
-        console.log(res);
         if (res.data == true) {
           alert("이메일 본인 인증이 완료되었습니다.");
           state.emailConfirm = true;
@@ -102,11 +100,9 @@ const actions = {
       });
   },
   async login({ state, commit, dispatch }) {
-    // dispatch("process/getSubComplete", true, { root: true });
     await messaging
       .getToken({ vapidKey: "BHNLrFDYFvHeFVnKkYMskZfNTjOu8z5_G_QQJcIdRZdZ2lq3Sl5iMXRdtDdr_M2fboN1EKU_o-DTsxOBwljmXSY" })
       .then((token) => {
-        console.log(token);
         commit("SET_USER_FIREBASETOKEN", token);
       });
 
@@ -114,7 +110,6 @@ const actions = {
       .login(state)
       .then((res) => {
         if (res.status == 200) {
-          console.log(res);
           dispatch("process/getSubComplete", true, { root: true });
           dispatch("process/getAllMap", true, { root: true });
           commit("SET_JOIN_USERID", res.data.id);
@@ -141,7 +136,6 @@ const actions = {
     await userApi
       .getMyInfo(state)
       .then((res) => {
-        console.log(res);
         if (res.status == 200) {
           commit("SET_JOIN_USERID", res.data.id);
           commit("SET_JOIN_NAME", res.data.name);
@@ -158,7 +152,6 @@ const actions = {
     await userApi
       .updateInfo(state)
       .then((res) => {
-        console.log(res);
         if (res.status == 200) {
           alert("성공적으로 수정되었습니다.");
         }
@@ -174,7 +167,6 @@ const actions = {
     await userApi
       .updateNickname(state.nickname)
       .then((res) => {
-        console.log(res);
         if (res.status == 200) {
           alert("성공적으로 수정되었습니다.");
         }
@@ -190,7 +182,7 @@ const actions = {
     await userApi
       .sendTempPw(state)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -201,7 +193,7 @@ const actions = {
     await userApi
       .logout(state)
       .then((res) => {
-        console.log(res);
+        console.log(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -222,7 +214,6 @@ const actions = {
       .kakaoLogin(state)
       .then((res) => {
         if (res.status == 200) {
-          console.log(res);
           dispatch("process/getSubComplete", true, { root: true });
           dispatch("process/getAllMap", true, { root: true });
           commit("SET_JOIN_USERID", res.data.id);
@@ -250,7 +241,6 @@ const actions = {
     await userApi
       .comTutorial(state)
       .then((res) => {
-        console.log(res);
         if (res.status == 200) {
           commit("SET_JOIN_TUTORIAL", true);
         }

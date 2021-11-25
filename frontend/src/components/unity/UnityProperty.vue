@@ -51,10 +51,6 @@ export default {
       var canvas = document.querySelector("#unity-canvas");
       if(val){
         this.getAllMap(true)
-        // const target = document.querySelector('#unity-container').getBoundingClientRect();
-        // canvas.style.width = target.width
-        // canvas.style.height = window.innerHeight-302;
-        // console.log(canvas.style.height)
         canvas.style.width = "1280px";
         canvas.style.height = "800px";
         this.instance.SendMessage("KeyManager","FocusCanvas","1");
@@ -93,13 +89,8 @@ export default {
       this.instance.SendMessage("KeyManager","FocusCanvas","0");
     }
   },
-  mounted(){ // 
-    
+  mounted(){ 
     this.runWebGL()
-  },
-
-  updated(){
-    
   },
 
   methods:{
@@ -131,9 +122,6 @@ export default {
           mobileWarning.style.display = "none";
         }, 5000);
       } else {
-        // const target = document.querySelector('#unity-container').getBoundingClientRect();
-        // canvas.style.width = target.width;
-        // canvas.style.height = "800px";
         canvas.style.width = "1280px";
         canvas.style.height = "800px";
       }
@@ -160,9 +148,6 @@ export default {
       document.body.appendChild(script);
 
       if(this.allMap){
-        // const target = container.getBoundingClientRect();
-        // canvas.style.width = target.width;
-        // canvas.style.height = window.innerHeight-102;
         canvas.style.width = "1280px";
         canvas.style.height = "800px";
       }else{

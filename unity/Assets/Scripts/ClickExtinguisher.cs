@@ -13,6 +13,7 @@ public class ClickExtinguisher : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        // 클릭 감지
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);

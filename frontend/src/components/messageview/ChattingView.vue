@@ -119,7 +119,6 @@ export default {
                           item.key = doc.key
                           this.messages.push(item)
                       });
-                      console.log(this.messages)
                       setTimeout(()=>{
                           this.scrollToBottom()
                       },1000)
@@ -127,7 +126,6 @@ export default {
                       console.log("No data available");
                   }
               })
-                
             } catch (e) {
               console.log("catch")
                 throw e
@@ -135,7 +133,7 @@ export default {
         },
         scrollToBottom(){
             let box = document.querySelector('.msg_history');
-            box.scrollTop = box.scrollHeight;
+            if(box) box.scrollTop = box.scrollHeight;
         },
 
         isme(name){
@@ -161,7 +159,6 @@ export default {
 
     async created(){
         this.getChattingOpen(false)
-        // this.getMessSize(0)
     },
     async mounted(){
       setTimeout(() => {
@@ -180,8 +177,7 @@ export default {
           }
         },
         unityRoom(val){
-          console.log(val)
-          this.fetchMessages()
+          if(val) this.fetchMessages()
         }
     }
 }

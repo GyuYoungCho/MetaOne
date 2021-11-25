@@ -20,6 +20,7 @@ public class CheckWall : MonoBehaviour
     {
         pos = mc.transform.position;
 
+        // 벽에 가까지 있는지 위치 체크
         if (pos.z > 0.64f)
         {
             if (pos.x < -30f) checkWall();
@@ -48,6 +49,7 @@ public class CheckWall : MonoBehaviour
         if(mission.GetComponent<CheckOut>() == null) mission.AddComponent<CheckOut>();
     }
 
+    // 벽에 붙어있지 않을 경우 주의 메시지
     public void warning()
     {
         // 가이드 대화 추가

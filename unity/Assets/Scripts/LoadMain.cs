@@ -11,12 +11,6 @@ using System.Runtime.InteropServices;
 
 public class LoadMain : MonoBehaviourPunCallbacks
 {
-    //[DllImport("__Internal")]
-    //private static extern void UnityCharacterHook(string str);
-
-    [DllImport("__Internal")]
-    private static extern void UnityEducationNameHook(string eduName);
-
     string characterName;
     string characterData;
     string roomTitle;
@@ -45,6 +39,7 @@ public class LoadMain : MonoBehaviourPunCallbacks
         characterData = PlayerPrefs.GetString("character");
         roomTitle = PlayerPrefs.GetString("roomTitle");
 
+        // 캐릭터 생성 (나)
         CreateCharacter();
 
         // photonNetwork의 데이터 통신을 다시 연결시켜준다. 
@@ -52,20 +47,10 @@ public class LoadMain : MonoBehaviourPunCallbacks
         //PhotonNetwork.AutomaticallySyncScene = true;
         Invoke("CheckPlayerCount", 0.5f);
 
-        Debug.Log(characterData);
-
-        // 캐릭터의 transform
-        //tr = focus.transform;
-
         // 방명록 책들 renderer 설정
         rend1.material = m1;
         rend2.material = m1;
         rend3.material = m1;
-
-        // unity -> front로 교육명 전달
-        UnityEducationNameHook("earthquake");
-        UnityEducationNameHook("fire");
-
     }
 
     // Update is called once per frame
@@ -79,36 +64,20 @@ public class LoadMain : MonoBehaviourPunCallbacks
             rend2.material.Lerp(m1, m2, lerp);
             rend3.material.Lerp(m1, m2, lerp);
         }
-
-
     }
 
+    // 캐릭터 생성
     void CreateCharacter()
     {
         Debug.Log(characterName);
         
         GameObject me = PhotonNetwork.Instantiate(characterName, new Vector3(-0.7f, 0, -5.06f), Quaternion.identity);
-
-        //me.AddComponent<MovingCharacter>();
+        
         CharacterController cc = me.AddComponent<CharacterController>();
         me.transform.position = new Vector3(28f, 0, -15f);
         me.transform.localScale = new Vector3(0.5f, 0.5f, 0.5f);
         cc.slopeLimit = 90f;
         cc.stepOffset = 0.1f;
-
-        // 닉네임 추가
-        //GameObject nickname = new GameObject("Nickname");
-        //nickname.transform.position = new Vector3(28f, 2.6f, -15f);
-        //nickname.transform.rotation = Quaternion.Euler(new Vector3(0, 180f, 0));
-        //nickname.transform.SetParent(me.transform);
-
-        //TextMeshPro nn = nickname.AddComponent<TextMeshPro>();
-        //nn.text = PhotonNetwork.NickName;
-        //nn.font = Resources.Load("Font/SDSamliphopangcheBasic SDF") as TMP_FontAsset;
-        //nn.fontSize = 6;
-        //nn.color = Color.black;
-        //nn.horizontalAlignment = HorizontalAlignmentOptions.Center;
-        //nn.verticalAlignment = VerticalAlignmentOptions.Middle;
 
         // 하위에 카메라 추가
         GameObject mc = new GameObject("Main Camera");
@@ -119,8 +88,6 @@ public class LoadMain : MonoBehaviourPunCallbacks
         mc.AddComponent<Camera>();
         mc.transform.position = new Vector3(28f, 6.4f, -8.4f);
         mc.transform.rotation = Quaternion.Euler(new Vector3(37.9f, -180f, -0.68f));
-        //mc.transform.position = new Vector3(28f, 3.62f, -10.12f);
-        //mc.transform.rotation = Quaternion.Euler(new Vector3(26.251f, 180f, -0.6f));
 
         // bgm listener
         mc.AddComponent<AudioListener>();
@@ -135,10 +102,6 @@ public class LoadMain : MonoBehaviourPunCallbacks
         // 최초 설정
         PlayerPrefs.SetFloat("volume", BGM.volume);
         PlayerPrefs.SetInt("BgmState", 1);
-
-        // rigidbody 추가 및 설정
-        //Rigidbody rb = me.AddComponent<Rigidbody>();
-        //rb.constraints = RigidbodyConstraints.FreezeRotation;
 
         // character controller 추가 및 설정
         cc.center = new Vector3(0, 2.1f, 0);
@@ -155,9 +118,6 @@ public class LoadMain : MonoBehaviourPunCallbacks
     {
         int currPlayer = PhotonNetwork.PlayerList.Length;
         int maxPlayer = PhotonNetwork.CurrentRoom.MaxPlayers;
-        //        playerCount.text = string.Format("[{0}/{1}]", currPlayer, maxPlayer);
-
-        Debug.Log("현재 몇명? " + currPlayer);
     }
 
     // Menu panel on/off

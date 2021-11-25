@@ -45,10 +45,10 @@
 </template>
 
 <script>
-import MainTitle from "../components/MainTitle.vue"
-import Inputparam from '../components/Inputparam.vue'
-import ConfirmModal from "@/components/ConfirmModal.vue"
-import userApi from "../api/user.js"
+import MainTitle from "@/components/basic/MainTitle.vue"
+import Inputparam from '@/components/basic/Inputparam.vue'
+import ConfirmModal from "@/components/modal/ConfirmModal.vue"
+import userApi from "@/api/user.js"
 import { mapState, mapActions } from 'vuex'
 
 export default {
@@ -106,7 +106,6 @@ export default {
             
             await userApi.checkDuplicate(data, type)
             .then((res) => {
-                console.log(res)
                 if (res.status == 200) isPass = true;
             })
             .catch((err) => {
