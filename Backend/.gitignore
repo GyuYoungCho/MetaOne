@@ -51,3 +51,6 @@ dependencies/
 snapshot-dependencies/
 spring-boot-loader/
 application/
+
+### application 파일
+**/src/main/resources/application-prod.yml
