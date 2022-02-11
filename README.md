@@ -73,7 +73,7 @@
 </details>
 <br>
 
-## 기능
+## 🧮 기능
 
 [시연 시나리오](https://github.com/GyuYoungCho/MetaOne/blob/dev/exec/%EC%8B%9C%EC%97%B0%20%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4.pdf)
 
