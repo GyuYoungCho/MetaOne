@@ -9,7 +9,17 @@
 
 <br>
 
-### ❔ 기획 배경 및 의도
+## 👨‍👦‍👦 팀원 소개
+
+<div align="center">
+  <img src="https://user-images.githubusercontent.com/49333349/153621485-5bb1d4f3-aaf5-4287-837d-b3de373d97cc.png"  width="50%" height="50%">
+</div> 
+
+- 권진우, 이효진 (중간취업)
+
+<br>
+
+## ❔ 기획 배경 및 의도
 
 <details>
 <summary>트렌드와 필요성</summary>
@@ -47,26 +57,86 @@
 </details>
 <br>
 
-## 🔧 ERD
-![image](https://user-images.githubusercontent.com/49333349/153613237-8579de8c-8e56-4736-ac75-8403cc85c326.png)
+## 🪄 애플리케이션 아키텍쳐
+<details>
+<summary>ERD </summary>
+<div markdown="1">
+<img src="https://user-images.githubusercontent.com/49333349/153613237-8579de8c-8e56-4736-ac75-8403cc85c326.png" width="80%" height="80%">
+</div>
+</details>
+
+<details>
+<summary>Figma </summary>
+<div markdown="1">
+<img src="https://user-images.githubusercontent.com/49333349/153613791-8c57650f-3760-425a-9384-685c36ea2134.png" width="80%" height="80%">
+</div>
+</details>
 <br>
 
-## 🪄 Figma
-![image](https://user-images.githubusercontent.com/49333349/153613791-8c57650f-3760-425a-9384-685c36ea2134.png)
-<br>
+## 기능
+
+[시연 시나리오](https://github.com/GyuYoungCho/MetaOne/blob/dev/exec/%EC%8B%9C%EC%97%B0%20%EC%8B%9C%EB%82%98%EB%A6%AC%EC%98%A4.pdf)
 
 
 ## ⌛ Stack
 
 <p align="center">
 <img src="https://img.shields.io/badge/Java-007396?style=flat-square&logo=Java&logoColor=white"/></a>&nbsp
+<img src="https://img.shields.io/badge/C%23-00599C?style=flat-square&logo=c sharp&logoColor=white"/></a>&nbsp
+<img src="https://img.shields.io/badge/Unity-dcdcdc?style=flat-square&logo=unity&logoColor=black"/></a>&nbsp
+<img src="https://img.shields.io/badge/WebGL-990000?style=flat-square&logo=webgl&logoColor=white"/></a>&nbsp 
 <img src="https://img.shields.io/badge/HTML5-E34F26?style=flat-square&logo=html5&logoColor=white"/></a>&nbsp 
 <img src="https://img.shields.io/badge/CSS-1572B6?style=flat-square&logo=css3&logoColor=white"/></a>&nbsp 
 <img src="https://img.shields.io/badge/Javascript-ffb13b?style=flat-square&logo=javascript&logoColor=white"/></a>&nbsp 
 <img src="https://img.shields.io/badge/Vue.js-4FC08D?style=flat-square&logo=vue.js&logoColor=white"/></a>&nbsp 
 <img src="https://img.shields.io/badge/Sass-CC6699?style=flat-square&logo=sass&logoColor=white"/></a>&nbsp
+<br>
+<img src="https://img.shields.io/badge/Redis-DC382D?style=flat-square&logo=redis&logoColor=white"/></a>&nbsp
+<img src="https://img.shields.io/badge/Firebase-FFCA28?style=flat-square&logo=firebase&logoColor=white"/></a>&nbsp
 <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=flat-square&logo=Spring&logoColor=white"/></a>&nbsp 
 <img src="https://img.shields.io/badge/MySQL-E6B91E?style=flat-square&logo=MySql&logoColor=white"/></a>&nbsp  
+<img src="https://img.shields.io/badge/Nginx-009639?style=flat-square&logo=nginx&logoColor=white"/></a>&nbsp 
 <img src="https://img.shields.io/badge/Docker-2496ED?style=flat-square&logo=docker&logoColor=white"/></a>&nbsp 
 </p>
 
+<br>
+
+## 🖥️ 개발 환경
+
+### Deploy Server
+- Ubuntu 20:04:LTS
+
+### DB
+- MySQL : 8.0.27
+- Redis : 5.0.7
+
+### Frontend
+- Vue : 2.6.11
+- vue/cli : 4.5.13
+- Sass-loader : 10.2.0
+
+### Backend
+
+- Java : openjdk version "1.8.0_262"
+- Spring
+    - Spring Boot : 2.5.5
+    - gradle : 6.8.3
+- npm : 6.14.13
+- Docker : 20.10.8
+
+
+<br>
+
+
+- Docker-compose : 1.28.0-rc2
+
+### IDE
+- Visual Studio Code : 1.61.2
+- IntelliJ : 2019.3.5
+- STS : 3.9.14.RELEASE
+- MySQLWorkBench : 8.0.25
+- Unity : 2020.3.20f1
+
+## 🔗 Test
+- [포팅 메뉴얼](https://github.com/GyuYoungCho/MetaOne/blob/dev/exec/Porting_Menual.pdf) 참고
+- exec 내 dump 파일 실행
